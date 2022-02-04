@@ -7,7 +7,8 @@ const tilesIndexEndPoint = "http://localhost:3000/tiles"
 // make sure the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM loaded")
-    getTiles()
+    // getTiles()
+    getBoard()
 })
     // fetch your endpoint
 
@@ -16,11 +17,11 @@ function getTiles() {
     .then(response => response.json())
     .then(tilesArray => {
         console.log(tilesArray)
-        tilesArray.forEach( tile => {
+        tilesArray.data.forEach( tile => {
             const tileMarkup = `
             <div data-id=${tile.id}>
                 <p>ID: ${tile.id}</p>
-                <p>peg: ${tile.peg}</p>
+                <p>peg: ${tile.attributes.peg}</p>
             </div>
             `
         document.querySelector('#tile-container').innerHTML += tileMarkup
@@ -28,6 +29,11 @@ function getTiles() {
 
     })
 } 
+
+
+function getBoard() {
+    console.log("board!")
+}
    
 
 

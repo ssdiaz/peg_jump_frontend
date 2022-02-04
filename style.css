@@ -1,0 +1,33 @@
+.peg {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block; 
+    position:relative;
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+  }
+
+  table {
+    /* align-self: center; */
+    display: flex;
+    justify-content: center;
+  }
+
+  /* .triangle {
+    margin: 0 auto;
+    position:absolute; top:25px; left: 25%; 
+    opacity: 0.5;
+    width: 0;
+    height: 0;
+    border-left: 300px solid transparent;
+    border-right: 300px solid transparent;
+    border-bottom: 350px solid pink;
+  }
+ */
+
+ .greeting {
+    text-align: center;
+ }
