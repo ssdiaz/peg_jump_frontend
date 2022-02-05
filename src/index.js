@@ -33,7 +33,12 @@ let peg15 = "#board > table > tbody > tr:nth-child(5) > td:nth-child(9)"
 
 let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg11, peg12, peg13, peg14, peg15]
 
-const boardShowEndPoint = "http://localhost:3000/boards/1";
+const board = document.getElementById('board'); // let boardBody = document.querySelector("#board > table > tbody")
+// let content = document.getElementById('board');
+// let firstChild = content.firstChild.nodeName;
+// console.log(firstChild)
+ 
+
 // make sure the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded")
@@ -41,37 +46,46 @@ document.addEventListener('DOMContentLoaded', () => {
   getBoard()
 })
 
-// fetch your endpoint
+// set end point and fetch your endpoint
+const boardShowEndPoint = "http://localhost:3000/boards/1";
 function getBoard() {
   fetch(boardShowEndPoint)
   .then(response => response.json())
-  .then(boardArray => {
+   .then(boardArray => {
     console.log(boardArray)
-    boardArray.data.attributes.tiles.forEach( tile => {
-      
-      const tileMarkup = `      
-      <div id="board">
-      <button class="peg" id=${tile.id}>
-          ID: ${tile.id}
-          <br>peg: ${tile.peg}
-          <br>num#: ${tile.number}
-          <br>?: ${tile.peg}
-          </button>
-        </div>
+        boardArray.data.attributes.tiles.forEach( tile => {
+          
+          // debugger
 
-      `
-      // document.querySelector('#pegs').innerHTML += tileMarkup
-      // peg1.innerText = tileMarkup
-      document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
-    })
-  })
+          let newTile = new Tile(tile)
+
+          renderPeg(tile)
+        })
+        // .catch(err => console.dir(err))
+   })
 } 
+ 
+// render a peg
+function renderPeg(tile) {
+  const tileMarkup = `      
+    <div id="board">
+      <button class="peg" id=${tile.id}>
+        ID: ${tile.id}
+        <br>peg: ${tile.peg}
+        <br>num#: ${tile.number}
+        <br>?: ${tile.peg}
+      </button>
+    </div>
+  `
+  document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup   // document.querySelector('#pegs').innerHTML += tileMarkup
+}
+
+
 
 
 // const allPegs = document.querySelectorAll(".peg");
-
 // works!!
-const board = document.getElementById('board');
+// const board = document.getElementById('board');
 board.addEventListener('click', (event) => {
   // event.target === button#1.peg
   // event.target.nodeName === BUTTON
@@ -85,10 +99,6 @@ board.addEventListener('click', (event) => {
   }
 
 })
-
-
-
-
 
 // for play button - right now changes background
 const btn = document.querySelector('button');
