@@ -1,14 +1,3 @@
-// using:
-const boardShowEndPoint = "http://localhost:3000/boards/1"
-
-// Workign on:
-// const tilesIndexEndPoint = "http://localhost:3000/tiles"
-// let pegTable = document.getElementById("pegs");
-// let peg = document.querySelector('#pegs > input[type=submit]:nth-child(3)');
-//                                 #pegs > table > tbody > tr:nth-child(1) > td:nth-child(5) > span
-
-
-
 // define peg buttons
 // let peg1  = document.querySelector("#pegs > table > tbody > tr:nth-child(1) > td:nth-child(5)")
 // let peg2  = document.querySelector("#pegs > table > tbody > tr:nth-child(2) > td:nth-child(4)")
@@ -44,103 +33,66 @@ let peg15 = "#pegs > table > tbody > tr:nth-child(5) > td:nth-child(9)"
 
 let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg11, peg12, peg13, peg14, peg15]
 
-
+const boardShowEndPoint = "http://localhost:3000/boards/1"
 // make sure the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded")
+  console.log("DOM loaded")
 
-    getBoard()
+  getBoard()
+})
+
+// fetch your endpoint
+function getBoard() {
+  fetch(boardShowEndPoint)
+  .then(response => response.json())
+  .then(boardArray => {
+    console.log(boardArray)
+    boardArray.data.attributes.tiles.forEach( tile => {
+      const tileMarkup = `
+      
+      <div id="pegs">
+      <button class="peg" id=${tile.id}>
+          ID: ${tile.id}
+          <br>peg: ${tile.peg}
+          <br>num#: ${tile.number}
+          <br>?: ${tile.peg}
+          </button>
+        </div>
+
+      `
+      // document.querySelector('#pegs').innerHTML += tileMarkup
+      // peg1.innerText = tileMarkup
+      document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
+    })
+  })
+} 
+
+
+// const allPegs = document.querySelectorAll(".peg");
+
+// works!!
+const pegs = document.getElementById('pegs');
+pegs.addEventListener('click', (event) => {
+  const isButton = event.target.nodeName === 'BUTTON';
+  if (!isButton) {
+    return;
+  }
+
+  console.dir(event.target.id);
+  console.log("hi")
+  // call a function here
 })
 
 
 
 
-// fetch your endpoint
-function getBoard() {
-    console.log("board!")
-
-    fetch(boardShowEndPoint)
-    .then(response => response.json())
-    .then(boardArray => {
-        console.log(boardArray)
-        boardArray.data.attributes.tiles.forEach( tile => {
-            const tileMarkup = `
-            <button class="peg" id=${tile.id}>
-                <p>
-                    ID: ${tile.id}
-                    <br>peg: ${tile.peg}
-                    <br>num#: ${tile.number}
-                    <br>?: ${tile.peg}
-                </p>
-            </button>
-            `
-            // document.querySelector('#pegs').innerHTML += tileMarkup
-            // peg1.innerText = tileMarkup
-            document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
-        })
-    })
-} 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function startPegRemoved(){
-// }
-
-// const button = document.getElementById('button')
-
-// class Moves {
-//     constructor(selection, move) {
-//         this.selection = selection
-//         this.move = move
-//     }
-
-//     setSelection(){
-
-//     }
-
-//     setMove(){
-
-//     }
-
-
-//     checkForOptions(){
-
-//     }
-
-//     removePeg(){
-
-//     }
-
-//     placePeg(){
-
-//     }
-
-//     checkIfLoss(){
-
-//     }
-
-//     checkIfWon(){
-
-//     }
-
-// }
-
-// let move1 = new Moves(6,1)
+const btn = document.querySelector('button');
+function random(number) {
+  return Math.floor(Math.random() * (number+1));
+}
+btn.addEventListener('click', () => {
+  const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+  document.body.style.backgroundColor = rndCol;
+});
