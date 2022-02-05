@@ -1,4 +1,13 @@
+// using:
 const boardShowEndPoint = "http://localhost:3000/boards/1"
+
+// Workign on:
+// const tilesIndexEndPoint = "http://localhost:3000/tiles"
+// let pegTable = document.getElementById("pegs");
+// let peg = document.querySelector('#pegs > input[type=submit]:nth-child(3)');
+//                                 #pegs > table > tbody > tr:nth-child(1) > td:nth-child(5) > span
+
+
 
 // define peg buttons
 // let peg1  = document.querySelector("#pegs > table > tbody > tr:nth-child(1) > td:nth-child(5)")
@@ -34,14 +43,17 @@ let peg14 = "#pegs > table > tbody > tr:nth-child(5) > td:nth-child(7)"
 let peg15 = "#pegs > table > tbody > tr:nth-child(5) > td:nth-child(9)"
 
 let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg11, peg12, peg13, peg14, peg15]
-// pegRowIndex = [[1,5],[2,4], [2,6], [3,3], [3,5], [3,7], [4,2], [4,4], [4,6], [4,8], [5,1], [5,3], [5,5], [5,7], [5,9]]
+
 
 // make sure the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM loaded")
-    getBoard()
 
+    getBoard()
 })
+
+
+
 
 // fetch your endpoint
 function getBoard() {
@@ -51,91 +63,23 @@ function getBoard() {
     .then(response => response.json())
     .then(boardArray => {
         console.log(boardArray)
-        boardArray.data.attributes.tiles.forEach( tile => {          
+        boardArray.data.attributes.tiles.forEach( tile => {
             const tileMarkup = `
-            <div class="peg" id=${tile.id}>
+            <button class="peg" id=${tile.id}>
                 <p>
                     ID: ${tile.id}
                     <br>peg: ${tile.peg}
                     <br>num#: ${tile.number}
                     <br>?: ${tile.peg}
-                    <li class="like">Like! <span class="like-glyph">&#x2661;</span></li>
                 </p>
-            </div>
+            </button>
             `
-            document.querySelector("#pegs").innerHTML += tileMarkup
-            // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
+            // document.querySelector('#pegs').innerHTML += tileMarkup
+            // peg1.innerText = tileMarkup
+            document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
         })
     })
 } 
-
-
-
-
-
-
-
-const allPegs = document.querySelectorAll(".peg");
-
-
-
-
-
-
-let glyphStates = {
-    "♡": "♥",
-    "♥": "♡"
-  };
-  
-  let colorStates = {
-    "red" : "",
-    "": "red"
-  };
-  
-  let articleHearts = document.querySelectorAll(".like-glyph");
-  
-  function likeCallback(e) {
-    let heart = e.target;
-    mimicServerCall()
-      .then(function(serverMessage){
-        alert("You notified the server!");
-        alert(serverMessage);
-        heart.innerText = glyphStates[heart.innerText];
-        heart.style.color = colorStates[heart.style.color];
-      })
-      .catch(function(error) {
-        alert("Something went wrong!");
-      });
-  }
-  
-  
-  for (let glyph of articleHearts) {
-    glyph.addEventListener("click", likeCallback);
-  }
-
-  function mimicServerCall() {
-    return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        resolve("Pretend remote server notified of action!");
-      }, 300);
-    });
-  }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
