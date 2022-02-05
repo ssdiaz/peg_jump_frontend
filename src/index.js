@@ -37,67 +37,46 @@ const board = document.getElementById('board'); // let boardBody = document.quer
 // let content = document.getElementById('board');
 // let firstChild = content.firstChild.nodeName;
 // console.log(firstChild)
- 
+ // const allPegs = document.querySelectorAll(".peg");
+  // const board = document.getElementById('board');
 
 // make sure the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded")
-
-  getBoard()
+  // fetch board
+  getTiles()
 })
 
 // set end point and fetch your endpoint
 const boardShowEndPoint = "http://localhost:3000/boards/1";
-function getBoard() {
+function getTiles() {
   fetch(boardShowEndPoint)
   .then(response => response.json())
    .then(boardArray => {
     console.log(boardArray)
         boardArray.data.attributes.tiles.forEach( tile => {
-          
-          // debugger
-
+          // create new Tile from boardArray of each tile
           let newTile = new Tile(tile)
 
-          renderPeg(tile)
+          // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
+          document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
         })
         // .catch(err => console.dir(err))
    })
 } 
  
-// render a peg
-function renderPeg(tile) {
-  const tileMarkup = `      
-    <div id="board">
-      <button class="peg" id=${tile.id}>
-        ID: ${tile.id}
-        <br>peg: ${tile.peg}
-        <br>num#: ${tile.number}
-        <br>?: ${tile.peg}
-      </button>
-    </div>
-  `
-  document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup   // document.querySelector('#pegs').innerHTML += tileMarkup
-}
 
 
 
 
-// const allPegs = document.querySelectorAll(".peg");
-// works!!
-// const board = document.getElementById('board');
 board.addEventListener('click', (event) => {
-  // event.target === button#1.peg
-  // event.target.nodeName === BUTTON
+  const objClicked = event.target.nodeName    // event.target === button#1.peg     // event.target.nodeName === BUTTON
+    // check that clicked button and not on div
+    if (objClicked === 'BUTTON') {
+      console.dir(event.target.id);
 
-  // check that clicked button and not on div
-  const objClicked = event.target.nodeName 
-  if (objClicked === 'BUTTON') {
-    console.dir(event.target.id);
-
-    // call a function here
-  }
-
+      // call a function here
+    }
 })
 
 // for play button - right now changes background
