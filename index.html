@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Peg Game</title>
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -11,7 +12,32 @@
 
         <div class="greeting">
             <p>Welcome to the Peg Jump Game!</p>
-            <p><button id="new-game-btn">Play</button></p>
+            <p><button id="play-btn">Play</button></p>
+        </div>
+
+        <div class="form-container">
+            <form id="new-player-form">
+                <h3>Create a username!</h3>
+        
+                <input id="input-name"
+                    type="text"
+                    name="name"
+                    value=""
+                    placeholder="username"                    
+                    class="input-text"
+                />
+                <br />
+                <input id='create-player-button'
+                    type="submit"
+                    name="submit"
+                    value="Create New Player"
+                    class="submit"
+                />
+            </form>
+        </div>
+
+        <div class="player-container">
+            
         </div>
 
         <div id="board">
@@ -77,6 +103,7 @@
             </table>
 
         </div>
+        <script src="src/player.js"></script> 
         <script src="src/tile.js"></script> 
         <script src="src/game.js"></script> 
         <script src="src/index.js"></script> 

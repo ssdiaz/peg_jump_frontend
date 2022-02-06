@@ -12,7 +12,7 @@ class Tile {
 
     // render a peg
     renderPeg() {
-        console.log(this)
+        // console.log(this)
         return `      
         <div id="board">
             <button class="peg" id=${this.id}>
