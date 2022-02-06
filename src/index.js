@@ -18,38 +18,35 @@ let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg
 
 
 
-
-
-
-
+// Constants used throughout
 const board = document.getElementById('board'); 
+// set end point and fetch your endpoint
+const boardShowEndPoint = "http://localhost:3000/boards/1";
+const gameEndPoint = "http://localhost:3000/games"
 
-// Load the DOM
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM loaded")
-  // fetch board
-  getTiles()
-  
-  // NEW PLAYER = find form, add a listener, then call callback function to action
-  const createPlayerForm = document.querySelector("#new-player-form")
-  createPlayerForm.addEventListener("submit", (e) => createFormHandler(e))
 
+// Load the DOM; 
+document.addEventListener('DOMContentLoaded', () => { 
+  console.log("DOM loaded")//had:  // getTiles()   // fetch board
+  createNewPlayer()
 })
 
-// NEW PLAYER =create form handler; gets the  user input for 'username' name
-function createFormHandler(e) {
-  e.preventDefault() //make sure page doesn't reload
-  console.log(e)
-  // grab input and set to variable
-  const nameInput = document.querySelector("#input-name").value
-  // call post function
-  postFetch(nameInput)
+
+
+// [NEW PLAYER] : Select New Player User Info
+function createNewPlayer(){
+  // NEW PLAYER = find form, add a listener, then call callback function to action
+  const selectPlayerForm = document.querySelector("#new-player-form")
+  // createPlayerForm.addEventListener("submit", (e) => createFormHandler(e))
+  selectPlayerForm.addEventListener("submit", (e) => {
+    e.preventDefault() //prevent page reload
+    const nameInput = document.querySelector("#input-name").value  // grab user input value and set to variable
+    nameInput ? postFetchPlayer(nameInput) : console.log("username cannot be empty")  // if (nameInput){postFetchPlayer(nameInput)} else {console.log("username cannot be empty")}// if text in box, call post function
+  })
 }
-// NEW PLAYER =action on the fetch; create new player and POST back to our database
-function postFetch(nameInput){
-  
+// [NEW PLAYER] : POST fetch
+function postFetchPlayer(nameInput){ //; creates new player and POST back to our database
   fetch("http://localhost:3000/players", {
-    // POST Request
     method: "POST",
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({name: nameInput })      // build body object :note you can do this outside of the fetch request
@@ -57,23 +54,24 @@ function postFetch(nameInput){
   .then(response => response.json())
   .then(player => {
     console.log(player)
-    console.log("above")
 
-    const playerData = player.data.attributes
-
+    const playerAttributes = player.data.attributes
     const playerMarkup = `
       <div data-id${player.id}>
-        <p>Username: ${playerData.name}</p>
+        <p>Username: ${playerAttributes.name}</p>
       </div>
     `
     const usernameCreated = document.querySelector(".player-container")
-    // update div with player info from above
-    usernameCreated.innerHTML += playerMarkup
+    usernameCreated.innerHTML += playerMarkup     // update div with player info from above
     
     // hide form
     if(usernameCreated) {
       document.querySelector(".form-container").style.display = 'none'
     }
+  })
+  .catch(function(error){
+    alert("Invalid Username. Please try again.");
+    console.log(error.message)
   })
 }
 
@@ -81,41 +79,34 @@ function postFetch(nameInput){
 
 
 
-// Create new Player button (form)
-// const btnNewPlayer = document.querySelector("#new-player-form > input.submit")
-// btnNewPlayer.addEventListener("click", function(event) {
-
-//   // createPlayer()
-//   event.preventDefault();
-// });
 
 
 
 
 
 
+// [New Game] : select play button
+const btnPlay = document.querySelector("#play-btn");
+btnPlay.addEventListener('click', function(event) {
+  event.preventDefault() 
+
+  getBoardTiles()// load board
+});
 
 
-
-
-
-// set end point and fetch your endpoint
-const boardShowEndPoint = "http://localhost:3000/boards/1";
-const gameEndPoint = "http://localhost:3000/games"
-
-function getTiles() {
+function getBoardTiles() {
   fetch(boardShowEndPoint)
   .then(response => response.json())
    .then(boardArray => {
-    // console.log(boardArray)
-        boardArray.data.attributes.tiles.forEach( tile => {
-          // create new Tile from boardArray of each tile
-          let newTile = new Tile(tile)
+      console.log(boardArray)
+      boardArray.data.attributes.tiles.forEach( tile => {
+        // create new Tile from boardArray of each tile
+        let newTile = new Tile(tile)
 
-          // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
-          document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
-        })
-        // .catch(err => console.dir(err))
+        // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
+        document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
+      })
+      // .catch(err => console.dir(err))
    })
 } 
 
@@ -143,19 +134,7 @@ board.addEventListener('click', (event) => {
     }
 })
 
-// play button - color changer
-// for play button - right now changes background
-function random(number) {
-  return Math.floor(Math.random() * (number+1));
-}
 
-const btnPlay = document.querySelector("#play-btn");
-btnPlay.addEventListener('click', function(event) {
-  event.preventDefault() 
-
-  const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
-  document.body.style.backgroundColor = rndCol;
-});
 
 
 // fetch player
@@ -172,7 +151,6 @@ function getPlayer(){
       playerArray.data.forEach( player => {
         console.log(player)
         console.log(player.id)
-
       })
     })
 }

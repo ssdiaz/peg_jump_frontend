@@ -25,7 +25,20 @@
 
 
 
+for color change:
+// [New Game] : select play button
+function random(number) {
+  return Math.floor(Math.random() * (number+1));
+}
+  const btnPlay = document.querySelector("#play-btn");
+  btnPlay.addEventListener('click', function(event) {
+    event.preventDefault() 
 
+    getTiles()// load board
+
+    const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+    document.body.style.backgroundColor = rndCol;
+  });//
 
 
 
