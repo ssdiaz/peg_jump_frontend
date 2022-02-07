@@ -14,14 +14,19 @@ class Tile {
     renderPeg() {
         // console.log(this)
         return `      
-        <div id="board">
-            <button class="peg" id=${this.id}>
-            ID: ${this.id}
-            <br>peg: ${this.peg}
-            <br>num#: ${this.number}
-            <br>?: ${this.peg}
+            <button class="peg" id="peg${this.id}">
+                <div class="number" id="peg${this.id}">
+                    ${this.number}
+                </div>
+
+                <div class="active" id="peg${this.id}">
+                    ${this.peg}
+                </div>
+
+                <div class="options" id="peg${this.id}">
+                    ${this.options}
+                </div>
             </button>
-        </div>
         `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
     }
 

@@ -45,4 +45,5 @@ function random(number) {
 
 
 NOTES- 
-fetch requestes need a method, header, and body. so look up this code.
+- fetch requestes need a method, header, and body. so look up this code.
+- if creating a new object, create it FULLY in the DOM then post to the database - can't have it just create nothing without sending to database
