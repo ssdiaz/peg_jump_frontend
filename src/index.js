@@ -22,12 +22,24 @@ const btnPlay = document.querySelector("#play-btn");
 const directionsText = document.querySelector(".directions")
 const displayOptionsText = document.querySelector(".display-options")
 let optionsArray = []
+let pegSelected = ""
+let pegNewPosition = ""
 // set end point and fetch your endpoint
 const boardShowEndPoint = "http://localhost:3000/boards/1";
 const gameEndPoint = "http://localhost:3000/games"
 
 function resetOptionsArray(){
   optionsArray.length === 0 ?  optionsArray :  optionsArray = 0
+}
+
+function setPegColor(pegId){
+  let peg = document.querySelector(`#${pegId}`)
+
+  if (document.querySelector(`#${pegId}.active`).innerText === "true") {
+    peg.style.backgroundColor = 'violet'
+  } else {
+    peg.style.backgroundColor = '#bbb'
+  }
 }
 
 
@@ -83,7 +95,6 @@ function newGame() {
 
       btnPlay.innerText = "Reset Game"
       resetGame()
-
     }
   });
 }
@@ -119,6 +130,9 @@ function getBoardTiles() {
    })
 } 
 
+
+
+
 function firstMove() {
   directionsText.innerText = `Click a peg to remove`
 
@@ -127,9 +141,14 @@ function firstMove() {
     // console.log(event.target.id)
 
     let pegClicked =  document.querySelector(`#${id}`) 
-    pegClicked.style.backgroundColor = '#bbb'
+
+
+
     let pegActiveStatus =  document.querySelector(`#${id}.active`) 
     pegActiveStatus.innerText = 'false'      //change peg to false
+
+    setPegColor(pegClicked.id) // pegClicked.style.backgroundColor = '#bbb'
+    console.log(`PEG CLIKECKED: ${pegClicked.id}`)
 
     selectPeg()
 
@@ -140,65 +159,88 @@ function firstMove() {
 
 function selectPeg(){
   directionsText.innerText = "Select a Peg to move"
-
   resetOptionsArray()   // newArray.length === 0 ?  newArray :  newArray = 0
 
-  board.addEventListener('click', (event) => {
-    
+  board.addEventListener('click', (event) => { 
+    let id = event.target.id
+    pegSelected = id
 
-    console.log(event.target.id)
+    console.log(`peg selected: ${pegSelected}`)
 
-      let id = event.target.id
+    let pegClicked =  document.querySelector(`#${id}`)  
+    pegClicked.style.backgroundColor = 'yellow'
 
+    let optionsString = document.querySelector(`#${id}.options`).innerText  // console.log(typeof options) //=>string
+    let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")
 
-      let pegClicked =  document.querySelector(`#${id}`)  
-      pegClicked.style.backgroundColor = 'yellow'
+    function checkOptions(){
+      optionsStringToArray.forEach(function(num){
+        let peg = document.querySelector(`#peg${num}.active`)
+        if (peg.innerText === 'false' ) {
+          optionsArray.push(num)
+        }
+      })
+    }   
+    checkOptions()
 
-      let optionsString = document.querySelector(`#${id}.options`).innerText  // console.log(typeof options) //string UGH
-      let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")
+    displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
 
-
-      function checkOptions(){
-        optionsStringToArray.forEach(function(num){
-          let peg = document.querySelector(`#peg${num}.active`)
-          if (peg.innerText === 'false' ) {
-            optionsArray.push(num)
-          }
-        })
-      } 
-      
-      checkOptions()
- 
-      // directionsText.innerHTML += `<br><br>Peg Options Availible: ${optionsArray}`
-      displayOptionsText.innerHTML += `<br><br>Peg Options Availible: ${optionsArray}`
-
-      movePeg()
-
+    selectMovePosition()
   },{once : true})
 }
 
-function movePeg(){
-  directionsText.innerText = "Select availible position"
 
-  
 
-  board.addEventListener('click', (event) => {
-    const objClicked = event.target.nodeName    // event.target === button#1.peg     // event.target.nodeName === BUTTON
-    if (objClicked === 'BUTTON') {     // check that clicked button and not on div 
-      let id = event.target
-      console.log(id)
-      console.log(`options array: ${optionsArray}`) //=> ['1']
+function selectMovePosition(){
+  directionsText.innerText = "Select availible position to move Peg."
+
+  board.addEventListener('click', (event) => {        
+    let pegId = event.target.id
+    // console.log(pegId) //=> peg1
+    // console.log(`options array: ${optionsArray}`) //=> ['1']
       
+    // THEN if that number is in array, good, otherwise alert and start over.
+    let pegClickedNumber =  document.querySelector(`#${pegId}.number`).innerText
+    // console.log(`numbtxt: ${pegClickedNumber}`)
 
+    if (optionsArray.includes(pegClickedNumber, 0)) {
+      console.log("yes, call next function")
 
+      pegNewPosition = pegId //=> peg1
+      console.log(`pegNewPosition: ${pegNewPosition}`)
+
+      movePegs()
+
+    } else {
+      alert("Invalid Peg Selected. Please choose a grey peg.");
+      selectMovePosition()
     }
   },{once : true})
-
-
   //reset array at end if needed
   //optionsArray = []
+}
+
+function movePegs(){
+  // console.log(`selected: ${pegSelected}`)
+  document.querySelector(`#${pegSelected}.active`).innerText = false
+  setPegColor(pegSelected)
+  pegSelected = ""
+  // console.log(`selected reset: ${pegSelected}`)
+
+  // console.log(`newPosition: ${pegNewPosition}`)
+  document.querySelector(`#${pegNewPosition}.active`).innerText = true
+  setPegColor(pegNewPosition)
+  pegNewPosition = ""
+  // console.log(`newPosition reset: ${pegNewPosition}`)
+
+
+
 
 }
+
+
+
+
 
 
 // function pegClick(){
@@ -215,18 +257,18 @@ function movePeg(){
 // }
 
 
-function moveOrder(){
-  // directionsText = "Select 1 peg to remove"
+// function moveOrder(){
+//   // directionsText = "Select 1 peg to remove"
 
 
 
-  //   // selectPeg()
-  //   // selectRemove()
-  //   // removePeg()
-  //   // setPeg()
+//   //   // selectPeg()
+//   //   // selectRemove()
+//   //   // removePeg()
+//   //   // setPeg()
 
-  // document.querySelector(".directions").innerText = "hi"
-}
+//   // document.querySelector(".directions").innerText = "hi"
+// }
 
 
 
