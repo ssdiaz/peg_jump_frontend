@@ -26,6 +26,11 @@ class Tile {
                 <div class="options" id="peg${this.id}">
                     ${this.options}
                 </div>
+
+                <div class="removes" id="peg${this.id}">
+                    ${this.removes}
+                </div>
+
             </button>
         `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
     }

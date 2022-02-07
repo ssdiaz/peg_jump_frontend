@@ -24,6 +24,9 @@ const displayOptionsText = document.querySelector(".display-options")
 let optionsArray = []
 let pegSelected = ""
 let pegNewPosition = ""
+let optionIndex = ""
+let pegRemoveNum = ""
+let pegRemoved = ""
 // set end point and fetch your endpoint
 const boardShowEndPoint = "http://localhost:3000/boards/1";
 const gameEndPoint = "http://localhost:3000/games"
@@ -134,15 +137,13 @@ function getBoardTiles() {
 
 
 function firstMove() {
-  directionsText.innerText = `Click a peg to remove`
+  directionsText.innerText = `[firstMove] Click a peg to remove`
 
   board.addEventListener('click', (event) => {
     let id = event.target.id
     // console.log(event.target.id)
 
     let pegClicked =  document.querySelector(`#${id}`) 
-
-
 
     let pegActiveStatus =  document.querySelector(`#${id}.active`) 
     pegActiveStatus.innerText = 'false'      //change peg to false
@@ -158,7 +159,7 @@ function firstMove() {
 
 
 function selectPeg(){
-  directionsText.innerText = "Select a Peg to move"
+  directionsText.innerText = "[selectPeg] Select a Peg to move"
   resetOptionsArray()   // newArray.length === 0 ?  newArray :  newArray = 0
 
   board.addEventListener('click', (event) => { 
@@ -192,7 +193,7 @@ function selectPeg(){
 
 
 function selectMovePosition(){
-  directionsText.innerText = "Select availible position to move Peg."
+  directionsText.innerText = "[selectMovePosition] Select availible position to move Peg."
 
   board.addEventListener('click', (event) => {        
     let pegId = event.target.id
@@ -209,6 +210,8 @@ function selectMovePosition(){
       pegNewPosition = pegId //=> peg1
       console.log(`pegNewPosition: ${pegNewPosition}`)
 
+
+
       movePegs()
 
     } else {
@@ -221,21 +224,49 @@ function selectMovePosition(){
 }
 
 function movePegs(){
-  // console.log(`selected: ${pegSelected}`)
+  directionsText.innerText = "[movePegs]"
+
+  console.log(`selected: ${pegSelected}`)
   document.querySelector(`#${pegSelected}.active`).innerText = false
-  setPegColor(pegSelected)
-  pegSelected = ""
-  // console.log(`selected reset: ${pegSelected}`)
+  setPegColor(pegSelected) //=> peg6
+  // pegSelected = ""
+    // console.log(`selected reset: ${pegSelected}`)
 
-  // console.log(`newPosition: ${pegNewPosition}`)
+  console.log(`newPosition: ${pegNewPosition}`)
   document.querySelector(`#${pegNewPosition}.active`).innerText = true
-  setPegColor(pegNewPosition)
-  pegNewPosition = ""
-  // console.log(`newPosition reset: ${pegNewPosition}`)
+  setPegColor(pegNewPosition)//=> peg1
+  // pegNewPosition = ""
+    // console.log(`newPosition reset: ${pegNewPosition}`)
+
+  //6, choose 1 - get index of 1 in options, and choose index of removes 1
+
+
+  console.log(`optionsArray: ${optionsArray}`) //=>1 ... this is the num selected IN array
+
+
+  //optionsArray
+  let selectedOptionsString = document.querySelector(`#${pegSelected}.options`).innerText
+  let selectedOptionsStringToArray = selectedOptionsString.substr(1, selectedOptionsString.length-2).split(", ")
+  //=> ['1', '4', '15']
+  let pegNewPositionNumber = document.querySelector(`#${pegNewPosition}.number`).innerText//=> '1'
+
+  let optionIndex = selectedOptionsStringToArray.indexOf(pegNewPositionNumber, 0) //=>0
+  // console.log(optionIndex)//=>peg1
+  
+
+  let selectedRemovesString = document.querySelector(`#${pegSelected}.removes`).innerText
+  let selectedRemovesStringToArray = selectedRemovesString.substr(1, selectedRemovesString.length-2).split(", ")
+  //=>['3', '5', '10']
+  
+  let pegRemoveNum = selectedRemovesStringToArray[optionIndex]//=>3
 
 
 
 
+  //remove peg: change active to false and call color change !!!!!
+  let pegRemoved = document.querySelector(`#peg${pegRemoveNum}`)
+  document.querySelector(`#peg${pegRemoveNum}.active`).innerText = 'false'
+  setPegColor(pegRemoved.id)
 }
 
 
