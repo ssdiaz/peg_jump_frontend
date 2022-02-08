@@ -35,9 +35,36 @@ class Tile {
         `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
     }
 
+    renderPegHTML(){
+        return `      
+        <button class="peg" id="${this.id}">
+            <div class="number" id="${this.id}">
+            </div>
+
+            <div class="active" id="${this.id}">
+            </div>
+
+            <div class="options" id="${this.id}">
+            </div>
+
+            <div class="removes" id="${this.id}">
+            </div>
+        </button>
+    `
+    }
+
+    renderPegElements() {
+        document.querySelector(`#${this.id} .number`).innerText = this.number
+        document.querySelector(`#${this.id} .active`).innerText = this.active
+        document.querySelector(`#${this.id} .options`).innerText = this.options
+        document.querySelector(`#${this.id} .removes`).innerText = this.removes
+    }
+
+
     renderActive() {
         return this.active
     }
+
 
 
     static findById(id) {
