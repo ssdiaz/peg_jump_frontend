@@ -63,6 +63,11 @@ function getClickStatus(event) {
   return tile.active
 }
 
+function checkRemoves(tile) {
+  //checks if a peg has removes
+  //for options.active === false
+    //tile.option.indexOf(option, 0)
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,7 +174,7 @@ function firstMove() {
 
 
 function selectPeg(){
-  instructions.innerText = "[selectPeg] Select a Peg to move"
+  instructions.innerText = "[selectPeg] Select a Violet Peg to move"
   resetOptionsArray()
 
   board.addEventListener('click', (event) => {       
@@ -189,8 +194,7 @@ function selectPeg(){
           let peg = document.querySelector(`#peg${num}.active`)
           //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!
           if (peg.innerText === 'false' ) {
-            optionsArray.push(parseInt(num))//=>needs to be in int for selectMovePosiiton()
-            //console.log(parseInt(num))
+            optionsArray.push(parseInt(num))//=>needs to be in int for selectMovePosiiton()   //console.log(parseInt(num))
           }
         })
       } 
@@ -201,7 +205,7 @@ function selectPeg(){
       selectMovePosition()
 
     } else {
-      alert("Invalid Peg Selected. Please choose a violet peg.");
+      //alert("Invalid Peg Selected. Please choose a violet peg.");
       console.log("click ignored")
 
       selectPeg()
@@ -213,56 +217,57 @@ function selectPeg(){
 
 function selectMovePosition(){
   instructions.innerText = "[selectMovePosition] Select available position to move Peg."
-  // console.log("peg Selected:")
-  //console.log(pegSelected.id)
 
   board.addEventListener('click', (event) => {   
     let tile = Tile.findById(event.target.id)
 
+    //to unselect peg
     if (tile === pegSelected) {
-      console.log("means they clicked the same")
-      document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
-      pegSelected = ""
-      selectPeg()
+      console.log("means they clicked the selected peg")
+
+      resetPegSelect()
       return
     }
 
+    // check valid click and peg is false
     if (validClick(event) && getClickStatus(event) === false ){
-            
-      //let tile = Tile.findById(event.target.id)
-      //console.log(getClickStatus(event)) //=> false
-      //console.log(typeof tile.active) //=> boolean
-      //console.log(tile.active)
-      //console.log(event.target.id) //=> peg1     
-      //console.log(pegSelected)//=> Tile 6
-      //console.log(pegSelected.number)//=> 6
-
-      let id = event.target.id //=> peg1
-      pegPicked = Tile.findById(id) //=> Tile 1
+      pegPicked = Tile.findById(event.target.id) //=> Tile 1
+      pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
 
       // If pegPicked is in pegSelected array, good, otherwise alert and start over.
-      if (optionsArray.includes(pegPicked.number, 0)) { ///UGH integers sigh. 
+      if (optionsArray.includes(pegPicked.number, 0)) { 
         console.log("yes, call next function")
-        //pegNewPosition = pegPicked //id //=> peg1
-        //console.log(pegNewPosition)//Tile 1 
 
+        //abort if removed peg is gone already (false)
+        if (pegRemoved.active === false) {
+          alert("No Peg to remove. Please re-select.")
+          
+          resetPegSelect()
+          return
+        }
+  
         movePegs()
+
       } else {
-        console.log("clicked ignore. go again")
-        alert("Not a valid option for peg");
-        selectMovePosition()
+        console.log("clicked ignored")
+        alert("Not a valid option for peg. Please re-select.");
+
+        resetPegSelect()
+        return
       }
     } else {
-      alert("Invalid Peg Selected. Please choose a grey peg.");
-      console.log("Invalid Peg Selected. Please choose a grey peg.")
+      alert("Invalid Peg Selected. Please choose a grey peg. Please re-select.");
+      console.log("Invalid Peg Selected")
 
       selectMovePosition()
     }
 
 
-
   }, {once : true})
 }
+
+
+
 
 
 
@@ -304,7 +309,14 @@ function movePegs(){
   selectPeg()   //CALL NEW MOVE
 }
 
-
+function resetPegSelect() {
+  document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
+  pegSelected = ""
+  optionsArray = []
+  displayOptionsText.innerHTML = ""
+  selectPeg()
+  //return
+}
 
 function resetMove() {
   let optionsArray = []

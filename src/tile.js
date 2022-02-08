@@ -71,6 +71,49 @@ class Tile {
         return this.all.find(tile => tile.id === id)
     }
   
+
+
+
+    static returnRemovedPeg(selectedTile, pickedTile) {
+        console.log("in returnRemovedPeg function")    
+        //console.log(selectedTile) // Tile 6
+        //console.log(pickedTile) // Tile 1
+
+        let selectedOptionsString =  selectedTile.options //Tile 6
+
+        //console.log(" --- ")
+
+        let selectedOptionsArray = selectedOptionsString.substr(1, selectedOptionsString.length-2).split(", ")
+        //=> [1, 4, 13, 15]
+        //console.log(selectedOptionsArray)
+      
+        let optionIndexOfPickedInSelected = selectedOptionsArray.indexOf(`${pickedTile.number}`, 0) //=> 0
+        //console.log(optionIndexOfPickedInSelected)
+         //['1', '4', '13', '15']
+
+
+        let selectedRemovesString = selectedTile.removes
+        let selectedRemovesStringToArray = selectedRemovesString.substr(1, selectedRemovesString.length-2).split(", ")
+          //=> ['3', '5', '9', '10']
+      
+        let pegRemoveNumber = selectedRemovesStringToArray[optionIndexOfPickedInSelected]// => 3
+        let removePeg = Tile.findById(`peg${pegRemoveNumber}`) //=> Tile 3
+        //console.log(removePeg)
+
+        return removePeg
+        //RETURNS TILE 3!!!!!!!!!        // RETURNS REMOVED PEG! based on tile selected and tile picked 
+    }
+      
+
+
+
+
+
+
+
+
+
+
 }
 
 

@@ -58,5 +58,5 @@ MOVE STEPS
 
 NEED TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click on a blank tile, ignore
-- [] if you click same time again, unselect it - only for selectPeg
+- [DONE] if you click same time again, unselect it - only for selectPeg
 - [] a way to check the board and if won/loss after x amount of turns?
