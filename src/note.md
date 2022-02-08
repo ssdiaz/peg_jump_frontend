@@ -47,3 +47,5 @@ function random(number) {
 NOTES- 
 - fetch requestes need a method, header, and body. so look up this code.
 - if creating a new object, create it FULLY in the DOM then post to the database - can't have it just create nothing without sending to database
+- for hash tables: https://www.freecodecamp.org/news/javascript-hash-table-associative-array-hashing-in-js/#:~:text=To%20set%20the%20key%2Fvalue,will%20be%20incremented%20by%20one
+

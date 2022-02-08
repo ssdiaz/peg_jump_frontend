@@ -19,30 +19,32 @@ let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg
 const board = document.getElementById('board'); 
 const selectPlayerForm = document.querySelector("#new-player-form")
 const btnPlay = document.querySelector("#play-btn");
-const directionsText = document.querySelector(".directions")
+const instructions = document.querySelector(".directions")
 const displayOptionsText = document.querySelector(".display-options")
 let optionsArray = []
 let pegSelected = ""
+let pegPicked = ""
 let pegNewPosition = ""
 let optionIndex = ""
 let pegRemoveNum = ""
 let pegRemoved = ""
 // set end point and fetch your endpoint
-const boardShowEndPoint = "http://localhost:3000/boards/1";
+
 const gameEndPoint = "http://localhost:3000/games"
 
 function resetOptionsArray(){
   optionsArray.length === 0 ?  optionsArray :  optionsArray = []
 }
 
-function setPegColor(pegId){
-  let peg = document.querySelector(`#${pegId}`)
+function setPegColor(tile){
+  let peg = document.querySelector(`#${tile.id}`)
 
-  if (document.querySelector(`#${pegId}.active`).innerText === "true") {
+  if (tile.active === "true") {
     peg.style.backgroundColor = 'violet'
   } else {
     peg.style.backgroundColor = '#bbb'
   }
+  document.querySelector(`#${tile.id} .active`).innerText = tile.renderActive()
 }
 
 
@@ -74,31 +76,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // [New Game] : select play button
 function newGame() {
-
   btnPlay.addEventListener('click', function(e) {
     // e.preventDefault() 
-
-    if (board.innerText.length === 43){
-      let newGame = function Game() {
-        this.active = "active"
-      }
+    // if (board.innerText.length === 43){
+    //   let newGame = function Game() {
+    //     this.active = "active"
+    //   }
   
-      let newBoard = function Board() {
-        this.active = "active"
-        this.id = 1
-      }
-      
+    //   let newBoard = function Board() {
+    //     this.active = "active"
+    //     this.id = 1
+    //   }
       // console.log(`game: ${newGame}`)
       // console.log(`board: ${newBoard}`)
-      console.log("new game - and board, and tiles")
       // postFetchGame(game) // this needs to be AFTER we get board_id and player_id
   
       getBoardTiles()
       firstMove()
 
-      btnPlay.innerText = "Reset Game"
+      btnPlay.innerText = "Reset"
       resetGame()
-    }
+    // }
   });
 }
 
@@ -116,49 +114,56 @@ function resetGame(){
   })
 }
 
+
+
+
 //  [TILES] loads tiles
 function getBoardTiles() {
-  fetch(boardShowEndPoint)
+  fetch("http://localhost:3000/boards/1")
   .then(response => response.json())
    .then(boardArray => {
-      console.log(boardArray)
+      // console.log(boardArray)//=> board Object
       boardArray.data.attributes.tiles.forEach( tile => {
         // create new Tile from boardArray of each tile
         let newTile = new Tile(tile)
 
         // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
         document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
+        //console.log(tile)
       })
       // .catch(err => console.dir(err))
    })
 } 
 
-
+// document.querySelector(".peg #peg1")
 
 
 function firstMove() {
-  directionsText.innerText = `[firstMove] Click a peg to remove`
+  instructions.innerText = `[firstMove] Click a peg to remove`
 
   board.addEventListener('click', (event) => {
-    let id = event.target.id
-    // console.log(event.target.id)
+    let id = event.target.id //=> peg1  // console.log(id)//=>peg1
 
-    let pegClicked =  document.querySelector(`#${id}`) 
+    //let pegClicked =  document.querySelector(`#${id}`) 
+    let tileClicked = Tile.findById(id)
 
-    let pegActiveStatus =  document.querySelector(`#${id}.active`) 
-    pegActiveStatus.innerText = 'false'      //change peg to false
+    //console.log(tileClicked) //Tile {id: 'peg1', ...}
 
-    setPegColor(pegClicked.id) // pegClicked.style.backgroundColor = '#bbb'
-    console.log(`PEG CLIKECKED: ${pegClicked.id}`)
+    // let pegActiveStatus =  document.querySelector(`#${id}.active`)
+    // pegActiveStatus.innerText = 'false'      //change peg to false
+    tileClicked.active = 'false'
+
+    setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
+    //console.log(tileClicked)//=> peg1
 
     selectPeg()
 
-  },{once : true})
+  }, {once : true})
 }
 
 
 // function gameOrder(){
-//   // directionsText = "Select 1 peg to remove"
+//   // instructions = "Select 1 peg to remove"
 //   //   // selectPeg()
 //   //   // selectRemove()
 //   //   // removePeg()
@@ -170,64 +175,62 @@ function firstMove() {
 
 
 
-
-
-
-
-
 function selectPeg(){
-  directionsText.innerText = "[selectPeg] Select a Peg to move"
-  resetOptionsArray()   // newArray.length === 0 ?  newArray :  newArray = 0
+  instructions.innerText = "[selectPeg] Select a Peg to move"
+  resetOptionsArray()
 
   board.addEventListener('click', (event) => { 
-    let id = event.target.id
-    pegSelected = id
+    let id = event.target.id//=> peg6
+    let tileClicked = Tile.findById(id)//=> Tile 6
+    pegSelected = tileClicked//=> Tile 6
 
-    console.log(`peg selected: ${pegSelected}`)
-
-    let pegClicked =  document.querySelector(`#${id}`)  
+    let pegClicked =  document.querySelector(`#${id}`)//=> button for peg6
     pegClicked.style.backgroundColor = 'yellow'
 
-    let optionsString = document.querySelector(`#${id}.options`).innerText  // console.log(typeof options) //=>string
-    let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")
+    let optionsString = tileClicked.options //=> '[1, 4, 15]' //console.log(typeof optionsString) //=>string
+    //console.log(optionsString)//=> '[1, 4, 15]' //=>string
+    let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")//=> (3) ['1', '4', '15']
 
     function checkOptions(){
       optionsStringToArray.forEach(function(num){
         let peg = document.querySelector(`#peg${num}.active`)
         if (peg.innerText === 'false' ) {
-          optionsArray.push(num)      
+          optionsArray.push(parseInt(num))//=>needs to be in int for selectMovePosiiton()
+          //console.log(parseInt(num))
         }
       })
-    }   
+    } 
     checkOptions()
+
+    //console.log(optionsArray)
 
     displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
 
     selectMovePosition()
-  },{once : true})
+  }, {once : true})
 }
 
 
 
 function selectMovePosition(){
-  directionsText.innerText = "[selectMovePosition] Select availible position to move Peg."
+  instructions.innerText = "[selectMovePosition] Select availible position to move Peg."
 
   board.addEventListener('click', (event) => {        
-    let pegId = event.target.id
-    // console.log(pegId) //=> peg1
+    let id = event.target.id //=> peg1
     // console.log(`options array: ${optionsArray}`) //=> ['1']
       
-    // THEN if that number is in array, good, otherwise alert and start over.
-    let pegClickedNumber =  document.querySelector(`#${pegId}.number`).innerText
-    // console.log(`numbtxt: ${pegClickedNumber}`)
+    //console.log("HERE!!!!!!!!!!!!!!")
+    //console.log(pegSelected)//=> Tile 6
+    pegPicked = Tile.findById(id) //=> Tile 1
 
-    if (optionsArray.includes(pegClickedNumber, 0)) {
+    //let tileClicked = Tile.findById(id)//=> Tile 6
+
+    // THEN if that number is in array, good, otherwise alert and start over.
+    if (optionsArray.includes(pegPicked.number, 0)) {
       console.log("yes, call next function")
 
-      pegNewPosition = pegId //=> peg1
-      console.log(`pegNewPosition: ${pegNewPosition}`)
-
-
+      pegNewPosition = pegPicked //id //=> peg1
+      //console.log(pegNewPosition)//Tile 1 
 
       movePegs()
 
@@ -240,50 +243,65 @@ function selectMovePosition(){
   //optionsArray = []
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function movePegs(){
-  directionsText.innerText = "[movePegs]"
+  instructions.innerText = "[movePegs]"
 
-  console.log(`selected: ${pegSelected}`)
-  document.querySelector(`#${pegSelected}.active`).innerText = false
-  setPegColor(pegSelected) //=> peg6
-  // pegSelected = ""
-    // console.log(`selected reset: ${pegSelected}`)
+  console.log(pegSelected)//=> Tile 6
+  console.log(pegPicked)//=> Tile 1     //document.querySelector(`#${pegSelected}.active`).innerText = false
 
-  console.log(`newPosition: ${pegNewPosition}`)
-  document.querySelector(`#${pegNewPosition}.active`).innerText = true
-  setPegColor(pegNewPosition)//=> peg1
-  // pegNewPosition = ""
-    // console.log(`newPosition reset: ${pegNewPosition}`)
+  pegSelected.active = 'false'
+  setPegColor(pegSelected) //=> Tile 6
 
-  //6, choose 1 - get index of 1 in options, and choose index of removes 1
+  pegPicked.active = 'true'
+  setPegColor(pegPicked) //=> Tile 1
 
 
-  console.log(`optionsArray: ${optionsArray}`) //=>1 ... this is the num selected IN array
 
+  
+  let selectedOptionsString =  pegSelected.options  // document.querySelector(`#${pegSelected}.options`).innerText
 
-  //optionsArray
-  let selectedOptionsString = document.querySelector(`#${pegSelected}.options`).innerText
+  console.log("NOW HERE!!!!!!!!!!!!!!")
+  //console.log(selectedOptionsString)
   let selectedOptionsStringToArray = selectedOptionsString.substr(1, selectedOptionsString.length-2).split(", ")
   //=> ['1', '4', '15']
-  let pegNewPositionNumber = document.querySelector(`#${pegNewPosition}.number`).innerText//=> '1'
+  ///console.log(selectedOptionsStringToArray)
 
-  let optionIndex = selectedOptionsStringToArray.indexOf(pegNewPositionNumber, 0) //=>0
-  // console.log(optionIndex)//=>peg1
+
+
+
+  //let optionsString = tileClicked.options //=> '[1, 4, 15]' //console.log(typeof optionsString) //=>string
+  //console.log(optionsString)//=> '[1, 4, 15]' //=>string
+  //let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")//=> (3) ['1', '4', '15']
+
+
+
+  let pegPickedNumber = pegPicked.number//=> '1'
+  //console.log(pegPickedNumber) //1
+
+  let optionIndex = selectedOptionsStringToArray.indexOf(`${pegPickedNumber}`, 0) //=>0
+  console.log(optionIndex)//=>0 // -1 ///THIS IS (an) ISSUE - fixed - string vs. integer comparison I think
   
 
-  let selectedRemovesString = document.querySelector(`#${pegSelected}.removes`).innerText
+  let selectedRemovesString = pegSelected.removes
   let selectedRemovesStringToArray = selectedRemovesString.substr(1, selectedRemovesString.length-2).split(", ")
   //=>['3', '5', '10']
   
   let pegRemoveNum = selectedRemovesStringToArray[optionIndex]//=>3
+  console.log(pegRemoveNum)//3
 
 
 
 
   //remove peg: change active to false and call color change !!!!!
-  let pegRemoved = document.querySelector(`#peg${pegRemoveNum}`)
-  document.querySelector(`#peg${pegRemoveNum}.active`).innerText = 'false'
-  setPegColor(pegRemoved.id)
+  pegRemoved = Tile.findById(`peg${pegRemoveNum}`) //=> Tile 3
+  //document.querySelector(`#peg${pegRemoveNum}`)
+  console.log(pegRemoved)//undefined --- ISSUE
+
+  //document.querySelector(`#peg${pegRemoveNum}.active`).innerText = 'false'
+  pegRemoved.active = 'false'
+
+  setPegColor(pegRemoved)
 
   //////////////////////CALL NEW MOVE!!!!!!!!
 
@@ -436,3 +454,7 @@ function postFetchPlayer(nameInput){ //; creates new player and POST back to our
     console.log(error.message)
   })
 }
+
+
+// hash = new HashTable()
+// console.log(hash) 
