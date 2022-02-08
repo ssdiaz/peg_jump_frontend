@@ -23,8 +23,6 @@
 // let peg14 = document.querySelector("#pegs > table > tbody > tr:nth-child(5) > td:nth-child(7)")
 // let peg15 = document.querySelector("#pegs > table > tbody > tr:nth-child(5) > td:nth-child(9)")
 
-
-
 for color change:
 // [New Game] : select play button
 function random(number) {
@@ -41,11 +39,24 @@ function random(number) {
   });//
 
 
-
-
-
 NOTES- 
 - fetch requestes need a method, header, and body. so look up this code.
 - if creating a new object, create it FULLY in the DOM then post to the database - can't have it just create nothing without sending to database
 - for hash tables: https://www.freecodecamp.org/news/javascript-hash-table-associative-array-hashing-in-js/#:~:text=To%20set%20the%20key%2Fvalue,will%20be%20incremented%20by%20one
 
+
+
+MOVE STEPS
+1. firstMove()              --> [EVENT LISTENER] --> runs once 
+2. *selectPeg()*            --> [EVENT LISTENER]
+3. selectMovePosition()     --> [EVENT LISTENER]
+4. movePegs()
+5. resetMove() 
+    --> then selectPeg()
+
+
+
+NEED TO ADD TO BE FUNCTIONAL:
+- [DONE] if you click on a blank tile, ignore
+- [] if you click same time again, unselect it - only for selectPeg
+- [] a way to check the board and if won/loss after x amount of turns?

@@ -3,6 +3,7 @@
     width: 75px;
     background-color: violet;
     border-radius: 50%;
+    border: none;
     display: inline-block; 
     position:relative;
     margin: auto;
