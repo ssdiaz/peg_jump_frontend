@@ -10,49 +10,26 @@ class Tile {
         Tile.all.push(this)
     }
 
-    // render a peg
-    renderPeg() {
-        // console.log(this)
+    //render HTML for Peg
+    renderPegHTML(){
         return `      
             <button class="peg" id="${this.id}">
                 <div class="number" id="${this.id}">
-                    ${this.number}
                 </div>
 
                 <div class="active" id="${this.id}">
-                    ${this.active}
                 </div>
 
                 <div class="options" id="${this.id}">
-                    ${this.options}
                 </div>
 
                 <div class="removes" id="${this.id}">
-                    ${this.removes}
                 </div>
-
             </button>
-        `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
+        `
     }
 
-    renderPegHTML(){
-        return `      
-        <button class="peg" id="${this.id}">
-            <div class="number" id="${this.id}">
-            </div>
-
-            <div class="active" id="${this.id}">
-            </div>
-
-            <div class="options" id="${this.id}">
-            </div>
-
-            <div class="removes" id="${this.id}">
-            </div>
-        </button>
-    `
-    }
-
+    //render integers/booleans to DOM
     renderPegElements() {
         document.querySelector(`#${this.id} .number`).innerText = this.number
         document.querySelector(`#${this.id} .active`).innerText = this.active
@@ -60,14 +37,17 @@ class Tile {
         document.querySelector(`#${this.id} .removes`).innerText = this.removes
     }
 
+    //render updated active status for Tile
     renderActive() {
         return this.active
     }
 
+    //find Tile by ID ('peg#')
     static findById(id) {
         return this.all.find(tile => tile.id === id)
     }
   
+    //return what peg is to be removed from selected and picked peg
     static returnRemovedPeg(selectedTile, pickedTile) {
         //console.log("in returnRemovedPeg function")    
 
@@ -87,10 +67,6 @@ class Tile {
 
         return removePeg  // RETURNS REMOVED PEG
     }
-
-
-
-
 }
 
 
