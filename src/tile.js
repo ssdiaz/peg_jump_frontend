@@ -60,56 +60,33 @@ class Tile {
         document.querySelector(`#${this.id} .removes`).innerText = this.removes
     }
 
-
     renderActive() {
         return this.active
     }
-
-
 
     static findById(id) {
         return this.all.find(tile => tile.id === id)
     }
   
-
-
-
     static returnRemovedPeg(selectedTile, pickedTile) {
-        console.log("in returnRemovedPeg function")    
-        //console.log(selectedTile) // Tile 6
-        //console.log(pickedTile) // Tile 1
+        //console.log("in returnRemovedPeg function")    
 
-        let selectedOptionsString =  selectedTile.options //Tile 6
-
-        //console.log(" --- ")
-
-        let selectedOptionsArray = selectedOptionsString.substr(1, selectedOptionsString.length-2).split(", ")
-        //=> [1, 4, 13, 15]
-        //console.log(selectedOptionsArray)
+        let optionsString = selectedTile.options //Tile 6
+        let optionsArray = optionsString.substr(1, optionsString.length-2).split(", ")
+        //=> [1, 4, 13, 15]   //console.log(optionsArray)
       
-        let optionIndexOfPickedInSelected = selectedOptionsArray.indexOf(`${pickedTile.number}`, 0) //=> 0
-        //console.log(optionIndexOfPickedInSelected)
-         //['1', '4', '13', '15']
+        let pickedIndex = optionsArray.indexOf(`${pickedTile.number}`, 0) //=> 0
+        //['1', '4', '13', '15']  //console.log(pickedIndexInOptions)
 
-
-        let selectedRemovesString = selectedTile.removes
-        let selectedRemovesStringToArray = selectedRemovesString.substr(1, selectedRemovesString.length-2).split(", ")
+        let removesString = selectedTile.removes
+        let removesArray = removesString.substr(1, removesString.length-2).split(", ")
           //=> ['3', '5', '9', '10']
       
-        let pegRemoveNumber = selectedRemovesStringToArray[optionIndexOfPickedInSelected]// => 3
-        let removePeg = Tile.findById(`peg${pegRemoveNumber}`) //=> Tile 3
-        //console.log(removePeg)
+        let removePegNum = removesArray[pickedIndex]// => 3
+        let removePeg = Tile.findById(`peg${removePegNum}`) //=> Tile 3
 
-        return removePeg
-        //RETURNS TILE 3!!!!!!!!!        // RETURNS REMOVED PEG! based on tile selected and tile picked 
+        return removePeg  // RETURNS REMOVED PEG
     }
-      
-
-
-
-
-
-
 
 
 

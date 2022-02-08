@@ -26,7 +26,6 @@ let optionsArray = []
 let pegSelected = ""
 let pegPicked = ""
 let optionIndex = ""
-let pegRemoveNum = ""
 let pegRemoved = ""
 // set end point and fetch your endpoint
 const gameEndPoint = "http://localhost:3000/games"
@@ -36,8 +35,7 @@ function resetOptionsArray(){
   optionsArray.length === 0 ?  optionsArray :  optionsArray = []
 }
 
-
-//might be able to move to tile
+//set peg color on DOM
 function setPegColor(tile){
   let peg = document.querySelector(`#${tile.id}`)
 
@@ -61,12 +59,6 @@ function validClick(event){
 function getClickStatus(event) {
   let tile = Tile.findById(event.target.id)
   return tile.active
-}
-
-function checkRemoves(tile) {
-  //checks if a peg has removes
-  //for options.active === false
-    //tile.option.indexOf(option, 0)
 }
 
 
@@ -143,6 +135,7 @@ function getBoardTiles() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//[MOVE 1]
 function firstMove() {
   instructions.innerText = `[firstMove] Click a peg to remove`
 
@@ -172,7 +165,7 @@ function firstMove() {
 
 
 
-
+//[MOVE 2]
 function selectPeg(){
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
   resetOptionsArray()
@@ -214,7 +207,7 @@ function selectPeg(){
 }
 
 
-
+//[MOVE 3]
 function selectMovePosition(){
   instructions.innerText = "[selectMovePosition] Select available position to move Peg."
 
@@ -267,10 +260,7 @@ function selectMovePosition(){
 }
 
 
-
-
-
-
+//[MOVE 4]
 function movePegs(){
   instructions.innerText = "[movePegs]"
 
@@ -280,34 +270,28 @@ function movePegs(){
   pegPicked.active = true
   setPegColor(pegPicked) //=> Tile 1    //console.log(pegPicked)//=> Tile 1  
   
-  let selectedOptionsString =  pegSelected.options  // document.querySelector(`#${pegSelected}.options`).innerText
-  //console.log(selectedOptionsString)
+  pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked)
 
-  let selectedOptionsStringToArray = selectedOptionsString.substr(1, selectedOptionsString.length-2).split(", ")
-  //=> ['1', '4', '15']  ///console.log(selectedOptionsStringToArray)
-
-  let optionIndex = selectedOptionsStringToArray.indexOf(`${pegPicked.number}`, 0) //=>0
-  //console.log(optionIndex)//=>0 // -1 ///THIS IS (an) ISSUE - fixed - string vs. integer comparison I think
-  
-  let selectedRemovesString = pegSelected.removes
-  let selectedRemovesStringToArray = selectedRemovesString.substr(1, selectedRemovesString.length-2).split(", ")
-  //=>['3', '5', '10']
-  
-  let pegRemoveNum = selectedRemovesStringToArray[optionIndex]//=>3
-  //console.log(pegRemoveNum)//3
-
-  //remove peg: change active to false and call color change !!!!!
-  pegRemoved = Tile.findById(`peg${pegRemoveNum}`) //=> Tile 3
-  //document.querySelector(`#peg${pegRemoveNum}`)
-  //console.log(pegRemoved)//undefined --- ISSUE
-
-  //document.querySelector(`#peg${pegRemoveNum}.active`).innerText = false
   pegRemoved.active = false
   setPegColor(pegRemoved)
 
   resetMove()
-  selectPeg()   //CALL NEW MOVE
+  selectPeg()
 }
+
+//[MOVE 5]
+function resetMove() {
+  let optionsArray = []
+  let pegSelected = ""
+  let pegPicked = ""
+  let optionIndex = ""
+  let pegRemoved = ""
+
+  resetOptionsArray()
+
+  displayOptionsText.innerHTML = ""
+}
+
 
 function resetPegSelect() {
   document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
@@ -318,18 +302,11 @@ function resetPegSelect() {
   //return
 }
 
-function resetMove() {
-  let optionsArray = []
-  let pegSelected = ""
-  let pegPicked = ""
-  let optionIndex = ""
-  let pegRemoveNum = ""
-  let pegRemoved = ""
 
-  resetOptionsArray()
 
-  displayOptionsText.innerHTML = ""
-}
+
+
+
 
 
 
@@ -347,19 +324,6 @@ function resetMove() {
 //       }
 //   })
 // }
-
-
-
-// function gameOrder(){
-//   // instructions = "Select 1 peg to remove"
-//   //   // selectPeg()
-//   //   // selectRemove()
-//   //   // removePeg()
-//   //   // setPeg()
-
-//   // document.querySelector(".directions").innerText = "hi"
-// }
-
 
 
 
@@ -419,12 +383,10 @@ function getPlayer(){
 
 
 
-// document.querySelector("#new-player-form").innerHTML += new Player(tile).renderPeg()  
-
-
 
 
 // [NEW PLAYER] : Select New Player User Info
+// document.querySelector("#new-player-form").innerHTML += new Player(tile).renderPeg()  
 function newPlayerEvent(){
   // NEW PLAYER = find form, add a listener, then call callback function to action
 
