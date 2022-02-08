@@ -32,7 +32,7 @@ const boardShowEndPoint = "http://localhost:3000/boards/1";
 const gameEndPoint = "http://localhost:3000/games"
 
 function resetOptionsArray(){
-  optionsArray.length === 0 ?  optionsArray :  optionsArray = 0
+  optionsArray.length === 0 ?  optionsArray :  optionsArray = []
 }
 
 function setPegColor(pegId){
@@ -157,6 +157,23 @@ function firstMove() {
 }
 
 
+// function gameOrder(){
+//   // directionsText = "Select 1 peg to remove"
+//   //   // selectPeg()
+//   //   // selectRemove()
+//   //   // removePeg()
+//   //   // setPeg()
+
+//   // document.querySelector(".directions").innerText = "hi"
+// }
+
+
+
+
+
+
+
+
 
 function selectPeg(){
   directionsText.innerText = "[selectPeg] Select a Peg to move"
@@ -178,7 +195,7 @@ function selectPeg(){
       optionsStringToArray.forEach(function(num){
         let peg = document.querySelector(`#peg${num}.active`)
         if (peg.innerText === 'false' ) {
-          optionsArray.push(num)
+          optionsArray.push(num)      
         }
       })
     }   
@@ -267,8 +284,31 @@ function movePegs(){
   let pegRemoved = document.querySelector(`#peg${pegRemoveNum}`)
   document.querySelector(`#peg${pegRemoveNum}.active`).innerText = 'false'
   setPegColor(pegRemoved.id)
+
+  //////////////////////CALL NEW MOVE!!!!!!!!
+
+
+  resetMove() 
+
+  selectPeg()
+
 }
 
+
+
+
+function resetMove() {
+  let optionsArray = []
+  let pegSelected = ""
+  let pegNewPosition = ""
+  let optionIndex = ""
+  let pegRemoveNum = ""
+  let pegRemoved = ""
+
+  resetOptionsArray()
+
+  displayOptionsText.innerHTML = ""
+}
 
 
 
@@ -287,19 +327,6 @@ function movePegs(){
 //   })
 // }
 
-
-// function moveOrder(){
-//   // directionsText = "Select 1 peg to remove"
-
-
-
-//   //   // selectPeg()
-//   //   // selectRemove()
-//   //   // removePeg()
-//   //   // setPeg()
-
-//   // document.querySelector(".directions").innerText = "hi"
-// }
 
 
 
