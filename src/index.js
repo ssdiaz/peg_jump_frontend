@@ -165,26 +165,23 @@ function firstMove() {
   }, {once : true})
 }
 
+
+
+
 function selectPeg(){
   instructions.innerText = "[selectPeg] Select a Peg to move"
   resetOptionsArray()
 
-  board.addEventListener('click', (event) => { 
-   
+  board.addEventListener('click', (event) => {       
     if (validClick(event) && getClickStatus(event) === true){ 
-
-      let tile = Tile.findById(event.target.id)
-
       let id = event.target.id//=> peg6
-      let tileClicked = Tile.findById(id)//=> Tile 6
-      pegSelected = tileClicked//=> Tile 6
+      let tile = Tile.findById(id)//=> Tile 6
+      pegSelected = tile//=> Tile 6 //this is used in functions below
 
       let pegClicked =  document.querySelector(`#${id}`)//=> button for peg6
       pegClicked.style.backgroundColor = 'yellow'
 
-      let optionsString = tileClicked.options //=> '[1, 4, 15]' //console.log(typeof optionsString) //=>string
-
-      //console.log(optionsString)//=> '[1, 4, 15]' //=>string
+      let optionsString = tile.options //=> '[1, 4, 15]' //=>string     //console.log(optionsString)//=> '[1, 4, 15]'      
       let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")//=> (3) ['1', '4', '15']
 
       function checkOptions(){
@@ -202,14 +199,10 @@ function selectPeg(){
       displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
 
       selectMovePosition()
+
     } else {
-      // console.log("bad click")
-      // console.log(event.target.nodeName)
-      console.log("clicked ignore. go again")
-      
-      // let tile = Tile.findById(event.target.id)
-      // console.log(typeof tile.active)
-      // console.log(tile.active)
+      alert("Invalid Peg Selected. Please choose a violet peg.");
+      console.log("click ignored")
 
       selectPeg()
     }
@@ -224,41 +217,32 @@ function selectMovePosition(){
   board.addEventListener('click', (event) => {   
     if (validClick(event) && getClickStatus(event) === false ){
             
-      let tile = Tile.findById(event.target.id)
-
+      //let tile = Tile.findById(event.target.id)
       //console.log(getClickStatus(event)) //=> false
       //console.log(typeof tile.active) //=> boolean
       //console.log(tile.active)
-      //console.log(event.target.id) //=> peg1
-
-      let id = event.target.id //=> peg1
-      
+      //console.log(event.target.id) //=> peg1     
       //console.log(pegSelected)//=> Tile 6
       //console.log(pegSelected.number)//=> 6
 
+      let id = event.target.id //=> peg1
       pegPicked = Tile.findById(id) //=> Tile 1
-
 
       // If pegPicked is in pegSelected array, good, otherwise alert and start over.
       if (optionsArray.includes(pegPicked.number, 0)) { ///UGH integers sigh. 
         console.log("yes, call next function")
-
         //pegNewPosition = pegPicked //id //=> peg1
         //console.log(pegNewPosition)//Tile 1 
 
         movePegs()
-
       } else {
-        alert("Invalid Peg Selected. Please choose a grey peg.");
-        console.log("Invalid Peg Selected. Please choose a grey peg.")
-        //console.log(optionsArray)
-        //console.log(pegPicked.number)
+        console.log("clicked ignore. go again")
+        alert("Not a valid option for peg");
         selectMovePosition()
       }
     } else {
-      console.log("clicked ignore. go again")
-            
-      let tile = Tile.findById(event.target.id)
+      alert("Invalid Peg Selected. Please choose a grey peg.");
+      console.log("Invalid Peg Selected. Please choose a grey peg.")
 
       selectMovePosition()
     }
