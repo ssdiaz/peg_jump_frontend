@@ -212,9 +212,21 @@ function selectPeg(){
 
 
 function selectMovePosition(){
-  instructions.innerText = "[selectMovePosition] Select availible position to move Peg."
+  instructions.innerText = "[selectMovePosition] Select available position to move Peg."
+  // console.log("peg Selected:")
+  //console.log(pegSelected.id)
 
   board.addEventListener('click', (event) => {   
+    let tile = Tile.findById(event.target.id)
+
+    if (tile === pegSelected) {
+      console.log("means they clicked the same")
+      document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
+      pegSelected = ""
+      selectPeg()
+      return
+    }
+
     if (validClick(event) && getClickStatus(event) === false ){
             
       //let tile = Tile.findById(event.target.id)
@@ -246,6 +258,9 @@ function selectMovePosition(){
 
       selectMovePosition()
     }
+
+
+
   }, {once : true})
 }
 
