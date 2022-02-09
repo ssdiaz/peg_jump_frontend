@@ -74,6 +74,40 @@ class Tile {
         return removed.length
     }
 
+
+    static checkForLoss() {
+        let activeTiles = Tile.all.filter(tile => tile.active === true);
+        let trueCount = []
+
+        activeTiles.forEach(tile => {
+            let removesArray = tile.removes.substr(1, tile.removes.length-2).split(", ")
+            //=> [2,3] Array
+
+            removesArray.forEach(num => {
+                let tile = Tile.findById(`peg${num}`)
+
+                 if (tile.active === true) {
+                    trueCount.push(tile)
+                 }
+            })
+        })
+        return trueCount.length
+    }
+
+    static checkGameResult() {
+
+        let trues = Tile.all.filter(tile => tile.active === true)
+        let trueCount = trues.length
+
+        if (Tile.checkForLoss() === 0){
+            alert("Sorry, you lost :( ")
+        } else if (trueCount === 1) {
+            alert("CONGRATS! You win! ")
+        }
+    }
+
+
+
 }
 
 

@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
   newGame()
 
+
   //newPlayerEvent() // set the button newPlayer clickable
   // selectPlayerForm.style.display = 'none' //hide form
 })
@@ -123,10 +124,7 @@ function getGameTiles() {
           newTile.renderPegElements() 
         })
 
-        console.log("Tiles removed:")
-        console.log(Tile.checkPegsRemoved())
-
-        })
+      })
       // .catch(err => console.dir(err))
       })
 }
@@ -160,8 +158,7 @@ function firstMove() {
       setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
       //console.log(tileClicked)//=> peg1
 
-      console.log("Tiles removed:")
-      console.log(Tile.checkPegsRemoved())
+      //console.log(Tile.checkForLoss())
 
       selectPeg()
 
@@ -176,6 +173,9 @@ function firstMove() {
 
 //[MOVE 2]
 function selectPeg(){
+
+  Tile.checkGameResult()
+
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
   resetOptionsArray()
 
@@ -204,9 +204,6 @@ function selectPeg(){
 
       displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
 
-      console.log("Tiles removed:")
-      console.log(Tile.checkPegsRemoved())
-
       selectMovePosition()
 
     } else {
@@ -215,13 +212,19 @@ function selectPeg(){
 
       selectPeg()
     }
+    //Tile.checkGameResult()
   }, {once : true})
+
+  //Tile.checkGameResult()
+
 }
 
 
 //[MOVE 3]
 function selectMovePosition(){
   instructions.innerText = "[selectMovePosition] Select available position to move Peg."
+
+  // Tile.checkGameResult()
 
   board.addEventListener('click', (event) => {   
     let tile = Tile.findById(event.target.id)
@@ -251,10 +254,8 @@ function selectMovePosition(){
           return
         }
   
-        console.log("Tiles removed:")
-        console.log(Tile.checkPegsRemoved())
-
         movePegs()
+        //Tile.checkGameResult()
 
       } else {
         console.log("clicked ignored")
@@ -272,6 +273,7 @@ function selectMovePosition(){
 
 
   }, {once : true})
+
 }
 
 
@@ -290,15 +292,26 @@ function movePegs(){
   pegRemoved.active = false
   setPegColor(pegRemoved)
 
-  console.log("Tiles removed:, final")
-  console.log(Tile.checkPegsRemoved())
+  // console.log("Tiles removed:, final")
+  // console.log(Tile.checkPegsRemoved())
+  // console.log(Tile.checkForLoss())
 
   resetMove()
+
+  //Tile.checkGameResult()
+
+
   selectPeg()
+
+  //Tile.checkGameResult()
+
 }
 
 //[MOVE 5]
 function resetMove() {
+
+  //Tile.checkGameResult()
+
   let optionsArray = []
   let pegSelected = ""
   let pegPicked = ""
@@ -308,6 +321,8 @@ function resetMove() {
   resetOptionsArray()
 
   displayOptionsText.innerHTML = ""
+
+  //Tile.checkGameResult()
 }
 
 
@@ -316,8 +331,8 @@ function resetPegSelect() {
   pegSelected = ""
   optionsArray = []
   displayOptionsText.innerHTML = ""
+
   selectPeg()
-  //return
 }
 
 
