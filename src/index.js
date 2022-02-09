@@ -29,6 +29,8 @@ let optionIndex = ""
 let pegRemoved = ""
 // set end point and fetch your endpoint
 const gameEndPoint = "http://localhost:3000/games"
+//to track moves
+let moveCount = 0
 
 //move functions
 function resetOptionsArray(){
@@ -105,18 +107,20 @@ function getGameTiles() {
   .then(response => response.json())
    .then(games => {
       games.data.forEach( game => { //console.log(game)
-
-        let newGame = new Game(game)
-        document.querySelector("#test").innerHTML += `game id: ${newGame.id}`
-        console.log(newGame)
-
         //console.log(game.attributes.board_id)
         //console.log(game.attributes.tiles)
 
-        let newBoard = new Board(game.attributes.board_id)
-        //console.log(newBoard)
-        document.querySelector("#test").innerHTML += `board id: ${newBoard.id}`
+        let newGame = new Game(game)    //console.log(newGame)
+        //show game id
+        document.querySelector("#game-details .game-ids").innerHTML += `game id: ${newGame.id}`
 
+        let newBoard = new Board(game.attributes.board_id)
+
+        //show board id
+        document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
+        
+        //show move count
+        document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
 
         game.attributes.tiles.forEach( data =>  {
           let newTile = new Tile(data)  //console.log(tile)
@@ -244,7 +248,7 @@ function selectMovePosition(){
 
       // If pegPicked is in pegSelected array, good, otherwise alert and start over.
       if (optionsArray.includes(pegPicked.number, 0)) { 
-        console.log("yes, call next function")
+        //console.log("yes, call next function")
 
         //abort if removed peg is gone already (false)
         if (pegRemoved.active === false) {
@@ -304,6 +308,8 @@ function movePegs(){
   selectPeg()
 
   //Tile.checkGameResult()
+
+  document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
 
 }
 
@@ -402,8 +408,8 @@ function getPlayer(){
       console.log(playerArray.data)
 
       console.log("look:")
-      let test = Player.findById(1)
-      console.log(test)
+      let player = Player.findById(1)
+      console.log(player)
 
       playerArray.data.forEach( player => {
         console.log(player)

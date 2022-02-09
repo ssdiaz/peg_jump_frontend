@@ -9,11 +9,11 @@
 
   <body>
 
-    <div id="test">
-
+    <div id="game-details">
+        <div class="game-ids"></div>
+        <div class="move-count"></div>
+        <div class="game-outcome"></div>
     </div>
-
-
 
     <div id="main-content">
 
@@ -43,22 +43,34 @@
             </form>
         </div>
 
-        <div class="player-container">
 
+
+        <div class="directions">
+            <p>
+                The objective of the game is to remove all pegs on the triangle except one. 
+            </p>
+            <p>
+                Select a peg and move it diagonally over another peg to an open position on the board. 
+                The peg you jumped will be removed. You cannot move a peg unless it can jump over another.
+                <br>Repeat until you have won the game, or until there no moves left.
+            </p>
+            <p>
+                Be careful - a couple of moves can cost you the game!
+            </p>
         </div>
 
         <div class="play-btn">
             <p><button id="play-btn">Play</button></p>
         </div>
 
-        <div class="directions">
-
+        <div class="player-container">
+            High Score Board:
+            [[list players here]]
         </div>
 
         <div class="display-options">
-
+            
         </div>
-
 
         <div id="board">
             <table>

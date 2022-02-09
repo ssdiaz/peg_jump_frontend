@@ -29,8 +29,21 @@
   }
  */
 
+ .directions {
+   background-color: pink;
+   height: 75%;
+   width: 75%;
+   text-align: center;
+   margin: auto;
+ }
 
-#main-content, .greeting {
+
+#main-content {
   text-align: center;
 }
 
+
+.greeting {
+  text-align: center;
+  font-size: 22px;
+}

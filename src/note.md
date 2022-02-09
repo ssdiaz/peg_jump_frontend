@@ -86,6 +86,6 @@ MOVE STEPS
 NEED TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click on a blank tile, ignore
 - [DONE] if you click same time again, unselect it - only for selectPeg
-- [] a way to check the board and if won/loss after x amount of turns?
-- [] if wins, saves player to list? ... nah idk.
+- [DONE] a way to check the board and if won/loss
+- [] if wins, saves player to list? ... nah idk. --- only if we need the POST, which I think we do
 - [] should i be posting the tiles? and recreating the game with reset? Probably
