@@ -1,19 +1,20 @@
 class Player {
 
-
-
     constructor(data) {
-        this.id = data.attributes.id
-        // this.name = data.attributes.name
-
-
-        Player.all.push(this)
-
-        // console.log(this)
+        this.id = data.id
+        this.name = data.attributes.name
+        this.moveCount = 0
+        Player.all.unshift(this)
     }
 
 
-
+    //render HTML for Players
+    renderPlayerHTML() {
+        return `      
+            <td id="name">${this.name}</td>
+            <td id="move-count">${this.moveCount}</td>
+        `
+    }
 
 
 
@@ -48,7 +49,15 @@ class Player {
 
 
 
+    //render winner board
+    static renderWinnerBoard (){
+
+    }
+
+
+
 }
 
 
 Player.all = []
+

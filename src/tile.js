@@ -75,7 +75,7 @@ class Tile {
     }
 
 
-    static checkForLoss() {
+    static movesRemaining() {
         let trueCount = []
         let trueTiles = Tile.all.filter(tile => tile.active === true);
 
@@ -98,17 +98,15 @@ class Tile {
         let outcome = ""
         let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
-
         if (trueTiles === 1) {
             alert("CONGRATS! You win! ")
             console.log("GAME OVER - WON")
             outcome = "WON"
-        } else if (Tile.checkForLoss() === 0) {
+        } else if (Tile.movesRemaining() === 0) {
             alert("Sorry, you lost :( ")
             console.log("GAME OVER - LOST")
             outcome = "Loss"
         }
-
         //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
         document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
     }

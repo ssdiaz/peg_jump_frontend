@@ -68,12 +68,67 @@ function getClickStatus(event) {
 document.addEventListener('DOMContentLoaded', () => { 
   console.log("DOM loaded")//had:  // getTiles()   // fetch board
     
+
+  fetchPlayer()
+  //loadPlayerBoard()
+
   newGame()
 
 
   //newPlayerEvent() // set the button newPlayer clickable
   // selectPlayerForm.style.display = 'none' //hide form
 })
+
+function fetchPlayer() {
+  fetch("http://localhost:3000/players")
+  .then(response => response.json())
+    .then(players => {
+      players.data.forEach( data => { 
+        newPlayer = new Player(data)
+        //console.log(newPlayer)
+
+      })
+      displayWinnerBoard()
+    })
+}
+
+
+
+function displayWinnerBoard() {
+  let first15 = Player.all.slice(0, 15);  //grab first 15 players in array
+
+  for (let i = 0; i < (first15.length); i++) {
+    let player = Player.all[i]   // console.log(Player.all[i])
+    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML()
+  }
+}
+
+
+
+
+
+// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
+// function getPlayer(){
+//   fetch("http://localhost:3000/players")
+//   .then(response => response.json())
+//     .then(playerArray => {     
+//       console.log(playerArray.data)
+
+//       console.log("look:")
+//       let player = Player.findById(1)
+//       console.log(player)
+
+//       playerArray.data.forEach( player => {
+//         console.log(player)
+//         console.log(player.id)
+//       })
+//     })
+// }
+
+
+
+
+
 
 
 
@@ -118,9 +173,12 @@ function getGameTiles() {
 
         //show board id
         document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
-        
+
         //show move count
         document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
+
+        //remove players div content
+        document.querySelector(".player-container").innerText =  ""
 
         game.attributes.tiles.forEach( data =>  {
           let newTile = new Tile(data)  //console.log(tile)
@@ -162,7 +220,6 @@ function firstMove() {
       setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
       //console.log(tileClicked)//=> peg1
 
-      //console.log(Tile.checkForLoss())
 
       selectPeg()
 
@@ -298,7 +355,6 @@ function movePegs(){
 
   // console.log("Tiles removed:, final")
   // console.log(Tile.checkPegsRemoved())
-  // console.log(Tile.checkForLoss())
 
   resetMove()
 
@@ -310,6 +366,9 @@ function movePegs(){
   //Tile.checkGameResult()
 
   document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
+  
+  //if won  
+  //Player.findById(player.id).moveCount = moveCount
 
 }
 
@@ -400,23 +459,7 @@ function resetPegSelect() {
 
 
 
-// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
-function getPlayer(){
-  fetch("http://localhost:3000/players")
-  .then(response => response.json())
-    .then(playerArray => {     
-      console.log(playerArray.data)
 
-      console.log("look:")
-      let player = Player.findById(1)
-      console.log(player)
-
-      playerArray.data.forEach( player => {
-        console.log(player)
-        console.log(player.id)
-      })
-    })
-}
 
 
 
