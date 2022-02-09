@@ -39,6 +39,33 @@ function random(number) {
   });//
 
 
+  //  [TILES] loads tiles
+//function old() {
+  // fetch("http://localhost:3000/boards/1")
+  // .then(response => response.json())
+  //  .then(boardArray => {
+  //     // console.log(boardArray)//=> board Object
+  //     boardArray.data.attributes.tiles.forEach( tile => {
+  //       // create new Tile from boardArray of each tile
+  //       let newTile = new Tile(tile)
+
+  //       // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
+  //       //document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
+  //       //document.querySelector(`#${newTile.id} .active`).innerText = newTile.renderActive() //added this
+
+  //       document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPegHTML()
+  //       newTile.renderPegElements() 
+
+  //     })
+  //     // .catch(err => console.dir(err))
+  //  })
+//} // document.querySelector(".peg #peg1")
+
+
+
+
+
+
 NOTES- 
 - fetch requestes need a method, header, and body. so look up this code.
 - if creating a new object, create it FULLY in the DOM then post to the database - can't have it just create nothing without sending to database

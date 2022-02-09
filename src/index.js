@@ -47,7 +47,6 @@ function setPegColor(tile){
   document.querySelector(`#${tile.id} .active`).innerText = tile.renderActive()
 }
 
-
 //for clicks - valid tile and not something else in doc
 function validClick(event){
   if (event.target.id !== 'ignore' && (event.target.nodeName === 'DIV' || event.target.nodeName === 'BUTTON')) {
@@ -66,7 +65,7 @@ function getClickStatus(event) {
 // Load the DOM; 
 document.addEventListener('DOMContentLoaded', () => { 
   console.log("DOM loaded")//had:  // getTiles()   // fetch board
-  
+    
   newGame()
 
   //newPlayerEvent() // set the button newPlayer clickable
@@ -78,25 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // [New Game] : select play button
 function newGame() {
   btnPlay.addEventListener('click', function(e) {
-    // e.preventDefault() 
-    // if (board.innerText.length === 43){
-    //   let newGame = function Game() {
-    //     this.active = "active"
-    //   }
-  
-    //   let newBoard = function Board() {
-    //     this.active = "active"
-    //     this.id = 1
-    //   }
-      // console.log(`game: ${newGame}`)
-      // console.log(`board: ${newBoard}`)
-      // postFetchGame(game) // this needs to be AFTER we get board_id and player_id
-      getBoardTiles()
-      firstMove()
 
-      btnPlay.innerText = "Reset"
-      resetGame()
-    // }
+    getGameTiles()
+
+    firstMove()
+
+    btnPlay.innerText = "Reset"
+    resetGame()
   });
 }
 
@@ -112,26 +99,45 @@ function resetGame(){
 
 
 //  [TILES] loads tiles
-function getBoardTiles() {
-  fetch("http://localhost:3000/boards/1")
+function getGameTiles() {
+  fetch("http://localhost:3000/games")
   .then(response => response.json())
-   .then(boardArray => {
-      // console.log(boardArray)//=> board Object
-      boardArray.data.attributes.tiles.forEach( tile => {
-        // create new Tile from boardArray of each tile
-        let newTile = new Tile(tile)
+   .then(games => {
+      games.data.forEach( game => { //console.log(game)
 
-        // select the peg array placement, add in inner HTML, and call the renderPeg() function from the Tile class
-        //document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPeg()  
-        //document.querySelector(`#${newTile.id} .active`).innerText = newTile.renderActive() //added this
+        let newGame = new Game(game)
+        document.querySelector("#test").innerHTML += `game id: ${newGame.id}`
+        console.log(newGame)
 
-        document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += newTile.renderPegHTML()
-        newTile.renderPegElements() 
+        //console.log(game.attributes.board_id)
+        //console.log(game.attributes.tiles)
 
-      })
+        let newBoard = new Board(game.attributes.board_id)
+        //console.log(newBoard)
+        document.querySelector("#test").innerHTML += `board id: ${newBoard.id}`
+
+
+        game.attributes.tiles.forEach( data =>  {
+          let newTile = new Tile(data)  //console.log(tile)
+          document.querySelector(pegArray[`${data.id}`-1]).innerHTML += newTile.renderPegHTML()
+          newTile.renderPegElements() 
+        })
+
+        console.log("Tiles removed:")
+        console.log(Tile.checkPegsRemoved())
+
+        })
       // .catch(err => console.dir(err))
-   })
-} // document.querySelector(".peg #peg1")
+      })
+}
+
+
+
+
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -153,6 +159,9 @@ function firstMove() {
 
       setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
       //console.log(tileClicked)//=> peg1
+
+      console.log("Tiles removed:")
+      console.log(Tile.checkPegsRemoved())
 
       selectPeg()
 
@@ -194,6 +203,9 @@ function selectPeg(){
       checkOptions()
 
       displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
+
+      console.log("Tiles removed:")
+      console.log(Tile.checkPegsRemoved())
 
       selectMovePosition()
 
@@ -239,6 +251,9 @@ function selectMovePosition(){
           return
         }
   
+        console.log("Tiles removed:")
+        console.log(Tile.checkPegsRemoved())
+
         movePegs()
 
       } else {
@@ -274,6 +289,9 @@ function movePegs(){
 
   pegRemoved.active = false
   setPegColor(pegRemoved)
+
+  console.log("Tiles removed:, final")
+  console.log(Tile.checkPegsRemoved())
 
   resetMove()
   selectPeg()

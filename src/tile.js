@@ -67,7 +67,15 @@ class Tile {
 
         return removePeg  // RETURNS REMOVED PEG
     }
+
+
+    static checkPegsRemoved() {
+        let removed = Tile.all.filter(tile => tile.active === false);
+        return removed.length
+    }
+
 }
 
 
 Tile.all = [];
+

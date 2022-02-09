@@ -5,12 +5,10 @@ class Game {
     // console.log(this)
 
     constructor(data){
-        // console.log(this)
-        // console.log("above as this")
-
         this.id = data.id
         this.player = data.attributes.player
         this.board_id = data.attributes.board_id
+        this.win = null
 
         Game.all.push(this)
     }
@@ -38,6 +36,7 @@ class Game {
     // static loss() {
 
     // }
+
 
 
 }
