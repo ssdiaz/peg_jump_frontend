@@ -180,6 +180,9 @@ function getGameTiles() {
         //remove players div content
         document.querySelector(".player-container").innerText =  ""
 
+        //diplay Game Outcome
+        document.querySelector("#game-details .game-outcome").innerText =  `Game Status: in progress`
+
         game.attributes.tiles.forEach( data =>  {
           let newTile = new Tile(data)  //console.log(tile)
           document.querySelector(pegArray[`${data.id}`-1]).innerHTML += newTile.renderPegHTML()
@@ -235,7 +238,7 @@ function firstMove() {
 //[MOVE 2]
 function selectPeg(){
 
-  Tile.checkGameResult()
+  Game.checkGameResult()
 
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
   resetOptionsArray()
@@ -263,7 +266,7 @@ function selectPeg(){
       } 
       checkOptions()
 
-      displayOptionsText.innerHTML += `<br><br>Peg Options: ${optionsArray}`
+      displayOptionsText.innerHTML = `Peg Options: ${optionsArray}`
 
       selectMovePosition()
 
@@ -367,6 +370,7 @@ function movePegs(){
 
   document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
   
+
   //if won  
   //Player.findById(player.id).moveCount = moveCount
 
@@ -385,7 +389,7 @@ function resetMove() {
 
   resetOptionsArray()
 
-  displayOptionsText.innerHTML = ""
+  displayOptionsText.innerText = `\n`
 
   //Tile.checkGameResult()
 }
@@ -395,12 +399,15 @@ function resetPegSelect() {
   document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
   pegSelected = ""
   optionsArray = []
-  displayOptionsText.innerHTML = ""
+  displayOptionsText.innerHTML = `\n`
 
   selectPeg()
 }
 
 
+function winner(){
+  
+}
 
 
 

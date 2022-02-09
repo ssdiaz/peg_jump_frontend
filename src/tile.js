@@ -75,41 +75,41 @@ class Tile {
     }
 
 
-    static movesRemaining() {
-        let trueCount = []
-        let trueTiles = Tile.all.filter(tile => tile.active === true);
+    // static movesRemaining() {
+    //     let trueCount = []
+    //     let trueTiles = Tile.all.filter(tile => tile.active === true);
 
-        trueTiles.forEach(tile => {
-            let removesArray = tile.removes.substr(1, tile.removes.length-2).split(", ")
-            //=> [2,3] Array
+    //     trueTiles.forEach(tile => {
+    //         let removesArray = tile.removes.substr(1, tile.removes.length-2).split(", ")
+    //         //=> [2,3] Array
 
-            removesArray.forEach(num => {
-                let tile = Tile.findById(`peg${num}`)
+    //         removesArray.forEach(num => {
+    //             let tile = Tile.findById(`peg${num}`)
 
-                 if (tile.active === true) {
-                    trueCount.push(tile)
-                 }
-            })
-        })
-        return trueCount.length
-    }
+    //              if (tile.active === true) {
+    //                 trueCount.push(tile)
+    //              }
+    //         })
+    //     })
+    //     return trueCount.length
+    // }
 
-    static checkGameResult() {
-        let outcome = ""
-        let trueTiles = Tile.all.filter(tile => tile.active === true).length
+    // static checkGameResult() {
+    //     let outcome = ""
+    //     let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
-        if (trueTiles === 1) {
-            alert("CONGRATS! You win! ")
-            console.log("GAME OVER - WON")
-            outcome = "WON"
-        } else if (Tile.movesRemaining() === 0) {
-            alert("Sorry, you lost :( ")
-            console.log("GAME OVER - LOST")
-            outcome = "Loss"
-        }
-        //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
-        document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
-    }
+    //     if (trueTiles === 1) {
+    //         alert("CONGRATS! You win! ")
+    //         console.log("GAME OVER - WON")
+    //         outcome = "WON"
+    //     } else if (Tile.movesRemaining() === 0) {
+    //         alert("Sorry, you lost :( ")
+    //         console.log("GAME OVER - LOST")
+    //         outcome = "Loss"
+    //     }
+    //     //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
+    //     document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
+    // }
 
 
 
