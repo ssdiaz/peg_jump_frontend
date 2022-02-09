@@ -3,7 +3,7 @@ class Player {
     constructor(data) {
         this.id = data.id
         this.name = data.attributes.name
-        this.moveCount = 0
+        // this.moveCount = 0 //** probably needs to be pulled from game when shoveled in */
         Player.all.unshift(this)
     }
 

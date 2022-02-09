@@ -6,9 +6,12 @@ class Game {
 
     constructor(data){
         this.id = data.id
-        this.player = data.attributes.player
         this.board_id = data.attributes.board_id
+
+        this.moveCount = 0
+        
         this.win = null
+        //this.player = data.attributes.player
 
         Game.all.push(this)
     }
@@ -66,28 +69,29 @@ class Game {
 
 
     static checkGameResult() {
-        let outcome = ""
+        let outcome = this.win === true ? "WON" : "Loss"
         let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
         if (trueTiles === 1) {
             alert("CONGRATS! You win! ")
             console.log("GAME OVER - WON")
-            outcome = "WON"
+            //outcome = "WON"
+            this.win = true
         } else if (Game.movesRemaining() === 0) {
             alert("Sorry, you lost :( ")
             console.log("GAME OVER - LOST")
-            outcome = "Loss"
+            //outcome = "Loss"
+            this.win = false
         }
         //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
         document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
 
-
-
-
-
-
     }
 
+
+    static checkWin(){
+        return this.win
+    }
 
 
 

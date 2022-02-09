@@ -161,15 +161,15 @@ function getGameTiles() {
   fetch("http://localhost:3000/games")
   .then(response => response.json())
    .then(games => {
-      games.data.forEach( game => { //console.log(game)
-        //console.log(game.attributes.board_id)
-        //console.log(game.attributes.tiles)
+      games.data.forEach( data => { //console.log(data)
+        //console.log(data.attributes.board_id)
+        //console.log(data.attributes.tiles)
 
-        let newGame = new Game(game)    //console.log(newGame)
+        let newGame = new Game(data)    //console.log(newGame)
         //show game id
         document.querySelector("#game-details .game-ids").innerHTML += `game id: ${newGame.id}`
 
-        let newBoard = new Board(game.attributes.board_id)
+        let newBoard = new Board(data.attributes.board_id)
 
         //show board id
         document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
@@ -183,9 +183,9 @@ function getGameTiles() {
         //diplay Game Outcome
         document.querySelector("#game-details .game-outcome").innerText =  `Game Status: in progress`
 
-        game.attributes.tiles.forEach( data =>  {
-          let newTile = new Tile(data)  //console.log(tile)
-          document.querySelector(pegArray[`${data.id}`-1]).innerHTML += newTile.renderPegHTML()
+        data.attributes.tiles.forEach( tileData =>  {
+          let newTile = new Tile(tileData)  //console.log(tile)
+          document.querySelector(pegArray[`${tileData.id}`-1]).innerHTML += newTile.renderPegHTML()
           newTile.renderPegElements() 
         })
 
@@ -239,6 +239,7 @@ function firstMove() {
 function selectPeg(){
 
   Game.checkGameResult()
+
 
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
   resetOptionsArray()
@@ -370,10 +371,7 @@ function movePegs(){
 
   document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
   
-
-  //if won  
-  //Player.findById(player.id).moveCount = moveCount
-
+  gameWon()
 }
 
 //[MOVE 5]
@@ -405,8 +403,11 @@ function resetPegSelect() {
 }
 
 
-function winner(){
-  
+function gameWon(){
+  if (Game.checkWin() === true){
+    console.log("YA FIRLS")
+
+  }
 }
 
 
