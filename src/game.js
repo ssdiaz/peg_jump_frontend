@@ -2,13 +2,12 @@
 // console.log("in game")
 
 class Game {
-    // console.log(this)
 
     constructor(data){
         this.id = data.id
         this.board_id = data.attributes.board_id
 
-        this.moveCount = 0
+        //this.moveCount = 0
         
         this.win = null
         //this.player = data.attributes.player
@@ -16,29 +15,6 @@ class Game {
         Game.all.push(this)
     }
 
-
-    // static selectPeg(){
-
-    // }
-
-
-    // static pickFirstPegRemoved() {
-
-    // }
-
-
-
-    // static removePeg(){
-
-    // }
-
-    // static win() {
-
-    // }
-
-    // static loss() {
-
-    // }
 
 
     static movesRemaining() {
@@ -69,13 +45,11 @@ class Game {
 
 
     static checkGameResult() {
-        let outcome = this.win === true ? "WON" : "Loss"
         let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
         if (trueTiles === 1) {
             alert("CONGRATS! You win! ")
             console.log("GAME OVER - WON")
-            //outcome = "WON"
             this.win = true
 
             return "game over"
@@ -87,17 +61,12 @@ class Game {
 
             return "game over"
         }
-        //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
-        document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
     }
 
 
     static checkWin(){
         return this.win
     }
-
-
-
 
 
 }

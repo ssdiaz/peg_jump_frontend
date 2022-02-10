@@ -12,16 +12,13 @@ class Player {
     renderPlayerHTML() {
         return `      
             <td id="name">${this.name}</td>
-            <td id="move-count">${this.moveCount}</td>
         `
     }
-
 
 
     static findById(id) {
         return this.all.find(player => player.id === id)
     }
-
 
 
     // render player form
@@ -43,14 +40,11 @@ class Player {
                 value="Create New Player"
                 class="submit"
             />
-        `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
+        `
     }
-
-
 
 
 }
 
 
 Player.all = []
-

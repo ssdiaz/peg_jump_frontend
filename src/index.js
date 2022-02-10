@@ -17,9 +17,9 @@ let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg
 
 // Constants used throughout
 const board = document.getElementById('board'); 
-const selectPlayerForm = document.querySelector("#new-player-form")
+
 const btnPlay = document.querySelector("#play-btn");
-const btnCheat = document.querySelector("#cheat-btn");
+
 const instructions = document.querySelector(".directions")
 const displayOptionsText = document.querySelector(".display-options")
 //Game variables used / reset
@@ -68,6 +68,11 @@ function getClickStatus(event) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function cheatWin(){
+
+  document.querySelector(".cheat").innerHTML = `<p><button id="cheat-btn">CHEAT!</button></p>`
+
+  const btnCheat = document.querySelector("#cheat-btn");
+
   btnCheat.addEventListener('click', function(e) {
 
     console.log("cheater!")
@@ -99,9 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
   newGame()
 
 
-
-  //newPlayerEvent() // set the button newPlayer clickable
-  // selectPlayerForm.style.display = 'none' //hide form
 })
 
 function fetchPlayer() {
@@ -125,6 +127,7 @@ function displayWinnerBoard() {
   for (let i = 0; i < (first15.length); i++) {
     let player = Player.all[i]   // console.log(Player.all[i])
     document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML()
+    document.querySelector(`#slot${i+1}`).innerHTML += `<td id="move-count">${moveCount}</td>`
   }
 }
 
@@ -143,18 +146,21 @@ function newGame() {
 
     firstMove()
 
-    btnPlay.innerText = "Reset"
-    resetGame()
+    changeToResetBtn()
   });
 }
 
+function changeToResetBtn(){
+  btnPlay.innerText = "Reset"
+
+  btnPlay.addEventListener('click', function(e) {
+    resetGame()
+  })
+}
 
 
 function resetGame(){
-  btnPlay.addEventListener('click', function(e) {
-    // document.reload()
     window.location.reload();    //https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
-  })
 }
 
 
@@ -226,7 +232,6 @@ function firstMove() {
       setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
       //console.log(tileClicked)//=> peg1
 
-
       selectPeg()
 
     } else {
@@ -242,6 +247,11 @@ function firstMove() {
 function selectPeg(){
 
   if (Game.checkGameResult() === "game over"){
+
+    const outcome = Game.checkWin() === true ? "WON" : "Loss"
+
+    document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
+
     return
   }
 
@@ -282,10 +292,8 @@ function selectPeg(){
 
       selectPeg()
     }
-    //Tile.checkGameResult()
-  }, {once : true})
 
-  //Tile.checkGameResult()
+  }, {once : true})
 
 }
 
@@ -325,7 +333,6 @@ function selectMovePosition(){
         }
   
         movePegs()
-        //Tile.checkGameResult()
 
       } else {
         console.log("clicked ignored")
@@ -362,38 +369,26 @@ function movePegs(){
   pegRemoved.active = false
   setPegColor(pegRemoved)
 
-  // console.log("Tiles removed:, final")
-  // console.log(Tile.checkPegsRemoved())
-
   resetMove()
 
-  //Tile.checkGameResult()
-
-
   selectPeg()
-
-  //Tile.checkGameResult()
 
   document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
   
   gameWon()
+
 }
 
 //[MOVE 5]
 function resetMove() {
-
-  //Tile.checkGameResult()
-
   let optionsArray = []
   let pegSelected = ""
   let pegPicked = ""
   let optionIndex = ""
   let pegRemoved = ""
-
-  resetOptionsArray()
-
   displayOptionsText.innerText = `\n`
 
+  resetOptionsArray()
   //Tile.checkGameResult()
 }
 
@@ -410,12 +405,14 @@ function resetPegSelect() {
 
 function gameWon(){
   if (Game.checkWin() === true){
-    document.querySelector(".form-container").innerHTML = Player.renderPlayerForm()
+    document.querySelector(".player-form-container").innerHTML = Player.renderPlayerForm()
+
+    setMoveCount(moveCount)
+    console.log(setMoveCount(moveCount))
 
     newPlayerEvent()
 
-    postFetchPlayer(nameInput)
-
+    //postFetchPlayer(nameInput)
   }
 }
 
@@ -424,95 +421,36 @@ function gameWon(){
 
 
 
-
-// POST GAME PLAY!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-// broken
-// function postFetchGame(game){
-//   fetch(gameEndPoint, {
-//     method: "POST",
-//     headers: {'Content-Type': 'application/json'},
-//     body: JSON.stringify(game)      // build body object :note you can do this outside of the fetch request
-//   })
-//   .then(response => response.json())
-//   .then(games => {
-//     console.log("below")
-//     console.log(games)
-//   })
-// }
-
-
-
-// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
-// function getPlayer(){
-//   fetch("http://localhost:3000/players")
-//   .then(response => response.json())
-//     .then(playerArray => {     
-//       console.log(playerArray.data)
-
-//       console.log("look:")
-//       let player = Player.findById(1)
-//       console.log(player)
-
-//       playerArray.data.forEach( player => {
-//         console.log(player)
-//         console.log(player.id)
-//       })
-//     })
-// }
-
-
-
-
-
-
-
-
-
-
 // [NEW PLAYER] : Select New Player User Info
-// document.querySelector("#new-player-form").innerHTML += new Player(tile).renderPeg()  
-function newPlayerEvent(){
-  // NEW PLAYER = find form, add a listener, then call callback function to action
+function newPlayerEvent(){  // NEW PLAYER = find form, add a listener, then call callback function to action
+  const selectPlayerForm = document.querySelector("#create-player-button")
 
-  // createPlayerForm.addEventListener("submit", (e) => createFormHandler(e))
-  selectPlayerForm.addEventListener("submit", (e) => {
-    e.preventDefault() //prevent page reload
-    const nameInput = document.querySelector("#input-name").value  // grab user input value and set to variable
-    nameInput ? postFetchPlayer(nameInput) : console.log("username cannot be empty")  // if (nameInput){postFetchPlayer(nameInput)} else {console.log("username cannot be empty")}// if text in box, call post function
+  selectPlayerForm.addEventListener("click", (e) => {
+    //e.preventDefault() //prevent page reload
+    const userInput = document.querySelector("#input-name").value 
+    userInput ? postFetchPlayer(userInput) : alert("Username cannot be empty") 
   })
 }
 
 
 // [NEW PLAYER] : POST fetch
-function postFetchPlayer(nameInput){ //; creates new player and POST back to our database
+function postFetchPlayer(userInput){ //; creates new player and POST back to our database
   fetch("http://localhost:3000/players", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
   },
-    body: JSON.stringify({name: nameInput })      // build body object :note you can do this outside of the fetch request
+    body: JSON.stringify({
+      name: userInput   // build body object :note you can do this outside of the fetch request
+    })    
   })
   .then(response => response.json())
   .then(player => {
     console.log(player)
 
-    const playerAttributes = player.data.attributes
-    const playerMarkup = `
-      <div data-id${player.id}>
-        <p>Username: ${playerAttributes.name}</p>
-      </div>
-    `
-    const usernameCreated = document.querySelector(".player-container")
-    usernameCreated.innerHTML += playerMarkup     // update div with player info from above
-    
-    // hide form
-    if(usernameCreated) {
-      document.querySelector(".form-container").style.display = 'none'
-    }
+    resetGame()
+
   })
   .catch(function(error){
     alert("Invalid Username. Please try again.");

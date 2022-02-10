@@ -79,6 +79,25 @@ function random(number) {
 
 
 
+// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
+// function getPlayer(){
+//   fetch("http://localhost:3000/players")
+//   .then(response => response.json())
+//     .then(playerArray => {     
+//       console.log(playerArray.data)
+
+//       console.log("look:")
+//       let player = Player.findById(1)
+//       console.log(player)
+
+//       playerArray.data.forEach( player => {
+//         console.log(player)
+//         console.log(player.id)
+//       })
+//     })
+// }
+
+
 
 
 
