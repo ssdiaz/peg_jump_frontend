@@ -111,8 +111,7 @@ class Tile {
     //     document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
     // }
 
-
-
+      
 
 
 }

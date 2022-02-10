@@ -25,10 +25,9 @@ class Player {
 
 
     // render player form
-    renderPlayerForm() {
-        // console.log(this)
+    static renderPlayerForm() {
         return `      
-            <h3>Create a username!</h3>
+            <h3>Save your name to the Winner Board!</h3>
             
             <input id="input-name"
                 type="text"
@@ -47,12 +46,6 @@ class Player {
         `        // document.querySelector(pegArray[`${tile.id}`-1]).innerHTML += tileMarkup
     }
 
-
-
-    //render winner board
-    static renderWinnerBoard (){
-
-    }
 
 
 

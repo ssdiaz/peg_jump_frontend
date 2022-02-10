@@ -77,15 +77,18 @@ class Game {
             console.log("GAME OVER - WON")
             //outcome = "WON"
             this.win = true
+
+            return "game over"
         } else if (Game.movesRemaining() === 0) {
             alert("Sorry, you lost :( ")
             console.log("GAME OVER - LOST")
             //outcome = "Loss"
             this.win = false
+
+            return "game over"
         }
         //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
         document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
-
     }
 
 

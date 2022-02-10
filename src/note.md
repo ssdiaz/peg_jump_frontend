@@ -63,6 +63,23 @@ function random(number) {
 
 
 
+// function pegClick(){
+//   // clicking a peg
+//   board.addEventListener('click', (event) => {
+//     const objClicked = event.target.nodeName    // event.target === button#1.peg     // event.target.nodeName === BUTTON
+//       // check that clicked button and not on div
+//       if (objClicked === 'BUTTON') {
+//         console.dir(event.target.id);
+//         return event.target.id
+//         // call a function here
+//       }
+//   })
+// }
+
+
+
+
+
 
 
 

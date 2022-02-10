@@ -19,6 +19,7 @@ let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg
 const board = document.getElementById('board'); 
 const selectPlayerForm = document.querySelector("#new-player-form")
 const btnPlay = document.querySelector("#play-btn");
+const btnCheat = document.querySelector("#cheat-btn");
 const instructions = document.querySelector(".directions")
 const displayOptionsText = document.querySelector(".display-options")
 //Game variables used / reset
@@ -63,7 +64,30 @@ function getClickStatus(event) {
 }
 
 
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function cheatWin(){
+  btnCheat.addEventListener('click', function(e) {
+
+    console.log("cheater!")
+
+    Tile.all.forEach( tile => {
+      tile.active = false
+      setPegColor(tile)
+    })
+
+    let winTile = Tile.all[12]
+    
+    winTile.active = true
+    setPegColor(winTile)
+
+    selectPeg()
+    gameWon()
+  })
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Load the DOM; 
 document.addEventListener('DOMContentLoaded', () => { 
   console.log("DOM loaded")//had:  // getTiles()   // fetch board
@@ -73,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //loadPlayerBoard()
 
   newGame()
+
 
 
   //newPlayerEvent() // set the button newPlayer clickable
@@ -107,34 +132,12 @@ function displayWinnerBoard() {
 
 
 
-// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
-// function getPlayer(){
-//   fetch("http://localhost:3000/players")
-//   .then(response => response.json())
-//     .then(playerArray => {     
-//       console.log(playerArray.data)
-
-//       console.log("look:")
-//       let player = Player.findById(1)
-//       console.log(player)
-
-//       playerArray.data.forEach( player => {
-//         console.log(player)
-//         console.log(player.id)
-//       })
-//     })
-// }
-
-
-
-
-
-
-
 
 // [New Game] : select play button
 function newGame() {
   btnPlay.addEventListener('click', function(e) {
+
+    cheatWin()
 
     getGameTiles()
 
@@ -238,7 +241,9 @@ function firstMove() {
 //[MOVE 2]
 function selectPeg(){
 
-  Game.checkGameResult()
+  if (Game.checkGameResult() === "game over"){
+    return
+  }
 
 
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
@@ -405,42 +410,17 @@ function resetPegSelect() {
 
 function gameWon(){
   if (Game.checkWin() === true){
-    console.log("YA FIRLS")
+    document.querySelector(".form-container").innerHTML = Player.renderPlayerForm()
+
+    newPlayerEvent()
+
+    postFetchPlayer(nameInput)
 
   }
 }
 
 
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// function pegClick(){
-//   // clicking a peg
-//   board.addEventListener('click', (event) => {
-//     const objClicked = event.target.nodeName    // event.target === button#1.peg     // event.target.nodeName === BUTTON
-//       // check that clicked button and not on div
-//       if (objClicked === 'BUTTON') {
-//         console.dir(event.target.id);
-//         return event.target.id
-//         // call a function here
-//       }
-//   })
-// }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -465,6 +445,23 @@ function gameWon(){
 
 
 
+// NOT USED YETttttt!!!!!!!!!!!!!!!!!!!!!!! fetch player
+// function getPlayer(){
+//   fetch("http://localhost:3000/players")
+//   .then(response => response.json())
+//     .then(playerArray => {     
+//       console.log(playerArray.data)
+
+//       console.log("look:")
+//       let player = Player.findById(1)
+//       console.log(player)
+
+//       playerArray.data.forEach( player => {
+//         console.log(player)
+//         console.log(player.id)
+//       })
+//     })
+// }
 
 
 
@@ -487,11 +484,16 @@ function newPlayerEvent(){
     nameInput ? postFetchPlayer(nameInput) : console.log("username cannot be empty")  // if (nameInput){postFetchPlayer(nameInput)} else {console.log("username cannot be empty")}// if text in box, call post function
   })
 }
+
+
 // [NEW PLAYER] : POST fetch
 function postFetchPlayer(nameInput){ //; creates new player and POST back to our database
   fetch("http://localhost:3000/players", {
     method: "POST",
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+  },
     body: JSON.stringify({name: nameInput })      // build body object :note you can do this outside of the fetch request
   })
   .then(response => response.json())
@@ -517,7 +519,3 @@ function postFetchPlayer(nameInput){ //; creates new player and POST back to our
     console.log(error.message)
   })
 }
-
-
-// hash = new HashTable()
-// console.log(hash) 
