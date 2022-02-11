@@ -121,6 +121,33 @@ function random(number) {
 // }
 
 
+      // //check pegPicked is false (free)
+      // if (clickedTileStatus(event) === false ){
+      //   pegPicked = Tile.findById(event.target.id) //=> Tile 1
+      //   pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
+
+      //   // If pegPicked is in pegSelected array, good, otherwise alert and start over.
+      //   if (optionsArray.includes(pegPicked.number, 0) && pegRemoved.active === true) { 
+          
+
+      //     movePegs()          //console.log("yes, call next function")
+
+      //   } else {
+      //     (pegRemoved && pegRemoved.active === false) ? alert("No Peg to remove. Please re-select.") : alert("Not a valid option for peg. Please re-select.");
+      //     resetPegSelect()
+      //     return
+      //   }
+      // } else {
+      //   alert("Invalid Peg Selected. Please re-select a grey peg.");
+      //   //console.log("Invalid Peg Selected")
+      //   selectMovePosition()
+      // }
+
+
+
+
+
+      
 
 
 NOTES- 

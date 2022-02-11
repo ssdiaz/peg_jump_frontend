@@ -58,7 +58,7 @@ function validClick(event){
 }
 
 //for clicks - return tile status
-function getClickStatus(event) {
+function clickedTileStatus(event) {
   let tile = Tile.findById(event.target.id)
   return tile.active
 }
@@ -284,7 +284,7 @@ function selectPeg(){
   resetOptionsArray()
 
   board.addEventListener('click', (event) => {       
-    if (validClick(event) && getClickStatus(event) === true) { 
+    if (validClick(event) && clickedTileStatus(event) === true) { 
       let id = event.target.id//=> peg6
       let tile = Tile.findById(id)//=> Tile 6
       pegSelected = tile//=> Tile 6 //this is used in functions below
@@ -335,61 +335,31 @@ function selectMovePosition(){
     //to unselect peg
     if (tile === pegSelected) {
       console.log("they clicked twice to the selected peg")
-
       resetPegSelect()
       return
     }
 
-    // check valid click and peg is false
-
-
+    // check valid click
     if (validClick(event)) {
-
-
-
-      if (getClickStatus(event) === false ){
-        pegPicked = Tile.findById(event.target.id) //=> Tile 1
-        pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
-
-        // If pegPicked is in pegSelected array, good, otherwise alert and start over.
-        if (optionsArray.includes(pegPicked.number, 0)) { 
-          //console.log("yes, call next function")
-
-          //abort if removed peg is gone already (false)
-          if (pegRemoved.active === false) {
-            alert("No Peg to remove. Please re-select.")
-            
-            resetPegSelect()
-            return
-          }
     
-          movePegs()
+      pegPicked = Tile.findById(event.target.id) //=> Tile 1
+      pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
+      
+      //IF pegPicked is free (false)              && IF pegPicked is in pegSelected array           && IF pegRemoved is active (true)
+      if ( (pegPicked.active === false)  &&  (optionsArray.includes(pegPicked.number, 0))  &&  (pegRemoved.active === true) ) { 
+      
+        movePegs()          //console.log("yes, call next function")
 
-        } else {
-          console.log("clicked ignored")
-          alert("Not a valid option for peg. Please re-select.");
-
-          resetPegSelect()
-          return
-        }
       } else {
-        alert("Invalid Peg Selected. Please choose a grey peg. Please re-select.");
-        console.log("Invalid Peg Selected")
-
-        selectMovePosition()
+        (pegRemoved && pegRemoved.active === false) ? alert("No Peg to remove. Please re-select.") : alert("Not a valid option for peg. Please re-select.");
+        resetPegSelect()
+        return
       }
-
-
+  
     } else {
-      console.log("clicked ignore. go again")
+      console.log("clicked ignore")
       selectMovePosition()
     }
-
-
-
-
-
-
 
   }, {once : true})
 
