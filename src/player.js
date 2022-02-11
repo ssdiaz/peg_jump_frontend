@@ -23,23 +23,25 @@ class Player {
 
     // render player form
     static renderPlayerForm() {
-        return `      
-            <h3>Save your name to the Winner Board!</h3>
-            
-            <input id="input-name"
-                type="text"
-                name="name"
-                value=""
-                placeholder="username"                    
-                class="input-text"
-            />
-            <br />
-            <input id='create-player-button'
-                type="submit"
-                name="submit"
-                value="Create New Player"
-                class="submit"
-            />
+        return `  
+            <form class="add-player-form">    
+                <h3>Save your name to the Winner Board!</h3>
+                
+                <input id="input-name"
+                    type="text"
+                    name="name"
+                    value=""
+                    placeholder="username"                    
+                    class="input-text"
+                />
+                <br />
+                <input id='create-player-button'
+                    type="submit"
+                    name="submit"
+                    value="Create New Player"
+                    class="submit"
+                />
+            </form>
         `
     }
 

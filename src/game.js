@@ -7,15 +7,16 @@ class Game {
         this.id = data.id
         this.board_id = data.attributes.board_id
 
-        //this.moveCount = 0
+        this.moveCount = 0
         
         this.win = null
-        //this.player = data.attributes.player
 
         Game.all.push(this)
     }
 
-
+    static findById(id){
+        return this.all.find(game => game.id === id)
+    }
 
     static movesRemaining() {
         let movesLeft = []

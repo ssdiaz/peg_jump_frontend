@@ -31,7 +31,7 @@ let pegRemoved = ""
 // set end point and fetch your endpoint
 const gameEndPoint = "http://localhost:3000/games"
 //to track moves
-let moveCount = 0
+let movesTotal = 0
 
 //move functions
 function resetOptionsArray(){
@@ -66,6 +66,112 @@ function getClickStatus(event) {
 
 
 
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+// Load the DOM; 
+document.addEventListener('DOMContentLoaded', () => {   
+  console.log("DOM loaded")    
+
+  fetchPlayer() //used later, but fetches Players for the database & Winner's Board
+  //fetchWins()
+
+  // setTimeout(function(){ 
+  //   //alert("After .1 seconds!");
+  //   displayWinnerBoard()
+  //  }, 100);
+
+
+  newGame()
+
+})
+
+function fetchPlayer() { //fetches players from database
+  fetch("http://localhost:3000/players")
+  .then(response => response.json())
+    .then(players => {
+      players.data.forEach( data => { 
+
+        newPlayer = new Player(data)
+
+      })
+      fetchWins()
+      //displayWinnerBoard()
+      console.log("players good") //=> hits even when blank
+    })
+}
+
+function fetchWins() { //fetches players from database
+  fetch("http://localhost:3000/wins")
+  .then(response => response.json())
+    .then(winsData => {
+      winsData.data.forEach( data => { 
+
+        newWin = new Win(data)
+
+      })
+    displayWinnerBoard()
+    console.log("wins here") //=> hits even when blank
+    })
+}
+
+
+
+function displayWinnerBoard() {
+
+  //fetchPlayer() //used later, but fetches Players for the database & Winner's Board
+  //fetchWins()
+
+
+
+  console.log("am I hitting?") //=> hits even when blank
+  let first15 = Player.all.slice(0, 15);  //grab first 15 players in array
+
+  for (let i = 0; i < (first15.length); i++) {
+    let player = Player.all[i]
+
+    let playerId = parseInt(player.id)
+    let winPlayer = Win.findByPlayerId(playerId)
+
+    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML()
+    document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
+  }
+
+}
+
+
+
+// [New Game] : select play button
+function newGame() {
+  btnPlay.addEventListener('click', function(e) {
+
+    cheatWin()
+
+    getGameTiles()
+
+    firstMove()
+
+    changeToResetBtn()
+  });
+}
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function cheatWin(){
 
@@ -93,62 +199,14 @@ function cheatWin(){
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Load the DOM; 
-document.addEventListener('DOMContentLoaded', () => { 
-  console.log("DOM loaded")//had:  // getTiles()   // fetch board
-    
-
-  fetchPlayer()
-  //loadPlayerBoard()
-
-  newGame()
-
-
-})
-
-function fetchPlayer() {
-  fetch("http://localhost:3000/players")
-  .then(response => response.json())
-    .then(players => {
-      players.data.forEach( data => { 
-        newPlayer = new Player(data)
-        //console.log(newPlayer)
-
-      })
-      displayWinnerBoard()
-    })
-}
-
-
-
-function displayWinnerBoard() {
-  let first15 = Player.all.slice(0, 15);  //grab first 15 players in array
-
-  for (let i = 0; i < (first15.length); i++) {
-    let player = Player.all[i]   // console.log(Player.all[i])
-    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML()
-    document.querySelector(`#slot${i+1}`).innerHTML += `<td id="move-count">${moveCount}</td>`
-  }
-}
 
 
 
 
 
 
-// [New Game] : select play button
-function newGame() {
-  btnPlay.addEventListener('click', function(e) {
 
-    cheatWin()
 
-    getGameTiles()
-
-    firstMove()
-
-    changeToResetBtn()
-  });
-}
 
 function changeToResetBtn(){
   btnPlay.innerText = "Reset"
@@ -169,39 +227,38 @@ function resetGame(){
 function getGameTiles() {
   fetch("http://localhost:3000/games")
   .then(response => response.json())
-   .then(games => {
-      games.data.forEach( data => { //console.log(data)
-        //console.log(data.attributes.board_id)
-        //console.log(data.attributes.tiles)
+  .then(games => {
+    games.data.forEach( data => { 
 
-        let newGame = new Game(data)    //console.log(newGame)
-        //show game id
-        document.querySelector("#game-details .game-ids").innerHTML += `game id: ${newGame.id}`
+      let newGame = new Game(data)
+      let newBoard = new Board(data.attributes.board_id)
 
-        let newBoard = new Board(data.attributes.board_id)
+      //show game id
+      document.querySelector("#game-details .game-ids").innerHTML += `game id: ${newGame.id}`
 
-        //show board id
-        document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
+      //show board id
+      document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
 
-        //show move count
-        document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
+      //show move count
+      document.querySelector("#game-details .move-count").innerText =  `move count: ${movesTotal}` 
 
-        //remove players div content
-        document.querySelector(".player-container").innerText =  ""
+      //remove players div content
+      document.querySelector(".player-container").innerText =  ""
 
-        //diplay Game Outcome
-        document.querySelector("#game-details .game-outcome").innerText =  `Game Status: in progress`
+      //diplay Game Outcome
+      document.querySelector("#game-details .game-outcome").innerText =  `Game Status: in progress`
 
-        data.attributes.tiles.forEach( tileData =>  {
-          let newTile = new Tile(tileData)  //console.log(tile)
-          document.querySelector(pegArray[`${tileData.id}`-1]).innerHTML += newTile.renderPegHTML()
-          newTile.renderPegElements() 
-        })
-
+      data.attributes.tiles.forEach( tileData =>  {
+        let newTile = new Tile(tileData)
+        document.querySelector(pegArray[`${tileData.id}`-1]).innerHTML += newTile.renderPegHTML()
+        newTile.renderPegElements() 
       })
-      // .catch(err => console.dir(err))
-      })
+
+    })
+  })
 }
+
+
 
 
 
@@ -220,17 +277,12 @@ function firstMove() {
   board.addEventListener('click', (event) => {
     if (validClick(event)){
       let id = event.target.id //=> peg1 
-      //console.log(event.target)//=>peg1
 
-      //let pegClicked =  document.querySelector(`#${id}`) 
-      let tileClicked = Tile.findById(id)
-      //console.log(tileClicked) //Tile {id: 'peg1', ...}
+      let tileClicked = Tile.findById(id) //=> Tile 1
 
-      // let pegActiveStatus =  document.querySelector(`#${id}.active`)
       tileClicked.active = false
 
-      setPegColor(tileClicked) // pegClicked.style.backgroundColor = '#bbb'
-      //console.log(tileClicked)//=> peg1
+      setPegColor(tileClicked)
 
       selectPeg()
 
@@ -243,7 +295,7 @@ function firstMove() {
 
 
 
-//[MOVE 2]
+//[MOVE 2] --- the real first move
 function selectPeg(){
 
   if (Game.checkGameResult() === "game over"){
@@ -255,12 +307,12 @@ function selectPeg(){
     return
   }
 
-
   instructions.innerText = "[selectPeg] Select a Violet Peg to move"
+
   resetOptionsArray()
 
   board.addEventListener('click', (event) => {       
-    if (validClick(event) && getClickStatus(event) === true){ 
+    if (validClick(event) && getClickStatus(event) === true) { 
       let id = event.target.id//=> peg6
       let tile = Tile.findById(id)//=> Tile 6
       pegSelected = tile//=> Tile 6 //this is used in functions below
@@ -268,26 +320,25 @@ function selectPeg(){
       let pegClicked =  document.querySelector(`#${id}`)//=> button for peg6
       pegClicked.style.backgroundColor = 'yellow'
 
-      let optionsString = tile.options //=> '[1, 4, 15]' //=>string     //console.log(optionsString)//=> '[1, 4, 15]'      
-      let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ")//=> (3) ['1', '4', '15']
+      let optionsString = tile.options //=> '[1, 4, 15]' //=>string '[1, 4, 15]'      
+      let optionsStringToArray = optionsString.substr(1, optionsString.length-2).split(", ") //=> (3) ['1', '4', '15']
 
       function checkOptions(){
-        optionsStringToArray.forEach(function(num){
+        optionsStringToArray.forEach(function(num) {
           let peg = document.querySelector(`#peg${num}.active`)
-          //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!
-          if (peg.innerText === 'false' ) {
-            optionsArray.push(parseInt(num))//=>needs to be in int for selectMovePosiiton()   //console.log(parseInt(num))
+          
+          if (peg.innerText === 'false' ) {  // console.log(typeof peg.innerText) //=> string - leave as 'false' string!
+            optionsArray.push(parseInt(num))  //=> needs to be in int for selectMovePosiiton()
           }
         })
       } 
       checkOptions()
 
-      displayOptionsText.innerHTML = `Peg Options: ${optionsArray}`
+      //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!.innerHTML = `Potential Options: ${optionsArray}`
 
       selectMovePosition()
 
     } else {
-      //alert("Invalid Peg Selected. Please choose a violet peg.");
       console.log("click ignored")
 
       selectPeg()
@@ -302,14 +353,12 @@ function selectPeg(){
 function selectMovePosition(){
   instructions.innerText = "[selectMovePosition] Select available position to move Peg."
 
-  // Tile.checkGameResult()
-
   board.addEventListener('click', (event) => {   
     let tile = Tile.findById(event.target.id)
 
     //to unselect peg
     if (tile === pegSelected) {
-      console.log("means they clicked the selected peg")
+      console.log("they clicked twice to the selected peg")
 
       resetPegSelect()
       return
@@ -348,7 +397,6 @@ function selectMovePosition(){
       selectMovePosition()
     }
 
-
   }, {once : true})
 
 }
@@ -373,7 +421,7 @@ function movePegs(){
 
   selectPeg()
 
-  document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount += 1}` 
+  document.querySelector("#game-details .move-count").innerText =  `move count: ${movesTotal += 1}` 
   
   gameWon()
 
@@ -389,7 +437,6 @@ function resetMove() {
   displayOptionsText.innerText = `\n`
 
   resetOptionsArray()
-  //Tile.checkGameResult()
 }
 
 
@@ -405,15 +452,13 @@ function resetPegSelect() {
 
 function gameWon(){
   if (Game.checkWin() === true){
-    document.querySelector(".player-form-container").innerHTML = Player.renderPlayerForm()
 
-    setMoveCount(moveCount)
-    console.log(setMoveCount(moveCount))
+    document.querySelector(".player-form-container").innerHTML = Player.renderPlayerForm()
 
     newPlayerEvent()
 
-    //postFetchPlayer(nameInput)
   }
+  btnPlay.innerText = "Play Again"
 }
 
 
@@ -421,16 +466,19 @@ function gameWon(){
 
 
 
-// [NEW PLAYER] : Select New Player User Info
+// [NEW PLAYER] : Grab input from user / make a click event
 function newPlayerEvent(){  // NEW PLAYER = find form, add a listener, then call callback function to action
-  const selectPlayerForm = document.querySelector("#create-player-button")
+  
+    const selectPlayerForm = document.querySelector("#create-player-button")
 
-  selectPlayerForm.addEventListener("click", (e) => {
-    //e.preventDefault() //prevent page reload
-    const userInput = document.querySelector("#input-name").value 
-    userInput ? postFetchPlayer(userInput) : alert("Username cannot be empty") 
-  })
+    selectPlayerForm.addEventListener("click", (e) => {
+      e.preventDefault() //prevent page reload
+      const userInput = document.querySelector("#input-name").value 
+      userInput ? postFetchPlayer(userInput) : alert("Username cannot be empty") 
+    })
+      
 }
+
 
 
 // [NEW PLAYER] : POST fetch
@@ -442,18 +490,48 @@ function postFetchPlayer(userInput){ //; creates new player and POST back to our
       'Accept': 'application/json'
   },
     body: JSON.stringify({
-      name: userInput   // build body object :note you can do this outside of the fetch request
+      name: userInput 
     })    
   })
   .then(response => response.json())
   .then(player => {
-    console.log(player)
-
-    resetGame()
+    
+    createWinLog(player)
 
   })
   .catch(function(error){
     alert("Invalid Username. Please try again.");
     console.log(error.message)
   })
+
+
 }
+
+
+function createWinLog(player){
+
+  let movesFinal = movesTotal
+
+  fetch("http://localhost:3000/wins", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+  },
+    body: JSON.stringify( {
+      move_count: movesFinal,
+      win_count: 1,
+      player_id: player.data.id
+    }  )    
+  })
+  .then(response => response.json())
+
+  resetGame()
+  
+}
+
+
+
+
+
+
