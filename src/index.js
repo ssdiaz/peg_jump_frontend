@@ -8,7 +8,6 @@ const displayOptionsText = document.querySelector(".display-options")
 let validOptions = []
 let pegSelected = "" // def used - from move 2 - 3
 let pegPicked = ""
-let optionIndex = ""
 let pegRemoved = ""
 let movesTotal = 0  //to track moves
 
@@ -17,10 +16,6 @@ let movesTotal = 0  //to track moves
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//move functions
-function resetOptionsArray(){
-  validOptions.length === 0 ?  validOptions :  validOptions = []
-}
 
 //set peg color on DOM
 function setPegColor(tile){
@@ -283,10 +278,10 @@ function selectPeg(){
 
 //[MOVE 3]
 function selectMovePosition(){
-  instructions.innerText = "[3selectMovePosition] Select available position to move Peg."
+  instructions.innerText = "[3 selectMovePosition] Select available position to move Peg."
 
-  board.addEventListener('click', (event) => {
-    pegPicked = Tile.findById(event.target.id) //=> Tile 1
+  board.addEventListener('click', (e) => {
+    pegPicked = Tile.findById(e.target.id) //=> Tile 1
 
     //to unselect peg //console.log("they clicked twice to the selected peg")
     if (pegPicked === pegSelected) { 
@@ -295,10 +290,10 @@ function selectMovePosition(){
     }
 
     // check valid click
-    if (validClick(event)) {    
+    if (validClick(e)) {    
       pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
       
-      //IF pegPicked is free (false)              && IF pegPicked is in pegSelected array           && IF pegRemoved is active (true)
+      //IF pegPicked is free (false)     && IF pegPicked is in validOptions array          && IF pegRemoved is active (true)
       if ( (pegPicked.active === false)  &&  (validOptions.includes(pegPicked.number, 0))  &&  (pegRemoved.active === true) ) { 
       
         movePegs() //console.log("yes, call next function")
@@ -321,39 +316,30 @@ function selectMovePosition(){
 
 //[MOVE 4]
 function movePegs(){
-  instructions.innerText = "[4movePegs]"
-
   pegSelected.active = false
-  setPegColor(pegSelected) //=> Tile 6    //console.log(pegSelected)//=> Tile 6
+  setPegColor(pegSelected) //=> Tile 6
 
   pegPicked.active = true
-  setPegColor(pegPicked) //=> Tile 1    //console.log(pegPicked)//=> Tile 1  
+  setPegColor(pegPicked) //=> Tile 1
   
   pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked)
-
   pegRemoved.active = false
   setPegColor(pegRemoved)
 
-  resetMove()
-
-  selectPeg()
-
   document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
-  
-  gameWon()
 
+  resetMove()
+  selectPeg()  
+  gameWon()
 }
 
 //[MOVE 5]
 function resetMove() {
-  validOptions = []
   pegSelected = ""
   pegPicked = ""
-  optionIndex = ""
   pegRemoved = ""
+  validOptions = []
   displayOptionsText.innerHTML = `<br>`
-
-  resetOptionsArray()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

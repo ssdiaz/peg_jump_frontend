@@ -172,6 +172,8 @@ MOVE STEPS
 
 
 
+
+
 [[[FRIDAY]]]
 NEED TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click on a blank tile, ignore
@@ -196,14 +198,16 @@ Other things to do:
     - [] Check variable names and such
     - [] MOVES
       - [] MOVE 1
-      - [] MOVE 2
+      - [DONE] MOVE 2
       - [DONE] MOVE 3 - selectMovePosition
-      - [] MOVE 4
+      - [DONE] MOVE 4
       - [] refine MOVES intructions
 - [] [STRETCH_GOALS]
     - [] win streak?
     - [] Demo Move?
     - [] Updated Notes and User Story - add a line to see note.md to readme
+
+
 
 
 
@@ -261,4 +265,4 @@ EXPLAIN: (LEanring Goals)
 - [] EXPLAIN:      let optionsArray = pegSelected.options.substr(1, pegSelected.options.length-2).split(", ") //=> (3) ['1', '4', '15']
   - substr() extracts part of a string. so "Hello World!".substr(1,4) //=> ello
 - [] read this! for validOptionslength === 0 pero keep what we have!-  https://www.freecodecamp.org/news/check-if-javascript-array-is-empty-or-not-with-length/
-
+- [] includes synxtax: array.includes(element, start)
