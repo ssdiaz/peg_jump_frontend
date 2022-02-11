@@ -241,6 +241,7 @@ function firstMove() {
 //[MOVE 2] --- the real first move
 function selectPeg(){
 
+  //check if game over
   if (Game.checkGameResult() === "game over"){
     const outcome = Game.checkWin() === true ? "WON" : "Loss"
     document.querySelector("#game-details .game-outcome").innerText = `Game Over: ${outcome}`
@@ -251,24 +252,19 @@ function selectPeg(){
 
   board.addEventListener('click', (e) => {       
     if (validClick(e) && clickedTileStatus(e) === true) { 
-      pegSelected = Tile.findById(e.target.id)  //=> Tile 6 //this is used in functions below
+      pegSelected = Tile.findById(e.target.id)  //=> Tile 6; used in functions below
 
       //make pegSelected yellow
       document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'yellow' //=> yellow peg6
-      
-      //let optionsString = pegSelected.options //=> '[1, 4, 15]' //=>string '[1, 4, 15]'      
-      let allOptionsArray = pegSelected.options.substr(1, pegSelected.options.length - 2).split(", ").map(num => parseInt(num))
-        //=> (3) [1, 4, 15]
 
-      allOptionsArray.forEach(function(num) {
+      let optionsArray = pegSelected.options.substr(1, pegSelected.options.length - 2).split(", ").map(num => parseInt(num)) //=> (3) [1, 4, 15]
+
+      optionsArray.forEach(function(num) {
         let pegOption = Tile.findById(`peg${num}`)
-        
-        if (pegOption.active === false) {  
-          let pegToRemove = Tile.returnRemovedPeg(pegSelected, pegOption)
+        let pegToRemove = Tile.returnRemovedPeg(pegSelected, pegOption)
 
-          if (pegToRemove.active === true) {
-            validOptions.push(num) 
-          }
+        if (pegOption.active === false && pegToRemove.active === true) {
+          validOptions.push(num) 
         }
       })
 

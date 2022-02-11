@@ -260,5 +260,5 @@ EXPLAIN: (LEanring Goals)
 - []
 - [] EXPLAIN:      let optionsArray = pegSelected.options.substr(1, pegSelected.options.length-2).split(", ") //=> (3) ['1', '4', '15']
   - substr() extracts part of a string. so "Hello World!".substr(1,4) //=> ello
-
+- [] read this! for validOptionslength === 0 pero keep what we have!-  https://www.freecodecamp.org/news/check-if-javascript-array-is-empty-or-not-with-length/
 
