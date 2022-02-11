@@ -182,20 +182,6 @@ function cheatWin(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //  [TILES] loads tiles
 function getGameTiles() {
   fetch("http://localhost:3000/games")
@@ -206,20 +192,17 @@ function getGameTiles() {
       let newGame = new Game(data)
       let newBoard = new Board(data.attributes.board_id)
 
-      //show game id
-      document.querySelector("#game-details .game-ids").innerHTML += `game id: ${newGame.id}`
-
-      //show board id
-      document.querySelector("#game-details .game-ids").innerHTML += `board id: ${newBoard.id}`
-
-      //show move count
-      document.querySelector("#game-details .move-count").innerText =  `move count: ${movesTotal}` 
-
       //remove players div content
       document.querySelector(".player-container").innerText =  ""
 
+      //show move count
+      document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal}` 
+
       //diplay Game Outcome
-      document.querySelector("#game-details .game-outcome").innerText =  `Game Status: in progress`
+      document.querySelector("#game-details .game-outcome").innerText =  `Game Status: In Progress`
+
+      //show game id & board id
+      //document.querySelector("#game-details .game-ids").innerHTML += `Game ID: ${newGame.id}, Board ID: ${newBoard.id}`
 
       data.attributes.tiles.forEach( tileData =>  {
         let newTile = new Tile(tileData)
@@ -230,19 +213,6 @@ function getGameTiles() {
     })
   })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

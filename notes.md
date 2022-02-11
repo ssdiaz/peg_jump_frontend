@@ -186,7 +186,7 @@ Other things to do:
 - [] Finish the design / layout
     - [] Format pegs look
     - [DONE] If click ignore peg, do nothing
-    - [] refactor the pegs format ugh
+    - [DONE] refactor the pegs format
 - [] Refactor index.js COMPLETELY!
     - [] Fix Peg Options
     - [] Remove unused items - like routes
