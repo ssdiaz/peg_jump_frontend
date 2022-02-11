@@ -120,7 +120,6 @@ function displayWinnerBoard() {   // console.log("am I hitting?") //=> hits even
 
   for (let i = 0; i < (first15.length); i++) {
     let player = Player.all[i]
-
     let playerId = parseInt(player.id)
     let winPlayer = Win.findByPlayerId(playerId)
 
@@ -196,7 +195,7 @@ function getGameTiles() {
       document.querySelector(".player-container").innerText =  ""
 
       //show move count
-      document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal}` 
+      document.querySelector("#game-details .move-count").innerText =  `Move Count: ${newGame.moveCount}` 
 
       //diplay Game Outcome
       document.querySelector("#game-details .game-outcome").innerText =  `Game Status: In Progress`
@@ -278,7 +277,16 @@ function selectPeg(){
 
       //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!
       //peg.innerText.innerHTML = `Potential Options: ${optionsArray}`
-      displayOptionsText.innerText = `Potential Options - Pegs: ${optionsArray}`
+
+      let validOptions = optionsArray.filter(optionNum => {
+        let pickedTile = Tile.findById(`peg${optionNum}`)
+          let pegToRemove = Tile.returnRemovedPeg(pegSelected, pickedTile) 
+          return pegToRemove.active === true 
+        })
+
+      validOptions.length === 0 ? displayOptionsText.innerText = `\n` : displayOptionsText.innerText = `Potential Options for Selected - Pegs: ${validOptions}`
+
+      //displayOptionsText.innerText = `Potential Options for Selected - Pegs: ${validOptions}`
 
       selectMovePosition()
 
@@ -297,7 +305,7 @@ function selectPeg(){
 
 //[MOVE 3]
 function selectMovePosition(){
-  instructions.innerText = "[selectMovePosition] Select available position to move Peg."
+  instructions.innerText = "[3selectMovePosition] Select available position to move Peg."
 
   board.addEventListener('click', (event) => {
     pegPicked = Tile.findById(event.target.id) //=> Tile 1
@@ -335,7 +343,7 @@ function selectMovePosition(){
 
 //[MOVE 4]
 function movePegs(){
-  instructions.innerText = "[movePegs]"
+  instructions.innerText = "[4movePegs]"
 
   pegSelected.active = false
   setPegColor(pegSelected) //=> Tile 6    //console.log(pegSelected)//=> Tile 6
@@ -352,7 +360,7 @@ function movePegs(){
 
   selectPeg()
 
-  document.querySelector("#game-details .move-count").innerText =  `move count: ${movesTotal += 1}` 
+  document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
   
   gameWon()
 
@@ -427,8 +435,6 @@ function postFetchPlayer(userInput){
 }
 
 function createWinLog(player){
-  let movesFinal = movesTotal
-
   fetch("http://localhost:3000/wins", {
     method: "POST",
     headers: {
@@ -436,7 +442,7 @@ function createWinLog(player){
       'Accept': 'application/json'
   },
     body: JSON.stringify( {
-      move_count: movesFinal,
+      move_count: movesTotal,
       win_count: 1,
       player_id: player.data.id
     }  )    

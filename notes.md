@@ -178,7 +178,7 @@ NEED TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click same time again, unselect it; only for selectPeg
 - [DONE] a way to check the board and if won/loss
 - [DONE] if wins, saves player to list
-- [] should i be posting the tiles? and recreating the game with reset? Probably
+- [DONE] should I be posting the tiles? and recreating the game with reset?...no; seed data below
 
 Other things to do:
 - [DONE] Confirm Requirements
@@ -187,16 +187,18 @@ Other things to do:
     - [] Format pegs look
     - [DONE] If click ignore peg, do nothing
     - [DONE] refactor the pegs format
+    - [] Add image in front view
 - [] Refactor index.js COMPLETELY!
-    - [] Fix Peg Options
+    - [] Fix Peg Options Display
     - [] Remove unused items - like routes
     - [] Figure out Seed Data and such
+    - [] Check variable names and such
     - [] MOVES
       - [] MOVE 1
       - [] MOVE 2
       - [DONE] MOVE 3 - selectMovePosition
       - [] MOVE 4
-      - [] refine MOVE Sintructions
+      - [] refine MOVES intructions
 - [] [STRETCH_GOALS]
     - [] win streak?
     - [] Demo Move?
