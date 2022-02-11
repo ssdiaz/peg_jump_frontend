@@ -1,8 +1,10 @@
+NOTE: this is the FRONTEND API repo.
+
 # README - The Peg Jump Game 🔺
 Hello & Welcome to my Peg Jump Game Application! This app features the game of Peg Solitaire, also known as the Triangle Game at the Cracker Barrel restaurant.
 
 ## DEPLOYMENT INSTRUCTIONS
-This repo represents the frontend using HTML, CSS, and JavaScript, and communicates with a backend API built with Ruby on Rails stored in a separate repo (https://github.com/ssdiaz/peg_jump_backend_api). To run this application, please fork and clone this frontend repo and 'open index.html' in your web browser (Chrome preferred). You also need to fork and clone the peg_jump_backend_api repo and run the Rails Server on that directory.
+This repo represents the frontend using HTML, CSS, and JavaScript, and communicates with a backend API built with Ruby on Rails stored in a separate repo (https://github.com/ssdiaz/peg_jump_backend_api). To run this application, please fork and clone this frontend repo and 'open index.html' in your web browser (Chrome preferred). You also need to fork and clone the peg_jump_backend_api repo and run the 'rails server' in that directory.
 
 Frontend Repo (this one) - https://github.com/ssdiaz/peg_jump_frontend
 
