@@ -188,8 +188,9 @@ Other things to do:
     - [DONE] If click ignore peg, do nothing
     - [DONE] refactor the pegs format
     - [] Add image in front view
+    - [] make everything static on page; in terms of layout
 - [] Refactor index.js COMPLETELY!
-    - [] Fix Peg Options Display
+    - [DONE] Fix Peg Options Display
     - [] Remove unused items - like routes
     - [] Figure out Seed Data and such
     - [] Check variable names and such
@@ -256,4 +257,8 @@ EXPLAIN: (LEanring Goals)
 - [] Use fetch with 'GET', 'POST', 'PATCH' & 'DELETE' HTTP methods
 - [] Create a JavaScript object with ES6 class syntax
 - [] Instantiate JavaScript objects and call methods on them.
+- []
+- [] EXPLAIN:      let optionsArray = pegSelected.options.substr(1, pegSelected.options.length-2).split(", ") //=> (3) ['1', '4', '15']
+  - substr() extracts part of a string. so "Hello World!".substr(1,4) //=> ello
+
 
