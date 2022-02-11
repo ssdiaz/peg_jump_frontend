@@ -8,7 +8,7 @@ This repo represents the frontend using HTML, CSS, and JavaScript, and communica
 
 Frontend Repo (this one) - https://github.com/ssdiaz/peg_jump_frontend
 
-Backend Repo (API) - https://github.com/ssdiaz/peg_jump_backend_api
+Backend Repo, API - https://github.com/ssdiaz/peg_jump_backend_api
 
 ## GAME OBJECTIVE
 The objective of this game is to remove all but one peg from the board by jumping diagonally over another peg to remove it. You can only move a peg diagnoally and it must 'jump' over another peg to remove it. You cannot move a peg to a free position if it does not 'jump' over another peg.

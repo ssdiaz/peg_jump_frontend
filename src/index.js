@@ -318,6 +318,8 @@ function selectPeg(){
       selectPeg()
     }
 
+    
+
   }, {once : true})
 
 }
@@ -339,37 +341,55 @@ function selectMovePosition(){
     }
 
     // check valid click and peg is false
-    if (validClick(event) && getClickStatus(event) === false ){
-      pegPicked = Tile.findById(event.target.id) //=> Tile 1
-      pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
 
-      // If pegPicked is in pegSelected array, good, otherwise alert and start over.
-      if (optionsArray.includes(pegPicked.number, 0)) { 
-        //console.log("yes, call next function")
 
-        //abort if removed peg is gone already (false)
-        if (pegRemoved.active === false) {
-          alert("No Peg to remove. Please re-select.")
-          
+    if (validClick(event)) {
+
+
+
+      if (getClickStatus(event) === false ){
+        pegPicked = Tile.findById(event.target.id) //=> Tile 1
+        pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
+
+        // If pegPicked is in pegSelected array, good, otherwise alert and start over.
+        if (optionsArray.includes(pegPicked.number, 0)) { 
+          //console.log("yes, call next function")
+
+          //abort if removed peg is gone already (false)
+          if (pegRemoved.active === false) {
+            alert("No Peg to remove. Please re-select.")
+            
+            resetPegSelect()
+            return
+          }
+    
+          movePegs()
+
+        } else {
+          console.log("clicked ignored")
+          alert("Not a valid option for peg. Please re-select.");
+
           resetPegSelect()
           return
         }
-  
-        movePegs()
-
       } else {
-        console.log("clicked ignored")
-        alert("Not a valid option for peg. Please re-select.");
+        alert("Invalid Peg Selected. Please choose a grey peg. Please re-select.");
+        console.log("Invalid Peg Selected")
 
-        resetPegSelect()
-        return
+        selectMovePosition()
       }
-    } else {
-      alert("Invalid Peg Selected. Please choose a grey peg. Please re-select.");
-      console.log("Invalid Peg Selected")
 
+
+    } else {
+      console.log("clicked ignore. go again")
       selectMovePosition()
     }
+
+
+
+
+
+
 
   }, {once : true})
 
