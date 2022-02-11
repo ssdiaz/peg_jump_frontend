@@ -17,21 +17,22 @@ let pegArray = [peg1, peg2, peg3, peg4, peg5, peg6, peg7, peg8, peg9, peg10, peg
 
 // Constants used throughout
 const board = document.getElementById('board'); 
-
 const btnPlay = document.querySelector("#play-btn");
-
 const instructions = document.querySelector(".directions")
 const displayOptionsText = document.querySelector(".display-options")
+
 //Game variables used / reset
 let optionsArray = []
 let pegSelected = ""
 let pegPicked = ""
 let optionIndex = ""
 let pegRemoved = ""
+let movesTotal = 0  //to track moves
+
 // set end point and fetch your endpoint
-const gameEndPoint = "http://localhost:3000/games"
-//to track moves
-let movesTotal = 0
+//const gameEndPoint = "http://localhost:3000/games"
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //move functions
 function resetOptionsArray(){
@@ -63,11 +64,23 @@ function clickedTileStatus(event) {
   return tile.active
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function changeToResetBtn(){
+  btnPlay.innerText = "Reset"
+  btnPlay.addEventListener('click', function(e) {
+    resetGame()
+  })
+}
+
+function resetGame(){
+    window.location.reload();    //https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -119,9 +132,7 @@ function fetchWins() { //fetches players from database
 
 
 
-function displayWinnerBoard() {
-
- // console.log("am I hitting?") //=> hits even when blank
+function displayWinnerBoard() {   // console.log("am I hitting?") //=> hits even when blank
   let first15 = Player.all.slice(0, 15);  //grab first 15 players in array
 
   for (let i = 0; i < (first15.length); i++) {
@@ -184,22 +195,9 @@ function cheatWin(){
     gameWon()
   })
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-function changeToResetBtn(){
-  btnPlay.innerText = "Reset"
-  btnPlay.addEventListener('click', function(e) {
-    resetGame()
-  })
-}
-
-
-function resetGame(){
-    window.location.reload();    //https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
-}
 
 
 
@@ -398,6 +396,7 @@ function resetMove() {
   resetOptionsArray()
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function resetPegSelect() {
   document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'

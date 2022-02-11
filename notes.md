@@ -175,7 +175,7 @@ MOVE STEPS
 [[[FRIDAY]]]
 NEED TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click on a blank tile, ignore
-- [DONE] if you click same time again, unselect it - only for selectPeg
+- [DONE] if you click same time again, unselect it; only for selectPeg
 - [DONE] a way to check the board and if won/loss
 - [DONE] if wins, saves player to list
 - [] should i be posting the tiles? and recreating the game with reset? Probably
@@ -183,13 +183,11 @@ NEED TO ADD TO BE FUNCTIONAL:
 Other things to do:
 - [DONE] Confirm Requirements
 - [DONE] Readme w/Backend Repo
-- [] Updated Notes and User Story - add a line to see note.md to readme
-- [] 
 - [] Finish the design / layout
     - [] Format pegs look
     - [DONE] If click ignore peg, do nothing
     - [] refactor the pegs format ugh
-- [] Refactor index.js COMOPLETELY!
+- [] Refactor index.js COMPLETELY!
     - [] Fix Peg Options
     - [] Remove unused items - like routes
     - [] Figure out Seed Data and such
@@ -202,6 +200,7 @@ Other things to do:
 - [] [STRETCH_GOALS]
     - [] win streak?
     - [] Demo Move?
+    - [] Updated Notes and User Story - add a line to see note.md to readme
 
 
 
