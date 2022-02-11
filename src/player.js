@@ -3,25 +3,20 @@ class Player {
     constructor(data) {
         this.id = data.id
         this.name = data.attributes.name
-        // this.moveCount = 0 //** probably needs to be pulled from game when shoveled in */
+       
         Player.all.unshift(this)
     }
 
-
-    //render HTML for Players
     renderPlayerHTML() {
         return `      
             <td id="name">${this.name}</td>
         `
     }
 
-
     static findById(id) {
         return this.all.find(player => player.id === id)
     }
 
-
-    // render player form
     static renderPlayerForm() {
         return `  
             <form class="add-player-form">    
@@ -45,8 +40,6 @@ class Player {
         `
     }
 
-
 }
-
 
 Player.all = []

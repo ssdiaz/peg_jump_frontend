@@ -46,7 +46,7 @@ class Tile {
     static findById(id) {
         return this.all.find(tile => tile.id === id)
     }
-  
+
     //return what peg is to be removed from selected and picked peg
     static returnRemovedPeg(selectedTile, pickedTile) {
         //console.log("in returnRemovedPeg function")    
@@ -68,51 +68,10 @@ class Tile {
         return removePeg  // RETURNS REMOVED PEG
     }
 
-
     static checkPegsRemoved() {
         let removed = Tile.all.filter(tile => tile.active === false);
         return removed.length
     }
-
-
-    // static movesRemaining() {
-    //     let trueCount = []
-    //     let trueTiles = Tile.all.filter(tile => tile.active === true);
-
-    //     trueTiles.forEach(tile => {
-    //         let removesArray = tile.removes.substr(1, tile.removes.length-2).split(", ")
-    //         //=> [2,3] Array
-
-    //         removesArray.forEach(num => {
-    //             let tile = Tile.findById(`peg${num}`)
-
-    //              if (tile.active === true) {
-    //                 trueCount.push(tile)
-    //              }
-    //         })
-    //     })
-    //     return trueCount.length
-    // }
-
-    // static checkGameResult() {
-    //     let outcome = ""
-    //     let trueTiles = Tile.all.filter(tile => tile.active === true).length
-
-    //     if (trueTiles === 1) {
-    //         alert("CONGRATS! You win! ")
-    //         console.log("GAME OVER - WON")
-    //         outcome = "WON"
-    //     } else if (Tile.movesRemaining() === 0) {
-    //         alert("Sorry, you lost :( ")
-    //         console.log("GAME OVER - LOST")
-    //         outcome = "Loss"
-    //     }
-    //     //document.querySelector("#game-details .move-count").innerText =  `move count: ${moveCount}` 
-    //     document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
-    // }
-
-      
-
 
 }
 

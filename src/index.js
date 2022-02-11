@@ -65,20 +65,9 @@ function getClickStatus(event) {
 
 
 
-
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
 
 
 
@@ -110,7 +99,7 @@ function fetchPlayer() { //fetches players from database
       })
       fetchWins()
       //displayWinnerBoard()
-      console.log("players good") //=> hits even when blank
+      //console.log("players good") //=> hits even when blank
     })
 }
 
@@ -124,7 +113,7 @@ function fetchWins() { //fetches players from database
 
       })
     displayWinnerBoard()
-    console.log("wins here") //=> hits even when blank
+    //console.log("wins here") //=> hits even when blank
     })
 }
 
@@ -132,12 +121,7 @@ function fetchWins() { //fetches players from database
 
 function displayWinnerBoard() {
 
-  //fetchPlayer() //used later, but fetches Players for the database & Winner's Board
-  //fetchWins()
-
-
-
-  console.log("am I hitting?") //=> hits even when blank
+ // console.log("am I hitting?") //=> hits even when blank
   let first15 = Player.all.slice(0, 15);  //grab first 15 players in array
 
   for (let i = 0; i < (first15.length); i++) {
@@ -165,6 +149,9 @@ function newGame() {
     firstMove()
 
     changeToResetBtn()
+
+    document.querySelector(".instructions-header").innerHTML = `<h4>Next Move:</h4>`
+
   });
 }
 
@@ -202,15 +189,8 @@ function cheatWin(){
 
 
 
-
-
-
-
-
-
 function changeToResetBtn(){
   btnPlay.innerText = "Reset"
-
   btnPlay.addEventListener('click', function(e) {
     resetGame()
   })
@@ -263,11 +243,6 @@ function getGameTiles() {
 
 
 
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //[MOVE 1]
@@ -299,11 +274,8 @@ function firstMove() {
 function selectPeg(){
 
   if (Game.checkGameResult() === "game over"){
-
     const outcome = Game.checkWin() === true ? "WON" : "Loss"
-
     document.querySelector("#game-details .game-outcome").innerText =  `Game Over: ${outcome}`
-
     return
   }
 
@@ -334,7 +306,9 @@ function selectPeg(){
       } 
       checkOptions()
 
-      //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!.innerHTML = `Potential Options: ${optionsArray}`
+      //console.log(typeof peg.innerText) //=> string - leave below as 'false' string!
+      //peg.innerText.innerHTML = `Potential Options: ${optionsArray}`
+      displayOptionsText.innerText = `Potential Options - Pegs: ${optionsArray}`
 
       selectMovePosition()
 
@@ -429,12 +403,12 @@ function movePegs(){
 
 //[MOVE 5]
 function resetMove() {
-  let optionsArray = []
-  let pegSelected = ""
-  let pegPicked = ""
-  let optionIndex = ""
-  let pegRemoved = ""
-  displayOptionsText.innerText = `\n`
+  optionsArray = []
+  pegSelected = ""
+  pegPicked = ""
+  optionIndex = ""
+  pegRemoved = ""
+  displayOptionsText.innerHTML = `<br>`
 
   resetOptionsArray()
 }
@@ -444,7 +418,7 @@ function resetPegSelect() {
   document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
   pegSelected = ""
   optionsArray = []
-  displayOptionsText.innerHTML = `\n`
+  displayOptionsText.innerHTML = `<br>`
 
   selectPeg()
 }
@@ -456,9 +430,7 @@ function gameWon(){
     document.querySelector(".player-form-container").innerHTML = Player.renderPlayerForm()
 
     newPlayerEvent()
-
   }
-  btnPlay.innerText = "Play Again"
 }
 
 
@@ -504,7 +476,6 @@ function postFetchPlayer(userInput){ //; creates new player and POST back to our
     console.log(error.message)
   })
 
-
 }
 
 
@@ -529,9 +500,4 @@ function createWinLog(player){
   resetGame()
   
 }
-
-
-
-
-
 

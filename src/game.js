@@ -44,7 +44,6 @@ class Game {
         return movesLeft.length
     }
 
-
     static checkGameResult() {
         let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
@@ -52,23 +51,21 @@ class Game {
             alert("CONGRATS! You win! ")
             console.log("GAME OVER - WON")
             this.win = true
-
             return "game over"
+
         } else if (Game.movesRemaining() === 0) {
             alert("Sorry, you lost :( ")
             console.log("GAME OVER - LOST")
             //outcome = "Loss"
             this.win = false
-
             return "game over"
+            
         }
     }
-
 
     static checkWin(){
         return this.win
     }
-
 
 }
 

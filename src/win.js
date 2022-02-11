@@ -8,9 +8,9 @@ class Win {
         Win.all.push(this)
     }
 
-    renderMoveCount(){
-        return this.move_count
-    }
+    // renderMoveCount(){
+    //     return this.move_count
+    // }
 
     renderMoveHTML() {
         return `      
@@ -25,8 +25,6 @@ class Win {
     static findByPlayerId(id) {
         return this.all.find(win => win.player_id === id)
     }
-
-
 
 }
 
