@@ -1,37 +1,17 @@
-# README
+# README - The Peg Jump Game 🔺
+Hello & Welcome to my Peg Jump Game Application! This app features the game of Peg Solitaire, also known as the Triangle Game at the Cracker Barrel restaurant.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## DEPLOYMENT INSTRUCTIONS
+This repo represents the frontend using HTML, CSS, and JavaScript, and communicates with a backend API built with Ruby on Rails stored in a separate repo (https://github.com/ssdiaz/peg_jump_backend_api). To run this application, please fork and clone this frontend repo and 'open index.html' in your web browser (Chrome preferred). You also need to fork and clone the peg_jump_backend_api repo and run the Rails Server on that directory.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Hello & Welcome to my Peg Game Application! This is app features the game of Peg Solitaire, also known as the triangle game at Cracker Barrel.
-
-This repo represents the front end using HTML, CSS, and JavaScript, and communicates with a backend API built with Ruby on Rails stored in a separate repo (https://github.com/ssdiaz/peg_jump_backend_api). To run this application, please fork and clone this frontend repo and 'open index.html' in your webrowser. You also need to fork and clone the backend_api repo and run the Rails Server on that directory.
-
+Frontend Repo (this one) - https://github.com/ssdiaz/peg_jump_frontend
+Backend Repo (API) - https://github.com/ssdiaz/peg_jump_backend_api
 
 ## GAME OBJECTIVE
-The object of this game is to get all but one peg left removed from the board by selecting a peg and jumping over another diagonally. You can only move a peg diagnoally and it must have another peg to jump over to move. Be warned - a couple of bad moves can cost you the game!
+The objective of this game is to get all but one peg removed from the board by jumping diagonally over another peg to remove it. You can only move a peg diagnoally and it must 'jump' over another peg to remove it. You cannot move a peg to a free position if it does not 'jump' over another peg.
 
-Check out this link if you want to know how to win everytime: https://www.wikihow.com/Win-the-Peg-Game
+Be warned - a couple of bad moves can cost you the game!
 
-Have Fun and Good Luck!
+Check out this link if you want to know how to win everytime: https://www.wikihow.com/Win-the-Peg-Game.
+
+Have Fun and Good Luck! ✨
