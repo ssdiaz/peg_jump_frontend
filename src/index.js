@@ -26,12 +26,12 @@ function setPegColor(tile){
   } else {
     peg.style.backgroundColor = '#bbb'
   }
-  document.querySelector(`#${tile.id} .active`).innerText = tile.renderActive()
+  //document.querySelector(`#${tile.id} .active`).innerText = tile.renderActive()
 }
 
 //for clicks - valid tile and not something else in doc
-function validClick(event){
-  if (event.target.id !== 'ignore' && (event.target.nodeName === 'DIV' || event.target.nodeName === 'BUTTON')) {
+function validClick(e){
+  if (e.target.id !== 'ignore' && (e.target.nodeName === 'DIV' || e.target.nodeName === 'BUTTON')) {    
     return true
   }
 }
@@ -213,7 +213,7 @@ function getGameTiles() {
 
 //[MOVE 1]
 function firstMove() {
-  instructions.innerText = `[firstMove] Click a peg to remove`
+  instructions.innerText = `[firstMove] Click a peg to remove (violet)`
 
   board.addEventListener('click', (event) => {
     if (validClick(event)){
@@ -243,9 +243,9 @@ function selectPeg(){
     return
   }
 
-  instructions.innerText = "[2 selectPeg] Select a Peg to move (Violet)"
+  instructions.innerText = "[2 selectPeg] Select a Peg to move (violet)"
 
-  board.addEventListener('click', (e) => {       
+  board.addEventListener('click', (e) => { 
     if (validClick(e) && clickedTileStatus(e) === true) { 
       pegSelected = Tile.findById(e.target.id)  //=> Tile 6; used in functions below
 
@@ -270,7 +270,6 @@ function selectPeg(){
     } else {
       selectPeg()
     }
-
   }, {once : true})
 
 }
@@ -278,7 +277,7 @@ function selectPeg(){
 
 //[MOVE 3]
 function selectMovePosition(){
-  instructions.innerText = "[3 selectMovePosition] Select available position to move Peg."
+  instructions.innerText = "[3 selectMovePosition] Select available position to move Peg (grey)"
 
   board.addEventListener('click', (e) => {
     pegPicked = Tile.findById(e.target.id) //=> Tile 1
@@ -316,6 +315,8 @@ function selectMovePosition(){
 
 //[MOVE 4]
 function movePegs(){
+  document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
+
   pegSelected.active = false
   setPegColor(pegSelected) //=> Tile 6
 
@@ -325,8 +326,6 @@ function movePegs(){
   pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked)
   pegRemoved.active = false
   setPegColor(pegRemoved)
-
-  document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
 
   resetMove()
   selectPeg()  
@@ -413,5 +412,5 @@ function createWinLog(player){
   })
   .then(response => response.json())
 
-  resetGame()  
+  resetGame()
 }

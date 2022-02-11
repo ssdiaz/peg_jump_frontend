@@ -206,6 +206,7 @@ Other things to do:
     - [] win streak?
     - [] Demo Move?
     - [] Updated Notes and User Story - add a line to see note.md to readme
+    - [] only let pegs.active = true pegs be clickable
 
 
 

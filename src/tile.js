@@ -16,13 +16,10 @@ class Tile {
             <button class="peg" id="${this.id}">
                 <div class="number" id="${this.id}">
                 </div>
-
                 <div class="active" id="${this.id}">
                 </div>
-
                 <div class="options" id="${this.id}">
                 </div>
-
                 <div class="removes" id="${this.id}">
                 </div>
             </button>
@@ -32,15 +29,15 @@ class Tile {
     //render integers/booleans to DOM
     renderPegElements() {
         document.querySelector(`#${this.id} .number`).innerText = this.number
-        document.querySelector(`#${this.id} .active`).innerText = this.active
-        document.querySelector(`#${this.id} .options`).innerText = this.options
-        document.querySelector(`#${this.id} .removes`).innerText = this.removes
+        //document.querySelector(`#${this.id} .active`).innerText = this.active
+       // document.querySelector(`#${this.id} .options`).innerText = this.options
+       // document.querySelector(`#${this.id} .removes`).innerText = this.removes
     }
 
     //render updated active status for Tile
-    renderActive() {
-        return this.active
-    }
+    // renderActive() {
+    //     return this.active
+    // }
 
     //find Tile by ID ('peg#')
     static findById(id) {
