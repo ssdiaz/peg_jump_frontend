@@ -147,7 +147,7 @@ function random(number) {
 
 
 
-      
+
 
 
 NOTES- 
@@ -187,12 +187,18 @@ Other things to do:
 - [] 
 - [] Finish the design / layout
     - [] Format pegs look
-    - [] If click ignore peg, do nothing
+    - [DONE] If click ignore peg, do nothing
     - [] refactor the pegs format ugh
 - [] Refactor index.js COMOPLETELY!
     - [] Fix Peg Options
     - [] Remove unused items - like routes
     - [] Figure out Seed Data and such
+    - [] MOVES
+      - [] MOVE 1
+      - [] MOVE 2
+      - [DONE] MOVE 3 - selectMovePosition
+      - [] MOVE 4
+      - [] refine MOVE Sintructions
 - [] [STRETCH_GOALS]
     - [] win streak?
     - [] Demo Move?

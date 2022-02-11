@@ -252,17 +252,15 @@ function firstMove() {
   board.addEventListener('click', (event) => {
     if (validClick(event)){
       let id = event.target.id //=> peg1 
-
       let tileClicked = Tile.findById(id) //=> Tile 1
 
       tileClicked.active = false
 
       setPegColor(tileClicked)
-
       selectPeg()
 
     } else {
-      console.log("clicked ignore. go again")
+      //console.log("clicked ignore. go again")
       firstMove()
     }
   }, {once : true})
@@ -329,26 +327,23 @@ function selectPeg(){
 function selectMovePosition(){
   instructions.innerText = "[selectMovePosition] Select available position to move Peg."
 
-  board.addEventListener('click', (event) => {   
-    let tile = Tile.findById(event.target.id)
+  board.addEventListener('click', (event) => {
+    pegPicked = Tile.findById(event.target.id) //=> Tile 1
 
-    //to unselect peg
-    if (tile === pegSelected) {
-      console.log("they clicked twice to the selected peg")
+    //to unselect peg //console.log("they clicked twice to the selected peg")
+    if (pegPicked === pegSelected) { 
       resetPegSelect()
       return
     }
 
     // check valid click
-    if (validClick(event)) {
-    
-      pegPicked = Tile.findById(event.target.id) //=> Tile 1
+    if (validClick(event)) {    
       pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked) //=> Tile 3
       
       //IF pegPicked is free (false)              && IF pegPicked is in pegSelected array           && IF pegRemoved is active (true)
       if ( (pegPicked.active === false)  &&  (optionsArray.includes(pegPicked.number, 0))  &&  (pegRemoved.active === true) ) { 
       
-        movePegs()          //console.log("yes, call next function")
+        movePegs() //console.log("yes, call next function")
 
       } else {
         (pegRemoved && pegRemoved.active === false) ? alert("No Peg to remove. Please re-select.") : alert("Not a valid option for peg. Please re-select.");
@@ -413,38 +408,28 @@ function resetPegSelect() {
   selectPeg()
 }
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function gameWon(){
   if (Game.checkWin() === true){
-
+    //render 'Save Player' form
     document.querySelector(".player-form-container").innerHTML = Player.renderPlayerForm()
-
     newPlayerEvent()
   }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 // [NEW PLAYER] : Grab input from user / make a click event
 function newPlayerEvent(){  // NEW PLAYER = find form, add a listener, then call callback function to action
-  
-    const selectPlayerForm = document.querySelector("#create-player-button")
+  const selectPlayerForm = document.querySelector("#create-player-button")
 
-    selectPlayerForm.addEventListener("click", (e) => {
-      e.preventDefault() //prevent page reload
-      const userInput = document.querySelector("#input-name").value 
-      userInput ? postFetchPlayer(userInput) : alert("Username cannot be empty") 
-    })
-      
+  selectPlayerForm.addEventListener("click", (e) => {
+    e.preventDefault() //prevent page reload
+    const userInput = document.querySelector("#input-name").value 
+    userInput ? postFetchPlayer(userInput) : alert("Username cannot be empty") 
+  })      
 }
 
-
-
-// [NEW PLAYER] : POST fetch
-function postFetchPlayer(userInput){ //; creates new player and POST back to our database
+// [NEW PLAYER] : POST fetch  //; creates new player and POST back to our database
+function postFetchPlayer(userInput){ 
   fetch("http://localhost:3000/players", {
     method: "POST",
     headers: {
@@ -468,9 +453,7 @@ function postFetchPlayer(userInput){ //; creates new player and POST back to our
 
 }
 
-
 function createWinLog(player){
-
   let movesFinal = movesTotal
 
   fetch("http://localhost:3000/wins", {
@@ -487,7 +470,5 @@ function createWinLog(player){
   })
   .then(response => response.json())
 
-  resetGame()
-  
+  resetGame()  
 }
-
