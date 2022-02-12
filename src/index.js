@@ -118,7 +118,7 @@ function displayWinnerBoard() {   // console.log("am I hitting?") //=> hits even
     let playerId = parseInt(player.id)
     let winPlayer = Win.findByPlayerId(playerId)
 
-    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML()
+    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
     document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
   }
 
@@ -129,6 +129,8 @@ function displayWinnerBoard() {   // console.log("am I hitting?") //=> hits even
 // [New Game] : select play button
 function newGame() {
   btnPlay.addEventListener('click', function(e) {
+    //remove background image
+    document.body.style.backgroundImage = "url('')"
 
     cheatWin()
 

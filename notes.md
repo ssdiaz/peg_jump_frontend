@@ -186,11 +186,12 @@ Other things to do:
 - [DONE] Confirm Requirements
 - [DONE] Readme w/Backend Repo
 - [] Finish the design / layout
-    - [] Format pegs look
+    - [DONE] Format pegs look
     - [DONE] If click ignore peg, do nothing
     - [DONE] refactor the pegs format
     - [] Add image in front view
     - [] make everything static on page; in terms of layout
+    - [] format next move
 - [] Refactor index.js COMPLETELY!
     - [DONE] Fix Peg Options Display
     - [] Remove unused items - like routes
@@ -203,7 +204,7 @@ Other things to do:
       - [DONE] MOVE 4
       - [] refine MOVES intructions
 - [] [STRETCH_GOALS]
-    - [] win streak?
+    - [] Win streak? instead of move count
     - [] Demo Move?
     - [] Updated Notes and User Story - add a line to see note.md to readme
     - [] only let pegs.active = true pegs be clickable

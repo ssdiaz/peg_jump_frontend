@@ -7,8 +7,9 @@ class Player {
         Player.all.unshift(this)
     }
 
-    renderPlayerHTML() {
-        return `      
+    renderPlayerHTML(num) {
+        return `    
+            <td>${num}</td>
             <td id="name">${this.name}</td>
         `
     }
@@ -33,7 +34,7 @@ class Player {
                 <input id='create-player-button'
                     type="submit"
                     name="submit"
-                    value="Create New Player"
+                    value="Save New Player"
                     class="submit"
                 />
             </form>

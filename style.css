@@ -1,76 +1,173 @@
 html *
 {
    /* font-size: 1em !important; */
-   color: #000 !important;
-   font-family: Arial ;
+   /* color: #000 !important; */
+   font-family: Monaco ;
 }
 
-h2, h3, h4, h5 {
-  font-family: Monaco;
+body {
+  background-image: url("https://cdn11.bigcommerce.com/s-whvhnri10h/products/1261/images/22699/apiqngsuh__49943.1644575007.386.513.jpg?c=2");
+  background-color: white;
+  background-repeat: no-repeat, repeat;
+  background-position: center; 
+  background-attachment: fixed;
+ }
+
+
+#main-content {
+  margin: auto;
+}
+
+.greeting {
+  background-color: white;
+  text-align: center;
+  font-size: 22px;
+  width: 100%;
+  height: 75px;
+}
+
+.directions {
+  font-size: 14px;
+ background-color: lightblue;
+ width: 50%;
+ text-align: center;
+ margin: auto;
+ padding: 10px;
+}
+
+#play-btn {
+  background-color: rgb(130, 238, 171);
 }
 
 button {
   border: none;
-  color: white;
+  /* color: white; */
+  /* background-color: rgb(130, 238, 171); */
+  /* color: white; */
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
 }
 
-button:hover {
+button:hover, .submit:hover {
   box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24);
   /* box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 7px 25px 0 rgba(0,0,0,0.19); */
 }
 
-button:active {
-
+button:active, .submit:active {
   box-shadow:1 3px #666;
   transform: translateY(1px);
 }
 
-.directions {
-  font-size: 16px;
+.submit  {
+  border: none;
+  /* color: white; */
+  background-color: rgb(130, 238, 171);
+  /* color: white; */
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
+input[type=text], select {
+  width: 25%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+
+
+.winners-board {
+  /* font-family: Arial; */
+  border-collapse: collapse;
+  /* width: 50%; */
+  /* width: 200px; */
+  align-self: center;
+  /* display: flex; */
+  justify-content: center;
+  table-layout: fixed
+}
+
+.winners-board th {
+  font-size: 16px;
+  text-align: center;
+  background-color: lightblue;
+  padding: 10px;
+}
+
+.winners-board td {
+  font-size: 14px;
+  width: 200px;  
+  padding: 8px;
+}
+
+.winners-board tr:nth-child(even){background-color: #f2f2f2;}
+
+/* First Winners Column */
+.winners-board td:nth-child(1) {
+  width: 130px;
+  /* background: red; */
+  }
+
+/* Second Winners Column */
+.winners-board td:nth-child(2) {
+  width: 420px;
+  text-align: left;
+  /* background: orange; */
+}
+
+/* Third Winners Column */
+.winners-board td:nth-child(3) {
+  width: 130px;
+  /* background: yellow; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .display-options {
+  height: 75%;
+  width: 75%;
+
   font-size: 14px;
   font-family: Monaco;
 }
 
-.player-board {
-  /* font-family: Arial; */
-  border-collapse: collapse;
-  /* width: 50%; */
 
-  align-self: center;
-  display: flex;
-  justify-content: center;
+
+
+#board {
+  background-color: white;
 }
 
-.player-board td, .player-board th {
-  text-align: left;
-  padding: 8px;
-}
-
-.player-board tr:nth-child(even){background-color: #f2f2f2;}
-
-.player-board th {
-  padding-top: 12px;
-  padding-bottom: 6px;
-  text-align: center;
-  background-color: lightblue;
-  /* color: white; */
-}
-
-
-
-
-
-
+/* .player-form-container {
+  background-color: white;
+} */
 
 
 
@@ -107,25 +204,13 @@ button:active {
   }
  */
 
- .directions {
-   background-color: lightblue;
-   height: 75%;
-   width: 75%;
-   text-align: center;
-   margin: auto;
- }
+
+
+ 
 
 
 #main-content {
   text-align: center;
 }
 
-.display-options {
-  height: 75%;
-  width: 75%;
-}
 
-.greeting {
-  text-align: center;
-  font-size: 22px;
-}

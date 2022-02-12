@@ -14,7 +14,7 @@
         <div class="greeting">
             <p><h2>Welcome to the Peg Jump Game!</h2></p>
         </div>
-
+   
         <div class="instructions-header">
 
         </div>
@@ -24,8 +24,8 @@
                 The objective of this game is to remove all pegs on the triangle except one. 
             </p>
             <p>
-                Select a peg and move it diagonally over another peg to an open position on the board. 
-                The peg you jumped will be removed. You cannot move a peg unless it can jump over another.
+                Select a peg and move it diagonally over another to an open position on the board. 
+                <br>The peg you jumped over will be removed. You cannot move a peg unless it jumps over another.
                 <br>Repeat until you have won the game, or until there no moves left.
             </p>
             <p>
@@ -33,39 +33,43 @@
             </p>
         </div>
 
+        <!-- <div id=image>
+            <img src="https://cdn11.bigcommerce.com/s-whvhnri10h/products/1261/images/22699/apiqngsuh__49943.1644575007.386.513.jpg?c=2" width="500" height="350">
+        </div> -->
+
         <div class="play">
             <p><button id="play-btn">Play</button></p>
         </div>
 
         <div class="player-form-container">
 
-        </div>
+        </div> 
 
         <div class="player-container">
-            <b><u><h3>Winners Board</h3></u></b>
+            <b><u> <h3> Winners Board </h3> </u></b>
             <h5>Most Recent Wins:</h5>
-            <div class="player-board">
+            <div class="winners-board">
                 <table>
                     <tr>
-                        <th><h5>#</h5></th>
-                        <th><h5>Player Name</h5></th>
-                        <th><h5>Move Count</h5></th>
+                        <th> # </th>
+                        <th> Player Name </th>
+                        <th> Move Count </th>
                     </tr>
-                    <tr id=slot1><td>1</td></tr>
-                    <tr id=slot2><td>2</td></tr>
-                    <tr id=slot3><td>3</td></tr>
-                    <tr id=slot4><td>4</td></tr>
-                    <tr id=slot5><td>5</td></tr>
-                    <tr id=slot6><td>6</td></tr>
-                    <tr id=slot7><td>7</td></tr>
-                    <tr id=slot8><td>8</td></tr>
-                    <tr id=slot9><td>9</td></tr>
-                    <tr id=slot10><td>10</td></tr>
-                    <tr id=slot11><td>11</td></td>
-                    <tr id=slot12><td>12</td></tr>
-                    <tr id=slot13><td>13</td></tr>
-                    <tr id=slot14><td>14</td></tr>
-                    <tr id=slot15><td>15</td></tr>
+                    <tr id=slot1  > </tr>
+                    <tr id=slot2  > </tr>
+                    <tr id=slot3  > </tr>
+                    <tr id=slot4  > </tr>
+                    <tr id=slot5  > </tr>
+                    <tr id=slot6  > </tr>
+                    <tr id=slot7  > </tr>                   
+                    <tr id=slot8  > </tr>
+                    <tr id=slot9  > </tr>
+                    <tr id=slot10 > </tr>
+                    <tr id=slot11 > </tr>
+                    <tr id=slot12 > </tr>
+                    <tr id=slot13 > </tr>
+                    <tr id=slot14 > </tr>
+                    <tr id=slot15 > </tr>
                 </table>
             </div>
         </div>
@@ -73,6 +77,7 @@
         <div class="display-options">
             <br>
         </div>
+
 
         <div id="board">
             <table>
@@ -133,26 +138,32 @@
             </table>
         </div>
 
-        <script src="src/win.js"></script> 
-        <script src="src/board.js"></script> 
-        <script src="src/player.js"></script> 
-        <script src="src/tile.js"></script> 
-        <script src="src/game.js"></script> 
-        <script src="src/index.js"></script> 
+
+    </div>
+            
+
+    <div id="cheat-container">
+
+        <div class="cheat">  
+
+        </div>
+
+        <div id="game-details">
+            <div class="move-count"></div>
+            <div class="game-outcome"></div>
+            <!-- <div class="game-ids"></div> -->
+        </div>
+
     </div>
 
-    <div id="cheat-container"
 
-    <div class="cheat">  
-    </div>
+    <script src="src/win.js"></script> 
+    <script src="src/board.js"></script> 
+    <script src="src/player.js"></script> 
+    <script src="src/tile.js"></script> 
+    <script src="src/game.js"></script> 
+    <script src="src/index.js"></script> 
 
-    <div id="game-details">
-        <div class="move-count"></div>
-        <div class="game-outcome"></div>
-        <!-- <div class="game-ids"></div> -->
-    </div>
-
-</div>
 
   </body>
 </html>
