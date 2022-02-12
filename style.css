@@ -1,14 +1,4 @@
 /* https://stackoverflow.com/questions/6805482/css3-transition-animation-on-load */
-@keyframes slideInFromLeft {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-
 @keyframes slideInFromTop {
   0% {
     transform: translateY(-100%);
@@ -17,8 +7,6 @@
     transform: translateY(0);
   }
 }
-
-
 
 /* https://blog.hubspot.com/website/css-fade-in */
 @keyframes fadeIn {
@@ -57,7 +45,6 @@ body {
   font-size: 22px;
   width: 100%;
   height: 75px;
-  /* animation: .5s ease-out 0s .5 slideInFromLeft; */
 }
 
 .directions {
@@ -123,7 +110,6 @@ button:active, .submit:active {
   font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
-
 }
 
 .add-player-form {
@@ -212,6 +198,5 @@ table {
   margin: auto;
   text-align: center;
   padding: 7px;
-
   animation: .5s ease-out 0s .5 slideInFromTop;
 }
