@@ -80,6 +80,15 @@ SEED DATA (draft)
         Tile.create(options: tile[1], removes: tile[2], peg: true)
     end
 
+MOVE STEPS
+    1. firstMove()              --> [EVENT LISTENER] --> runs once 
+    2. *selectPeg()*            --> [EVENT LISTENER]
+    3. selectMovePosition()     --> [EVENT LISTENER]
+    4. movePegs()
+    5. resetMove() 
+        --> then selectPeg()
+
+
 Game Play ** - Have to base selection on removal; meaning a player can only select null tiles
     - track null tiles 
     - so, tile[01], peg: true/false (true = taken, false = empty/removed peg)
