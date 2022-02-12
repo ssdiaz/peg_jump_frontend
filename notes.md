@@ -185,37 +185,29 @@ NEED TO ADD TO BE FUNCTIONAL:
 Other things to do:
 - [DONE] Confirm Requirements
 - [DONE] Readme w/Backend Repo
-- [] Finish the design / layout
+- [DONE] Finish the design / layout
     - [DONE] Format pegs look
     - [DONE] If click ignore peg, do nothing
     - [DONE] refactor the pegs format
-    - [] Add image in front view
-    - [] make everything static on page; in terms of layout
-    - [] format next move
+    - [DONE] Add image in front view
+    - [DONE] make everything static on page; in terms of layout
 - [] Refactor index.js COMPLETELY!
     - [DONE] Fix Peg Options Display
-    - [] Remove unused items - like routes
-    - [] Figure out Seed Data and such
+    - [DONE] Remove unused items - like routes
+    - [X] Figure out Seed Data and such
     - [] Check variable names and such
     - [] MOVES
-      - [] MOVE 1
+      - [DONE] MOVE 1
       - [DONE] MOVE 2
       - [DONE] MOVE 3 - selectMovePosition
       - [DONE] MOVE 4
       - [] refine MOVES intructions
 - [] [STRETCH_GOALS]
-    - [] Win streak? instead of move count
-    - [] Demo Move?
-    - [] Updated Notes and User Story - add a line to see note.md to readme
-    - [] only let pegs.active = true pegs be clickable
-
-
-
-
-
-
-
-
+    - [X] Win streak? instead of move count
+    - [X] Demo Move?
+    - [X] Updated Notes and User Story - add a line to see note.md to readme
+    - [X] only let pegs.active = true pegs be clickable
+    - [X] Use javascript/css animation with webkits
 
 
 
@@ -268,3 +260,5 @@ EXPLAIN: (LEanring Goals)
   - substr() extracts part of a string. so "Hello World!".substr(1,4) //=> ello
 - [] read this! for validOptionslength === 0 pero keep what we have!-  https://www.freecodecamp.org/news/check-if-javascript-array-is-empty-or-not-with-length/
 - [] includes synxtax: array.includes(element, start)
+- [] namspace your routes?
+- [] Why add a script tag? to HTML file

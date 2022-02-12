@@ -1,14 +1,10 @@
-// make sure you add a script tag into your HTML file [Part 4]
-// console.log("in game")
+// Add a script tag into your HTML file
 
 class Game {
-
     constructor(data){
         this.id = data.id
         this.board_id = data.attributes.board_id
-
-        this.moveCount = 0
-        
+        this.moveCount = 0        
         this.win = null
 
         Game.all.push(this)
@@ -24,17 +20,13 @@ class Game {
 
         trueTiles.forEach(tile => {
             let arrayOptions = tile.options.substr(1, tile.options.length-2).split(", ")
-            //=> [4,13]            
             let arrayRemoves = tile.removes.substr(1, tile.removes.length-2).split(", ")
-            //=> [7,12]
 
             arrayRemoves.forEach(num => {
-                //=> num = 12
-                let removeTile = Tile.findById(`peg${num}`) //=> Tile 12
-                let indexRemove = arrayRemoves.indexOf(`${num}`) //=> 1
-
-                let indexOptions = arrayOptions[indexRemove] //=> 13
-                let optionTile = Tile.findById(`peg${indexOptions}`) //=> Tile 13
+                let removeTile = Tile.findById(`peg${num}`) 
+                let indexRemove = arrayRemoves.indexOf(`${num}`)
+                let indexOptions = arrayOptions[indexRemove] 
+                let optionTile = Tile.findById(`peg${indexOptions}`)              
 
                 if ((removeTile.active === true) && (optionTile.active === false)) {
                     movesLeft.push(tile)
@@ -48,7 +40,7 @@ class Game {
         let trueTiles = Tile.all.filter(tile => tile.active === true).length
 
         if (trueTiles === 1) {
-            alert("CONGRATS! You win! ")
+            alert("CONGRATS! You won!")
             console.log("GAME OVER - WON")
             this.win = true
 

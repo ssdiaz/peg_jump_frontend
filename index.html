@@ -8,15 +8,14 @@
   </head>
 
   <body>
-
     <div id="main-content">
 
         <div class="greeting">
             <p><h2>Welcome to the Peg Jump Game!</h2></p>
         </div>
-   
-        <div class="instructions-header">
 
+        <div class="instructions-header">
+    
         </div>
 
         <div class="directions">
@@ -25,28 +24,29 @@
             </p>
             <p>
                 Select a peg and move it diagonally over another to an open position on the board. 
-                <br>The peg you jumped over will be removed. You cannot move a peg unless it jumps over another.
-                <br>Repeat until you have won the game, or until there no moves left.
+                The peg you jumped over will be removed. You cannot move a peg unless it jumps over another.
+                Repeat until you have won the game, or until there no moves left.
             </p>
             <p>
-                Be careful - a couple of moves can cost you the game!
+                Be careful - a couple of wrong moves can cost you the game!
             </p>
         </div>
 
-        <!-- <div id=image>
-            <img src="https://cdn11.bigcommerce.com/s-whvhnri10h/products/1261/images/22699/apiqngsuh__49943.1644575007.386.513.jpg?c=2" width="500" height="350">
-        </div> -->
-
-        <div class="play">
-            <p><button id="play-btn">Play</button></p>
+        <div class="display-options">
+            <br><br>
         </div>
 
         <div class="player-form-container">
 
-        </div> 
+        </div>
+ 
+        <div class="play">
+            <p><button id="play-btn"><span>Play</span></button></p>
+        </div>
+ 
 
         <div class="player-container">
-            <b><u> <h3> Winners Board </h3> </u></b>
+            <b><u> <h3> Winner's Board </h3> </u></b>
             <h5>Most Recent Wins:</h5>
             <div class="winners-board">
                 <table>
@@ -73,11 +73,6 @@
                 </table>
             </div>
         </div>
-
-        <div class="display-options">
-            <br>
-        </div>
-
 
         <div id="board">
             <table>
@@ -137,25 +132,18 @@
                 </tr>
             </table>
         </div>
-
-
     </div>
-            
 
     <div id="cheat-container">
+        <div id="game-details">
+            <div class="move-count"></div>
+            <div class="game-outcome"></div>
+        </div>
 
         <div class="cheat">  
 
         </div>
-
-        <div id="game-details">
-            <div class="move-count"></div>
-            <div class="game-outcome"></div>
-            <!-- <div class="game-ids"></div> -->
-        </div>
-
     </div>
-
 
     <script src="src/win.js"></script> 
     <script src="src/board.js"></script> 
@@ -163,7 +151,5 @@
     <script src="src/tile.js"></script> 
     <script src="src/game.js"></script> 
     <script src="src/index.js"></script> 
-
-
   </body>
 </html>

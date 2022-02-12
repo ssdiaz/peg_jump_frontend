@@ -29,15 +29,7 @@ class Tile {
     //render integers/booleans to DOM
     renderPegElements() {
         document.querySelector(`#${this.id} .number`).innerText = this.number
-        //document.querySelector(`#${this.id} .active`).innerText = this.active
-       // document.querySelector(`#${this.id} .options`).innerText = this.options
-       // document.querySelector(`#${this.id} .removes`).innerText = this.removes
     }
-
-    //render updated active status for Tile
-    // renderActive() {
-    //     return this.active
-    // }
 
     //find Tile by ID ('peg#')
     static findById(id) {
@@ -46,23 +38,18 @@ class Tile {
 
     //return what peg is to be removed from selected and picked peg
     static returnRemovedPeg(selectedTile, pickedTile) {
-        //console.log("in returnRemovedPeg function")    
-
-        let optionsString = selectedTile.options //Tile 6
-        let optionsArray = optionsString.substr(1, optionsString.length-2).split(", ")
-        //=> [1, 4, 13, 15]   //console.log(optionsArray)
-      
-        let pickedIndex = optionsArray.indexOf(`${pickedTile.number}`, 0) //=> 0
-        //['1', '4', '13', '15']  //console.log(pickedIndexInOptions)
+        let optionsString = selectedTile.options 
+        let optionsArray = optionsString.substr(1, optionsString.length - 2).split(", ")
+              
+        let pickedIndex = optionsArray.indexOf(`${pickedTile.number}`, 0)
 
         let removesString = selectedTile.removes
-        let removesArray = removesString.substr(1, removesString.length-2).split(", ")
-          //=> ['3', '5', '9', '10']
+        let removesArray = removesString.substr(1, removesString.length - 2).split(", ")
       
-        let removePegNum = removesArray[pickedIndex]// => 3
-        let removePeg = Tile.findById(`peg${removePegNum}`) //=> Tile 3
+        let removePegNum = removesArray[pickedIndex]
+        let removePeg = Tile.findById(`peg${removePegNum}`) 
 
-        return removePeg  // RETURNS REMOVED PEG
+        return removePeg
     }
 
     static checkPegsRemoved() {

@@ -8,10 +8,6 @@ class Win {
         Win.all.push(this)
     }
 
-    // renderMoveCount(){
-    //     return this.move_count
-    // }
-
     renderMoveHTML() {
         return `      
             <td id="move-count">${this.move_count}</td>

@@ -1,5 +1,4 @@
 class Player {
-
     constructor(data) {
         this.id = data.id
         this.name = data.attributes.name
@@ -21,7 +20,7 @@ class Player {
     static renderPlayerForm() {
         return `  
             <form class="add-player-form">    
-                <h3>Save your name to the Winner Board!</h3>
+                <h3>Save your name to the Winner's Board!</h3>
                 
                 <input id="input-name"
                     type="text"
@@ -40,7 +39,6 @@ class Player {
             </form>
         `
     }
-
 }
 
 Player.all = []

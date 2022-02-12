@@ -1,8 +1,6 @@
 html *
 {
-   /* font-size: 1em !important; */
-   /* color: #000 !important; */
-   font-family: Monaco ;
+  font-family: Monaco ;
 }
 
 body {
@@ -13,9 +11,9 @@ body {
   background-attachment: fixed;
  }
 
-
 #main-content {
   margin: auto;
+  text-align: center;
 }
 
 .greeting {
@@ -28,11 +26,21 @@ body {
 
 .directions {
   font-size: 14px;
- background-color: lightblue;
- width: 50%;
- text-align: center;
- margin: auto;
- padding: 10px;
+  background-color: lightblue;
+  width: 50%;
+  text-align: justify;
+  margin: auto;
+  padding: 10px;
+}
+
+.display-options {
+  height: 75%;
+  width: 75%;
+  font-size: 12px;
+  font-family: Monaco;
+  margin: auto;
+  text-align: center;
+  color: rgb(99, 179, 130);
 }
 
 #play-btn {
@@ -41,9 +49,6 @@ body {
 
 button {
   border: none;
-  /* color: white; */
-  /* background-color: rgb(130, 238, 171); */
-  /* color: white; */
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -55,7 +60,15 @@ button {
 
 button:hover, .submit:hover {
   box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24);
-  /* box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 7px 25px 0 rgba(0,0,0,0.19); */
+}
+
+.button span:after{
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
 }
 
 button:active, .submit:active {
@@ -63,11 +76,10 @@ button:active, .submit:active {
   transform: translateY(1px);
 }
 
+/* for Submit Button Player's Name Form */
 .submit  {
   border: none;
-  /* color: white; */
-  background-color: rgb(130, 238, 171);
-  /* color: white; */
+  background-color: lightblue;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -77,6 +89,7 @@ button:active, .submit:active {
   cursor: pointer;
 }
 
+/* for Player's Name form */
 input[type=text], select {
   width: 25%;
   padding: 12px 20px;
@@ -87,10 +100,14 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
+/* for all tables */
+table {
+  display: flex;
+  justify-content: center;
+}
 
-
+/* full winner's board */
 .winners-board {
-  /* font-family: Arial; */
   border-collapse: collapse;
   /* width: 50%; */
   /* width: 200px; */
@@ -100,6 +117,7 @@ input[type=text], select {
   table-layout: fixed
 }
 
+/* winner's headers */
 .winners-board th {
   font-size: 16px;
   text-align: center;
@@ -107,110 +125,45 @@ input[type=text], select {
   padding: 10px;
 }
 
+/* winner's data / cell */
 .winners-board td {
   font-size: 14px;
   width: 200px;  
   padding: 8px;
 }
 
+/* every other winner's column row */
 .winners-board tr:nth-child(even){background-color: #f2f2f2;}
 
 /* First Winners Column */
 .winners-board td:nth-child(1) {
-  width: 130px;
+  width: 135px;
   /* background: red; */
   }
 
 /* Second Winners Column */
 .winners-board td:nth-child(2) {
-  width: 420px;
+  width: 425px;
   text-align: left;
   /* background: orange; */
 }
 
 /* Third Winners Column */
 .winners-board td:nth-child(3) {
-  width: 130px;
+  width: 135px;
   /* background: yellow; */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.display-options {
-  height: 75%;
-  width: 75%;
-
-  font-size: 14px;
-  font-family: Monaco;
-}
-
-
-
-
-#board {
-  background-color: white;
-}
-
-/* .player-form-container {
-  background-color: white;
-} */
-
-
-
-
-
+/* for Tiles */
 .peg {
-    height: 75px;
-    width: 75px;
-    background-color: violet;
-    border-radius: 50%;
-    border: none;
-    display: inline-block; 
-    position:relative;
-    margin: auto;
-    text-align: center;
-    padding: 7px;
-  }
-
-  table {
-    /* align-self: center; */
-    display: flex;
-    justify-content: center;
-  }
-
-  /* .triangle {
-    margin: 0 auto;
-    position:absolute; top:25px; left: 25%; 
-    opacity: 0.5;
-    width: 0;
-    height: 0;
-    border-left: 300px solid transparent;
-    border-right: 300px solid transparent;
-    border-bottom: 350px solid pink;
-  }
- */
-
-
-
- 
-
-
-#main-content {
+  height: 75px;
+  width: 75px;
+  background-color: violet;
+  border-radius: 50%;
+  border: none;
+  display: inline-block; 
+  position:relative;
+  margin: auto;
   text-align: center;
+  padding: 7px;
 }
-
-
