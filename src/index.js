@@ -145,7 +145,6 @@ function selectPeg(){
       selectPeg()
     }
   }, {once : true})
-
 }
 
 // Move 3
@@ -216,7 +215,7 @@ function changeToResetBtn(){
   })
 }
 
-//Set peg color on DOM
+// Set peg color on DOM
 function setPegColor(tile){
   let peg = document.querySelector(`#${tile.id}`)
 
@@ -227,6 +226,7 @@ function setPegColor(tile){
   }
 }
 
+// Changes the color of the instruction 'NEXT' move peg 
 function nextMoveColor(color){
   if (color === "violet") {
     return instructionsHeader.innerHTML = `<h5> Next Move: <span style="color: violet">violet</h5>`
@@ -280,13 +280,10 @@ function cheatWin() {
     setPegColor(winTile)
 
     checkGameOver()
-
-    return "cheated"
-  })
-  
+  })  
 }
 
-
+// Check if Game Over
 function checkGameOver() {
  if (Game.checkGameResult() === "game over"){
     const outcome = Game.checkWin() === true ? "WON" : "Loss"
@@ -297,9 +294,6 @@ function checkGameOver() {
     return true
   }  
 }
-
-
-
 
 //For Games Won: 
 
