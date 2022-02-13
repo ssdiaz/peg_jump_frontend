@@ -14,8 +14,8 @@ NOTES-
 
 
 
-[[[FRIDAY]]]
-NEED TO ADD TO BE FUNCTIONAL:
+[[FRIDAY]]
+NEEDS TO ADD TO BE FUNCTIONAL:
 - [DONE] if you click on a blank tile, ignore
 - [DONE] if you click same time again, unselect it; only for selectPeg
 - [DONE] a way to check the board and if won/loss
@@ -59,10 +59,9 @@ Other things to do:
 - [DONE] README.md
 - [] BLOG
      --- A Blog Post telling the story behind the application, challenges you overcame, and what you learned
-- [] VIDEO --- 1-2 mins
+- [DONE] VIDEO --- 1-2 mins
 - [DONE] has 3 AJAX calls (2 of CRUD) 
     -> CREATE Players, CREATE Wins, READ Game & Peg(?), READ Players and Wins
-- [] Read other blogs
 
 
 
@@ -70,12 +69,12 @@ Other things to do:
 - [] What is a Rails API 
 - [] All interactions between the client and the server must be handled asynchronously (AJAX) and use JSON as the communication format. // The backend and frontend must collaborate to demonstrate Client-Server Communication.
 EXPLAIN:
-- [] JavaScript - Use classes and functions to organize your code into reusable pieces. - are these classes separate? what abotu Ids??
+- [] JavaScript - Use classes and functions to organize your code into reusable pieces. - are these classes separate? what about Ids??
 - [] JavaScript - Translate JSON responses into JavaScript model objects using ES6 class or constructor function syntax.
 - [] JavaScript - Use ES6 features when appropriate (e.g. arrow functions, let & const, rest and spread syntax).
 - [] Review  Creating a Rails API from Scratch - https://github.com/learn-co-curriculum/js-rails-as-api-creating-a-rails-api-from-scratch
 - [] 
-- [] 
+- [] READ MY OWN NOTES!!!!!!!!!!! All 270 pages :)
 - [] 
 In particular, the JavaScript Fundamentals concepts your reviewer may ask about include:
 - [] variables
@@ -105,3 +104,7 @@ EXPLAIN: (LEanring Goals)
 - [] includes synxtax: array.includes(element, start)
 - [] namspace your routes?
 - [] Why add a script tag? to HTML file
+- 
+- READ:
+- [] for fetch/ajax requests - https://www.freecodecamp.org/news/how-to-use-fetch-api/#:~:text=Fetch%20is%20an%20interface%20for,promise%2C%20with%20a%20Response%20object.
+

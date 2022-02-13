@@ -12,7 +12,6 @@ let pegPicked = ""
 let pegRemoved = ""
 let movesTotal = 0 
 
-
 // Load the DOM;
 document.addEventListener('DOMContentLoaded', () => {    
   console.log("DOM loaded") 
@@ -33,7 +32,7 @@ function fetchPlayer() {
 }
 
 // GET fetch Wins from database
-function fetchWins() {  //fetches wins from database
+function fetchWins() { 
   fetch("http://localhost:3000/wins")
   .then(response => response.json())
     .then(winsData => {
@@ -65,9 +64,10 @@ function newGame() {
     document.querySelector(".directions").style.textAlign = 'center'
 
     getGameTiles()
-    firstMove()
-    cheatWin()
     changeToResetBtn()
+
+    firstMove()
+    cheatWin() 
   });
 }
 
@@ -117,12 +117,7 @@ function firstMove() {
 // Move 2 - start of play loop
 function selectPeg(){
 
-  if (Game.checkGameResult() === "game over"){
-    const outcome = Game.checkWin() === true ? "WON" : "Loss"
-    document.querySelector("#game-details .game-outcome").innerText = `Game Over: ${outcome}`
-    instructions.innerHTML = ``
-    return
-  } 
+  if (checkGameOver()) { return }
 
   instructions.innerText= `Select a peg to move`
   nextMoveColor("violet")
@@ -150,6 +145,7 @@ function selectPeg(){
       selectPeg()
     }
   }, {once : true})
+
 }
 
 // Move 3
@@ -198,7 +194,6 @@ function movePegs(){
 
   resetMove()
   selectPeg()  
-  gameWon()
 }
 
 // Move 5
@@ -264,7 +259,7 @@ function resetPegSelect() {
 
 // Reset Game / Reload window page
 function resetGame(){
-    window.location.reload();
+  window.location.reload();
 }
 
 // To cheat a win
@@ -283,15 +278,32 @@ function cheatWin() {
     let winTile = Tile.all[12]
     winTile.active = true
     setPegColor(winTile)
-    selectPeg()
-    gameWon()
+
+    checkGameOver()
+
+    return "cheated"
   })
+  
 }
+
+
+function checkGameOver() {
+ if (Game.checkGameResult() === "game over"){
+    const outcome = Game.checkWin() === true ? "WON" : "Loss"
+    document.querySelector("#game-details .game-outcome").innerText = `Game Over: ${outcome}`
+    instructions.innerHTML = ``
+    
+    checkGameWin()   
+    return true
+  }  
+}
+
+
 
 
 //For Games Won: 
 
-function gameWon(){
+function checkGameWin(){
   if (Game.checkWin() === true){
     document.querySelector(".instructions-header").innerHTML = `<h5> Next Move: &#128526; </h5>` //emoji
     document.querySelector(".directions").style.backgroundColor = "white"
@@ -343,7 +355,7 @@ function createWin(player){
       move_count: movesTotal,
       win_count: 1,
       player_id: player.data.id
-    }  )    
+    })    
   })
   .then(response => response.json())
   resetGame()

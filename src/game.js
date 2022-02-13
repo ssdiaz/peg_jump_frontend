@@ -48,7 +48,6 @@ class Game {
         } else if (Game.movesRemaining() === 0) {
             alert("Sorry, you lost :( ")
             console.log("GAME OVER - LOST")
-            //outcome = "Loss"
             this.win = false
             
             return "game over"
