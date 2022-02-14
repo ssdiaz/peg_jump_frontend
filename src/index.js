@@ -48,7 +48,7 @@ function displayWinnerBoard() {
   let first15Players = Player.all.slice(0, 15);
 
   for (let i = 0; i < (first15Players.length); i++) {
-    let player = Player.all[i]
+    let player = first15Players[i]
     let playerId = parseInt(player.id)
     let winPlayer = Win.findByPlayerId(playerId)
 
@@ -149,7 +149,7 @@ function selectPeg(){
 
 // Move 3
 function selectMovePosition(){
-  instructions.innerHTML = 'Select an available position to move selected peg'
+  instructions.innerText = 'Select an available position to move selected peg'
   nextMoveColor("grey")
 
   board.addEventListener('click', (e) => {
