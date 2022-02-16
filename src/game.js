@@ -10,6 +10,10 @@ class Game {
         Game.all.push(this)
     }
 
+    increaseMoveCount() {
+        return this.moveCount = this.moveCount + 1
+    }
+
     static findById(id){
         return this.all.find(game => game.id === id)
     }

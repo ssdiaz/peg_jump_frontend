@@ -2,7 +2,7 @@
 const board = document.getElementById('board'); 
 const btnPlay = document.querySelector("#play-btn");
 const instructions = document.querySelector(".directions")
-const instructionsHeader = document.querySelector(".instructions-header")
+const instructionsHeader = document.querySelector(".instructions-header") //) > h5 > span")
 const displayOptionsText = document.querySelector(".display-options")
 const allPegs = document.getElementsByClassName("peg")
 
@@ -46,56 +46,58 @@ function fetchWins() {
 
 // Display Winner's Board
 function displayWinnerBoard() { 
-  let first15Players = Player.all.slice(0, 15);
+  //setting x to 15 for first 15 players - now this can be changed to whatever
+  const x = 15
+  let firstXPlayers = Player.all.slice(0, x);
 
-  for (let i = 0; i < (first15Players.length); i++) {
-    let player = first15Players[i]
+  const winnersTableBody = document.querySelector("#winners-board > tbody")
+
+  for (let i = 0; i < (firstXPlayers.length); i++) {
+    let player = firstXPlayers[i]
     let playerId = parseInt(player.id)
     let winPlayer = Win.findByPlayerId(playerId)
 
-
     // //create row
-    // let winnerRow = document.createElement('tr')
-    // winnerRow.className = "slot"
+    let winnerRow = document.createElement('tr')
+    winnerRow.setAttribute('id', `slot${i}`)
 
+    // create number div and element
+    let numberDiv = document.createElement('td')
+    numberDiv.className = "num"
+    numberDiv.innerText =  i + 1
+
+    //col 1 - # numbers
+    winnerRow.appendChild( numberDiv );
+  
+    //col 2 - Player Names
+    winnerRow.insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+
+    //col 3 - Move Count
+    winnerRow.insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
+
+    //add winnerRow to winnerTableBody
+    winnersTableBody.appendChild(winnerRow);
+
+
+//////WORKS:::::
     // // create number div and element
     // let numberDiv = document.createElement('td')
     // numberDiv.className = "num"
     // numberDiv.innerText =  i + 1
 
     // //col 1 - # numbers
-    // winnerRow.appendChild( numberDiv );
+    // document.querySelector(`#slot${i+1}`).appendChild(numberDiv);
   
     // //col 2 - Player Names
-    // winnerRow.insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+    // document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+    // //document.querySelector(`#slot${i+1}`).appendChild(player.renderPlayerHTML());
 
     // //col 3 - Move Count
-    // winnerRow.insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
+    // document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
 
-
-    // //add in winnerRow
-    // document.querySelector(`.winners-board`).insertAdjacentHTML("afterend", winnerRow );
-
-
-
-          // create number div and element
-          let numberDiv = document.createElement('td')
-          numberDiv.className = "num"
-          numberDiv.innerText =  i + 1
-
-          //col 1 - # numbers
-          document.querySelector(`#slot${i+1}`).appendChild(numberDiv);
-        
-          //col 2 - Player Names
-          document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
-          //document.querySelector(`#slot${i+1}`).appendChild(player.renderPlayerHTML());
-
-          //col 3 - Move Count
-          document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
-
-          //old code:
-            //document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
-            //document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
+    // //old code:
+    //   //document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
+    //   //document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
   }
 }
 
@@ -119,7 +121,7 @@ function getGameTiles() {
   .then(response => response.json())
   .then(games => {
     games.data.forEach( data => { 
-      let newGame = new Game(data)
+       newGame = new Game(data)
 
       //remove players div content
       document.querySelector(".player-container").innerText =  ""
@@ -274,19 +276,16 @@ function selectMovePosition(){
 
 // Move 4
 function movePegs(){
-  document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
+  document.querySelector("#game-details .move-count").innerText = `Move Count: ${newGame.increaseMoveCount()}` 
 
   pegSelected.active = false
-  //setPegColor(pegSelected) 
   setPegColor(pegSelected, 'removed-peg')
 
   pegPicked.active = true
-  //setPegColor(pegPicked) 
   setPegColor(pegPicked, 'active-peg')
   
   pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked)
   pegRemoved.active = false
-  //setPegColor(pegRemoved)
   setPegColor(pegRemoved, 'removed-peg')
 
   resetMove()
@@ -316,24 +315,15 @@ function changeToResetBtn(){
 // Set peg color on DOM
 function setPegColor(tile, pegStatus){
   let peg = document.querySelector(`#${tile.id}`)
-
-  // if (tile.active === true) {
-  //   peg.style.backgroundColor = 'violet'
-  // } else {
-  //   peg.style.backgroundColor = '#bbb'
-  // }
-
-
-  //let peg = document.querySelector(`#${tileClicked.id}`)
   peg.setAttribute('class', pegStatus)
 }
 
 // Changes the color of the instruction 'NEXT' move peg 
 function nextMoveColor(color){
   if (color === "violet") {
-    return instructionsHeader.innerHTML = `<h5> Next Move: <span style="color: violet">violet</h5>`
+    return instructionsHeader.innerHTML = `<h5> Next Move: <span style="color: violet">violet</span></h5>`
   } else {
-    return instructionsHeader.innerHTML = `<h5> Next Move: <span style="color: #bbb">&nbsp;&nbsp;grey</h5>`
+    return instructionsHeader.innerHTML = `<h5> Next Move: <span style="color: #bbb">&nbsp;&nbsp;grey</span></h5>`
   }
 }
 
