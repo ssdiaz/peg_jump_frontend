@@ -168,20 +168,23 @@ table {
 }
 
 /* First Winners Column */
-.winners-board td:nth-child(1) {
+/* .winners-board td:nth-child(1) { */
+.num {
   width: 135px;
   /* background: red; */
   }
 
 /* Second Winners Column */
-.winners-board td:nth-child(2) {
+/* .winners-board td:nth-child(2) { */
+.player-name {
   width: 425px;
   text-align: left;
   /* background: orange; */
 }
 
 /* Third Winners Column */
-.winners-board td:nth-child(3) {
+/* .winners-board td:nth-child(3) { */
+.move-count  {
   width: 135px;
   /* background: yellow; */
 }
@@ -199,4 +202,8 @@ table {
   text-align: center;
   padding: 7px;
   animation: .5s ease-out 0s .5 slideInFromTop;
+}
+
+.pegSelected {
+  background-color: yellow;
 }

@@ -4,6 +4,7 @@ const btnPlay = document.querySelector("#play-btn");
 const instructions = document.querySelector(".directions")
 const instructionsHeader = document.querySelector(".instructions-header")
 const displayOptionsText = document.querySelector(".display-options")
+const allPegs = document.getElementsByClassName("peg")
 
 // Variables
 let validOptions = []
@@ -52,8 +53,49 @@ function displayWinnerBoard() {
     let playerId = parseInt(player.id)
     let winPlayer = Win.findByPlayerId(playerId)
 
-    document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
-    document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
+
+    // //create row
+    // let winnerRow = document.createElement('tr')
+    // winnerRow.className = "slot"
+
+    // // create number div and element
+    // let numberDiv = document.createElement('td')
+    // numberDiv.className = "num"
+    // numberDiv.innerText =  i + 1
+
+    // //col 1 - # numbers
+    // winnerRow.appendChild( numberDiv );
+  
+    // //col 2 - Player Names
+    // winnerRow.insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+
+    // //col 3 - Move Count
+    // winnerRow.insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
+
+
+    // //add in winnerRow
+    // document.querySelector(`.winners-board`).insertAdjacentHTML("afterend", winnerRow );
+
+
+
+          // create number div and element
+          let numberDiv = document.createElement('td')
+          numberDiv.className = "num"
+          numberDiv.innerText =  i + 1
+
+          //col 1 - # numbers
+          document.querySelector(`#slot${i+1}`).appendChild(numberDiv);
+        
+          //col 2 - Player Names
+          document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+          //document.querySelector(`#slot${i+1}`).appendChild(player.renderPlayerHTML());
+
+          //col 3 - Move Count
+          document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
+
+          //old code:
+            //document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
+            //document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
   }
 }
 
@@ -90,11 +132,25 @@ function getGameTiles() {
 
       data.attributes.tiles.forEach( tileData =>  {
         let newTile = new Tile(tileData)
-        document.querySelector(`#tile${newTile.number}`).innerHTML += newTile.renderPegHTML()
+        document.querySelector(`#tile${newTile.number}`).insertAdjacentHTML("beforeend", newTile.renderPegHTML() );
+        //old code:
+        //document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
+
         newTile.renderPegElements() 
       })
     })
   })
+
+
+
+
+
+console.log("hi")
+console.log(allPegs)
+  for (const peg of allPegs) {
+    console.log (peg)
+  }
+
 }
 
 // Move 1 - First Move; runs once
@@ -102,16 +158,48 @@ function firstMove() {
   instructions.innerText = 'Click a peg to remove'
   nextMoveColor("violet")
 
-  board.addEventListener('click', (e) => {
-    if (validClick(e)){
-      let tileClicked = Tile.findById(e.target.id )
-      tileClicked.active = false
-      setPegColor(tileClicked)
-      selectPeg()
-    } else { 
-      firstMove()
-    }
-  }, {once : true})
+  // for (const peg of allPegs) {
+  //   console.log (peg)
+  // }
+
+
+  // for (let peg of allPegs) {
+  //   console.log(peg)
+
+    board.addEventListener('click', (e) => {
+      console.log(e.target)
+
+      if (validClick(e)){
+        let tileClicked = Tile.findById(e.target.id )
+        tileClicked.active = false
+        setPegColor(tileClicked)
+        selectPeg()
+      } else { 
+        firstMove()
+      }
+    }, {once : true})
+
+
+
+
+  // }
+
+
+
+
+
+
+
+  // board.addEventListener('click', (e) => {
+  //   if (validClick(e)){
+  //     let tileClicked = Tile.findById(e.target.id )
+  //     tileClicked.active = false
+  //     setPegColor(tileClicked)
+  //     selectPeg()
+  //   } else { 
+  //     firstMove()
+  //   }
+  // }, {once : true})
 }
 
 // Move 2 - start of play loop
@@ -126,6 +214,11 @@ function selectPeg(){
     if (validClick(e) && clickedTileStatus(e) === true) { 
       pegSelected = Tile.findById(e.target.id)
       document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'yellow'
+
+      console.log(pegSelected)
+
+
+
 
       let optionsArray = pegSelected.options.substr(1, pegSelected.options.length - 2).split(", ").map(num => parseInt(num))
 

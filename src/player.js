@@ -7,9 +7,8 @@ class Player {
     }
 
     renderPlayerHTML(num) {
-        return `    
-            <td>${num}</td>
-            <td id="name">${this.name}</td>
+        return `
+            <td class="player-name">${this.name}</td>
         `
     }
 

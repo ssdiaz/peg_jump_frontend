@@ -66,37 +66,37 @@ Other things to do:
 
 
 [[SUNDAY]]STUDY GUIDE: 
-- [] What is a Rails API 
-- [] All interactions between the client and the server must be handled asynchronously (AJAX) and use JSON as the communication format. // The backend and frontend must collaborate to demonstrate Client-Server Communication.
+- [DONE] What is a Rails API 
+- [DONE] All interactions between the client and the server must be handled asynchronously (AJAX) and use JSON as the communication format. // The backend and frontend must collaborate to demonstrate Client-Server Communication.
 EXPLAIN:
     - [] JavaScript - Use classes and functions to organize your code into reusable pieces. - are these classes separate? what about Ids??
     - [] JavaScript - Translate JSON responses into JavaScript model objects using ES6 class or constructor function syntax.
-    - [] JavaScript - Use ES6 features when appropriate (e.g. arrow functions, let & const, rest and spread syntax).
-    - [] Review  Creating a Rails API from Scratch - https://github.com/learn-co-curriculum/js-rails-as-api-creating-a-rails-api-from-scratch
+    - [DONE] JavaScript - Use ES6 features when appropriate (e.g. arrow functions, let & const, rest and spread syntax).
+    - [DONE] Review  Creating a Rails API from Scratch - https://github.com/learn-co-curriculum/js-rails-as-api-creating-a-rails-api-from-scratch
 
 - [] READ MY OWN NOTES!!!!!!!!!!! All 270 pages :)
 
 In particular, the JavaScript Fundamentals concepts your reviewer may ask about include:
-    - [] variables
-    - [] data structures
-    - [] functions
-    - [] hoisting
-    - [] scope
+    - [DONE] variables
+    - [DONE] data structures
+    - [DONE] functions
+    - [DONE] hoisting
+    - [DONE] scope
     - [] context
     - [] this
     - [] closures
     - [] ES6 syntax
-    - [] let, const
-    - [] arrow functions
+    - [DONE] let, const
+    - [DONE] arrow functions
 EXPLAIN: (Leanring Goals)
     - [] Explain how Rails routes a request to a controller and method based on the URL and HTTP verb
     - [] Use render json: to render serialized JSON
     - [] Select, Create, and Modify DOM nodes
     - [] Attach listeners to DOM nodes to respond to user interaction
     - [] Use preventDefault to control form submit behavior
-    - [] Use fetch with 'GET', 'POST', 'PATCH' & 'DELETE' HTTP methods
-    - [] Create a JavaScript object with ES6 class syntax
-    - [] Instantiate JavaScript objects and call methods on them.
+    - [DONE] Use fetch with 'GET', 'POST', 'PATCH' & 'DELETE' HTTP methods
+    - [DONE] Create a JavaScript object with ES6 class syntax
+    - [DONE] Instantiate JavaScript objects and call methods on them.
 
 - [] EXPLAIN:      let optionsArray = pegSelected.options.substr(1, pegSelected.options.length-2).split(", ") //=> (3) ['1', '4', '15']
   - substr() extracts part of a string. so "Hello World!".substr(1,4) //=> ello
@@ -139,6 +139,11 @@ Arrays
     - RECAP - DESTRUCTIVE:
         - push() pushes elements onto the ends of arrays  ||  pop() pops them off
         - unshift() adds elements to the beginnings of arrays  ||  shift() pulls them off
+    - Array is actually a special type of Object; anything that can be done to an Object can be done to an Array
+    - Data types in JS 
+        – numbers, strings, Booleans, symbols, Objects, null, undefined
+            - Array is a special type of Object
+            - Fundamental Truth: all keys in Objects and all indexes in Arrays are actually strings, converted by the JS Engine
 FUNCTIONS
     - First class Objects (data structures) of the langauge
         - assigned to a variable, stored in a data structure, pass as an argument, return value of another function
@@ -166,7 +171,7 @@ JS Engine
             - if the engine can't find a match in the global scope - it throws a reference error
     - we can use the same identifier (const name = ) to declare variables/functions in multiple scopes
 Form
-    - form elements autoamtically submit the form and edirects to a new URL - need to add the preventDefault() to stop this
+    - form elements autoamtically submit the form and redirects to a new URL - need to add the preventDefault() to stop this
 Fetch() function
     - AJAX technique is just a way to send data
     -  global method on the window object
@@ -175,27 +180,62 @@ Fetch() function
         --- takes response from URL and converts it to JSON
     - the final .then() is where you get some JSON passed in (the return the of the first then()) where you can then do whatver actino you want / use it to manipulate the DOM
         --- allows you to grab that converted json response to do whatever you want / maniupulate the dom
+    - fetch is like a little mini browser - it gos to a URL to make a network request and sends renders it back with then
+    - Correct to say: "fetch() uses an HTTP POST to send content gathered in a JavaScript Object." 
+    - Data being sent in fetch() must be stored in the body of the configurationObject: this must be as a string as the data being sent is text (just like when it is received and we need to convert the response to a JSON string so we can use it to manipulate the DOM)
+        *** page 110 for good example of how I should have set up fetch POST oops oh well ***
+    - catch(0 is used for when things go wrong with fetch)
 APIs
     - allow you to share your data with the internet / another program
 JSON
     - just a way to format data
-JS Objects
+JS Objects ------ REVIEW OBJECTS PAGE 77 *****
     - not like OO Programming, more like key/value data structure
-    
+    - have { } ... const object = { ... }
+    - ***** review dot notation and bracket notatino for selctingkey values ***********
+    - Variables don’t work with the dot operator because it treats the variable name as a literal key 
+        - address.key is trying to access the property on address with a key of key instead of street, zipCode, etc.
+Asynchronous JavaScript
+    - browsers use an asynchonous execution model
+        - do little bits of lots of tasks until all tasks are done AKA cooking a thanksgiving meal so all is warm at the same time! 
+- Rails as API
+    - you don't need instance variables becasue youre not rendering views
+        -  now we're directly rendering JSON in the same action (the controller) and we no longer need instance variables for the sepearate views (bc, not usign views)
+        - immedaitely rendering the model the JSON and not using ERB
 
-
-
-
-
-
-
-
-
-
-
+- ... JavaScript’s 3 magical dots can be used in two different ways:
+    - rest parameter – allows you to collect the rest of your remining arguments that you are passing into your function into an array
+        - so, function muppetlat(a,b, ...muppets) { ... means  you are getting the REST of your paramenters into an array (called muppest). If you only pass in 2 params, you get an enmpty array in muppets
+    - spread operator – allows you to pass elements of an array into a function as an argument
+        - allows us to pass elements of an array into a function as an argument 
+        - add(...arr) means array=[1,2,3] will be used as arguemnts in the function
+- Object.assign()
+    - alows us to combine properies form multiple objects into a single object
+- Hoisting
+    - Javasctipe's ability to call functions BEFORE They appear in code
+        - for hoisting, function must be defined using a function delcaration => name() {}
+- Function Expression
+    - no name: =>  function(){}
+    - also just regular exxpressions => 1+1
+    - return is the function itself
+    - JS doesn't recognize this as a function expression but as a function delcaraion thats missing a name
+    - to tell JS that it's a funciton expression, use the grouping operator () ; meaning, wrap it in the grouping operator () to tell JS to interpret what's inside the () as a value and not a declaration
+    - functions with no name are anonymous and no way to call them directly; we loose access to them immediately once created
+        - how to invoke? use it as a callback functions like in event listeners
+        - or, you can assign it to a varaible and use that variable as a pointer and call it with ()
+    - NOTE; Functional expressions ARE NOT HOISTED - same for any varaibel assigment
+- IIFE - immediately invoked function expression
+    (function(baseNumber){
+        return basenumber + 3
+    })(2) //=> 5
 
 
 
 OTHER
 - behvaiors on objects are called methods
 - using innerHTML can lead to HTML hacks if using userr driven data
+
+
+
+REFACTOR
+- *** line 65 - insertAdjacentHTML ***

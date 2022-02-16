@@ -10,7 +10,7 @@ class Win {
 
     renderMoveHTML() {
         return `      
-            <td id="move-count">${this.move_count}</td>
+            <td class="move-count">${this.move_count}</td>
         `
     }
 
