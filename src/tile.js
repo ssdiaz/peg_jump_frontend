@@ -4,7 +4,6 @@ class Tile {
         this.options = data.options
         this.removes = data.removes
         this.active = data.active
-        this.board_id = data.board_id
         this.number = data.number
 
         Tile.all.push(this)
@@ -22,7 +21,6 @@ class Tile {
                 </div>
                 <div class="removes" id="${this.id}">
                 </div>
-                
             </button>
         `
     }

@@ -5,6 +5,8 @@ const instructions = document.querySelector(".directions")
 const instructionsHeader = document.querySelector(".instructions-header")
 const displayOptionsText = document.querySelector(".display-options")
 const allPegs = document.getElementsByClassName("peg")
+//const allTiles = document.getElementsByClassName("tile")
+// const allTiles = document.querySelectorAll('#board tbody .tile')
 
 // Variables
 let validOptions = []
@@ -46,10 +48,8 @@ function fetchWins() {
 
 // Display Winner's Board
 function displayWinnerBoard() { 
-
   const x = 15    //setting x to 15 for first 15 players - now this can be changed to whatever
   const firstXPlayers = Player.all.slice(0, x);
-
   const winnersTableBody = document.querySelector("#winners-board tbody")
 
   for (let i = 0; i < (firstXPlayers.length); i++) {
@@ -58,8 +58,7 @@ function displayWinnerBoard() {
     let winPlayer = Win.findByPlayerId(playerId)
 
     // //create row
-    let winnerRow = document.createElement('tr')
-    winnerRow.setAttribute('id', `slot${i}`)
+    let winnerRow = document.createElement('tr')    //winnerRow.setAttribute('id', i+1)
 
     // create number div and element
     let numberDiv = document.createElement('td')
@@ -87,10 +86,11 @@ function newGame() {
     document.querySelector(".directions").style.textAlign = 'center'
 
     getGameTiles()
-    changeToResetBtn()
 
-    firstMove()
-    cheatWin() 
+    // changeToResetBtn()
+
+    // firstMove()
+    // cheatWin() 
   });
 }
 
@@ -100,7 +100,7 @@ function getGameTiles() {
   .then(response => response.json())
   .then(games => {
     games.data.forEach( data => { 
-       newGame = new Game(data)
+      newGame = new Game(data)
 
       //remove players div content
       document.querySelector(".player-container").innerText =  ""
@@ -114,23 +114,22 @@ function getGameTiles() {
       data.attributes.tiles.forEach( tileData =>  {
         let newTile = new Tile(tileData)
         document.querySelector(`#tile${newTile.number}`).insertAdjacentHTML("beforeend", newTile.renderPegHTML() );
-        //old code:
-        //document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
-
+        document.querySelector(`#tile${newTile.number}`).className = "tile"
         newTile.renderPegElements() 
       })
+
+      allTiles = document.querySelectorAll('#board tbody .tile')
+
+      
     })
+    changeToResetBtn()
+
+    firstMove()
+    cheatWin()
+
+
+    // tileEventListener()
   })
-
-
-
-
-
-console.log("hi")
-console.log(allPegs)
-  for (const peg in allPegs) {
-    console.log (peg)
-  }
 }
 
 
@@ -138,43 +137,6 @@ console.log(allPegs)
 function firstMove() {
   instructions.innerText = 'Click a peg to remove'
   nextMoveColor("violet")
-
-  // for (const peg in allPegs) {
-  //   console.log (peg)
-  // }
-
-
-  // for (let peg of allPegs) {
-  //   console.log(peg)
-
-    board.addEventListener('click', (e) => {
-      console.log(e.target)
-
-      if (validClick(e)){
-        let tileClicked = Tile.findById(e.target.id)
-        tileClicked.active = false
-
-        setPegColor(tileClicked, 'removed-peg')
-        //let peg = document.querySelector(`#${tileClicked.id}`)
-        //peg.setAttribute('class', 'peg-selected')
-
-
-        selectPeg()
-      } else { 
-        firstMove()
-      }
-    }, {once : true})
-
-
-
-
-  // }
-
-
-
-
-
-
 
   // board.addEventListener('click', (e) => {
   //   if (validClick(e)){
@@ -186,7 +148,21 @@ function firstMove() {
   //     firstMove()
   //   }
   // }, {once : true})
+
+  for (const tile of allTiles) {
+    // console.log (tile)
+    tile.addEventListener('click', function(e)  {
+      console.log (e.target)
+      let tileClicked = Tile.findById(e.target.id)
+      tileClicked.active = false
+      setPegColor(tileClicked, 'removed-peg')
+      selectPeg()
+    }, {once : true})
+    return
+  }
+
 }
+
 
 // Move 2 - start of play loop
 function selectPeg(){
