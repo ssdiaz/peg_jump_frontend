@@ -12,7 +12,7 @@ class Tile {
 
     //render HTML for Peg
     renderPegHTML(){
-        return `      
+        return `    
             <button class="peg" id="${this.id}">
                 <div class="number" id="${this.id}">
                 </div>
@@ -22,6 +22,7 @@ class Tile {
                 </div>
                 <div class="removes" id="${this.id}">
                 </div>
+                
             </button>
         `
     }

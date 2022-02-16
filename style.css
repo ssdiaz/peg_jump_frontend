@@ -191,7 +191,7 @@ table {
 
 /* for Tiles */
 .peg {
-  height: 75px;
+  /* height: 75px;
   width: 75px;
   background-color: violet;
   border-radius: 50%;
@@ -200,10 +200,33 @@ table {
   position:relative;
   margin: auto;
   text-align: center;
-  padding: 7px;
+  padding: 7px; */
   animation: .5s ease-out 0s .5 slideInFromTop;
 }
 
-.pegSelected {
+
+.peg, .selected-peg, .active-peg, .removed-peg  {
+  height: 75px;
+  width: 75px;
+  /* background-color: violet; */
+  border-radius: 50%;
+  border: none;
+  display: inline-block; 
+  position:relative;
+  margin: auto;
+  text-align: center;
+  padding: 7px;
+  /* animation: .5s ease-out 0s .5 slideInFromTop; */
+}
+
+.selected-peg {
   background-color: yellow;
+}
+
+.active-peg, .peg{
+  background-color: violet;
+}
+
+.removed-peg {
+  background-color: #bbb;
 }

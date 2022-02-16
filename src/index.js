@@ -125,10 +125,10 @@ function getGameTiles() {
       document.querySelector(".player-container").innerText =  ""
 
       //show move count
-      document.querySelector("#game-details .move-count").innerText =  `Move Count: ${newGame.moveCount}` 
+      document.querySelector("#game-details .move-count").innerText = `Move Count: ${newGame.moveCount}` 
 
       //diplay Game Outcome
-      document.querySelector("#game-details .game-outcome").innerText =  `Game Status: In Progress`
+      document.querySelector("#game-details .game-outcome").innerText = `Game Status: In Progress`
 
       data.attributes.tiles.forEach( tileData =>  {
         let newTile = new Tile(tileData)
@@ -147,18 +147,18 @@ function getGameTiles() {
 
 console.log("hi")
 console.log(allPegs)
-  for (const peg of allPegs) {
+  for (const peg in allPegs) {
     console.log (peg)
   }
-
 }
+
 
 // Move 1 - First Move; runs once
 function firstMove() {
   instructions.innerText = 'Click a peg to remove'
   nextMoveColor("violet")
 
-  // for (const peg of allPegs) {
+  // for (const peg in allPegs) {
   //   console.log (peg)
   // }
 
@@ -170,9 +170,14 @@ function firstMove() {
       console.log(e.target)
 
       if (validClick(e)){
-        let tileClicked = Tile.findById(e.target.id )
+        let tileClicked = Tile.findById(e.target.id)
         tileClicked.active = false
-        setPegColor(tileClicked)
+
+        setPegColor(tileClicked, 'removed-peg')
+        //let peg = document.querySelector(`#${tileClicked.id}`)
+        //peg.setAttribute('class', 'peg-selected')
+
+
         selectPeg()
       } else { 
         firstMove()
@@ -213,12 +218,9 @@ function selectPeg(){
   board.addEventListener('click', (e) => { 
     if (validClick(e) && clickedTileStatus(e) === true) { 
       pegSelected = Tile.findById(e.target.id)
-      document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'yellow'
 
-      console.log(pegSelected)
-
-
-
+      //set color to yellow
+      setPegColor(pegSelected, 'selected-peg')
 
       let optionsArray = pegSelected.options.substr(1, pegSelected.options.length - 2).split(", ").map(num => parseInt(num))
 
@@ -275,14 +277,17 @@ function movePegs(){
   document.querySelector("#game-details .move-count").innerText =  `Move Count: ${movesTotal += 1}` 
 
   pegSelected.active = false
-  setPegColor(pegSelected) 
+  //setPegColor(pegSelected) 
+  setPegColor(pegSelected, 'removed-peg')
 
   pegPicked.active = true
-  setPegColor(pegPicked) 
+  //setPegColor(pegPicked) 
+  setPegColor(pegPicked, 'active-peg')
   
   pegRemoved = Tile.returnRemovedPeg(pegSelected, pegPicked)
   pegRemoved.active = false
-  setPegColor(pegRemoved)
+  //setPegColor(pegRemoved)
+  setPegColor(pegRemoved, 'removed-peg')
 
   resetMove()
   selectPeg()  
@@ -309,14 +314,18 @@ function changeToResetBtn(){
 }
 
 // Set peg color on DOM
-function setPegColor(tile){
+function setPegColor(tile, pegStatus){
   let peg = document.querySelector(`#${tile.id}`)
 
-  if (tile.active === true) {
-    peg.style.backgroundColor = 'violet'
-  } else {
-    peg.style.backgroundColor = '#bbb'
-  }
+  // if (tile.active === true) {
+  //   peg.style.backgroundColor = 'violet'
+  // } else {
+  //   peg.style.backgroundColor = '#bbb'
+  // }
+
+
+  //let peg = document.querySelector(`#${tileClicked.id}`)
+  peg.setAttribute('class', pegStatus)
 }
 
 // Changes the color of the instruction 'NEXT' move peg 
@@ -343,7 +352,9 @@ function clickedTileStatus(event) {
 
 // Reselect peg clicked
 function resetPegSelect() {
-  document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
+  //document.querySelector(`#${pegSelected.id}`).style.backgroundColor = 'violet'
+  
+  setPegColor(pegSelected, 'active-peg')
   pegSelected = ""
   validOptions = []
   displayOptionsText.innerHTML = `<br><br>`
@@ -365,12 +376,12 @@ function cheatWin() {
 
     Tile.all.forEach( tile => {
       tile.active = false
-      setPegColor(tile)
+      setPegColor(tile, 'removed-peg')
     })
 
     let winTile = Tile.all[12]
     winTile.active = true
-    setPegColor(winTile)
+    setPegColor(winTile, 'active-peg')
 
     checkGameOver()
   })  
