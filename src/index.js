@@ -2,7 +2,7 @@
 const board = document.getElementById('board'); 
 const btnPlay = document.querySelector("#play-btn");
 const instructions = document.querySelector(".directions")
-const instructionsHeader = document.querySelector(".instructions-header") //) > h5 > span")
+const instructionsHeader = document.querySelector(".instructions-header")
 const displayOptionsText = document.querySelector(".display-options")
 const allPegs = document.getElementsByClassName("peg")
 
@@ -46,11 +46,11 @@ function fetchWins() {
 
 // Display Winner's Board
 function displayWinnerBoard() { 
-  //setting x to 15 for first 15 players - now this can be changed to whatever
-  const x = 15
-  let firstXPlayers = Player.all.slice(0, x);
 
-  const winnersTableBody = document.querySelector("#winners-board > tbody")
+  const x = 15    //setting x to 15 for first 15 players - now this can be changed to whatever
+  const firstXPlayers = Player.all.slice(0, x);
+
+  const winnersTableBody = document.querySelector("#winners-board tbody")
 
   for (let i = 0; i < (firstXPlayers.length); i++) {
     let player = firstXPlayers[i]
@@ -75,29 +75,8 @@ function displayWinnerBoard() {
     //col 3 - Move Count
     winnerRow.insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
 
-    //add winnerRow to winnerTableBody
+    //Add winnerRow to winnerTableBody
     winnersTableBody.appendChild(winnerRow);
-
-
-//////WORKS:::::
-    // // create number div and element
-    // let numberDiv = document.createElement('td')
-    // numberDiv.className = "num"
-    // numberDiv.innerText =  i + 1
-
-    // //col 1 - # numbers
-    // document.querySelector(`#slot${i+1}`).appendChild(numberDiv);
-  
-    // //col 2 - Player Names
-    // document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", player.renderPlayerHTML() );
-    // //document.querySelector(`#slot${i+1}`).appendChild(player.renderPlayerHTML());
-
-    // //col 3 - Move Count
-    // document.querySelector(`#slot${i+1}`).insertAdjacentHTML("beforeend", winPlayer.renderMoveHTML() );
-
-    // //old code:
-    //   //document.querySelector(`#slot${i+1}`).innerHTML += player.renderPlayerHTML(i+1)
-    //   //document.querySelector(`#slot${i+1}`).innerHTML += winPlayer.renderMoveHTML()
   }
 }
 
